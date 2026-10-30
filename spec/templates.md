@@ -101,9 +101,9 @@ Sxem: [`template.schema.json`](template.schema.json).
 | `event.hosts_line` | `event.hosts` mətni (`{host_names}` ilə); boşdursa gizlənir. |
 | `event.type_label` | `event_type.<növ>`. |
 | `event.invite_sentence` | `invite.<növ>`. |
-| `event.date` | `starts_at`, `Intl.DateTimeFormat(lang, { dateStyle: 'long' })`. |
-| `event.weekday` | `Intl.DateTimeFormat(lang, { weekday: 'long' })`. |
-| `event.time` | `Intl.DateTimeFormat(lang, { timeStyle: 'short' })`. |
+| `event.date` | `starts_at` → `date.long` + `date.month.<1-12>` (invite.json). Intl lokal məlumatına etibar edilmir: Android Chrome-da `az` formatı yoxdur. |
+| `event.weekday` | `date.weekday.<0-6>` (0 = bazar). |
+| `event.time` | `HH:MM`, 24 saat. |
 | `event.venue_name` | `events.venue_name`. |
 | `event.venue_address` | `events.venue_address`; boşdursa gizlənir. |
 | `text.<açar>` | `customization.texts.<açar>`; boşdursa gizlənir. |
@@ -151,7 +151,7 @@ Core sinifləri `dv-` prefiksi ilə BEM formatındadır; şablon onları `style.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <!-- T24 buraya <base>, og:* teqləri və #invite-config əlavə edir -->
+  <!-- Pages Function buraya <base> və #invite-config (T23), og:* teqləri (T24) əlavə edir -->
 </head>
 <body>
   <main class="dv-page" data-state="loading">
@@ -183,7 +183,7 @@ Core sinifləri `dv-` prefiksi ilə BEM formatındadır; şablon onları `style.
 
 ### 6.1 Canlı rejim (`/i/<kod>`)
 
-Pages Function `<head>`-ə konfiqurasiya yerləşdirir (T24):
+Pages Function `<head>`-ə `<base>` və konfiqurasiya yerləşdirir (T23; imzalı `media` linkləri T24-də):
 
 ```html
 <script id="invite-config" type="application/json">

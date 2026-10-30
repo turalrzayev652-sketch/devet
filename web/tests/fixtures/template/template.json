@@ -1,0 +1,18 @@
+{
+  "id": "free-01",
+  "version": 1,
+  "tier": "free",
+  "name": { "az": "Test", "ru": "Тест", "en": "Test", "tr": "Test" },
+  "event_types": ["wedding", "engagement", "henna", "birthday", "jubilee"],
+  "langs": ["az", "ru", "en", "tr"],
+  "blocks": ["hero", "countdown", "gallery", "music", "map", "table", "rsvp", "watermark"],
+  "css_vars": {
+    "--dv-color-bg": { "type": "color", "default": "#faf7f2", "label_key": "template.var.color_bg" },
+    "--dv-color-text": { "type": "color", "default": "#2b2622", "label_key": "template.var.color_text" },
+    "--dv-color-accent": { "type": "color", "default": "#8a5a44", "label_key": "template.var.color_accent" }
+  },
+  "fonts": {},
+  "texts": { "intro": { "max_length": 200, "label_key": "template.text.intro" } },
+  "photos": { "max": 6 },
+  "music": true
+}

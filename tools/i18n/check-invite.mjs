@@ -25,6 +25,7 @@ const REQUIRED = [
   'rsvp.yes', 'rsvp.no', 'rsvp.count_label', 'rsvp.submit', 'rsvp.thanks_yes', 'rsvp.thanks_no',
   'table.title', 'table.number', 'table.mates', 'map.title', 'map.directions', 'map.google', 'map.waze',
   'music.play', 'music.pause', 'gallery.title', 'watermark',
+  'date.long', ...Array.from({ length: 12 }, (_, i) => `date.month.${i + 1}`), ...Array.from({ length: 7 }, (_, i) => `date.weekday.${i}`),
   ...['not_found', 'event_past', 'network', 'rate_limited'].flatMap((e) => [`error.${e}.title`, `error.${e}.body`]),
 ];
 
