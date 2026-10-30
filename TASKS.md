@@ -95,7 +95,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `pg_cron` işi: tədbir tarixindən 90 gün sonra qonaqların telefon nömrələri silinir (adlar və statistika qalır).
   - Hazırdır, əgər: test tarixi keçmiş tədbirdə telefonların silindiyini göstərir.
 
-- [ ] **T18 Təhlükəsizlik testləri**
+- [x] **T18 Təhlükəsizlik testləri**
+  - ⚠️ Qeyd: 6 pgTAP faylı (42 test) PGlite-də pgTAP imitasiyası ilə keçib; `supabase test db` Docker qurulanda işlədilməlidir.
   - Asılılıq: T11–T15
   - `/backend/supabase/tests/` — pgTAP və ya SQL skriptləri: A istifadəçisi B-nin tədbirini, qonaqlarını, alışlarını görə və dəyişə bilmir; anon yalnız RPC çağıra bilir; cohost silə bilmir.
   - Hazırdır, əgər: `supabase test db` tam keçir.

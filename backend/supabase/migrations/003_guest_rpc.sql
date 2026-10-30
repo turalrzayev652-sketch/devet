@@ -7,6 +7,8 @@
 
 revoke execute on all functions in schema public from public, anon;
 alter default privileges in schema public revoke execute on functions from public, anon;
+-- The built-in EXECUTE-to-PUBLIC default is global; a per-schema revoke does not remove it.
+alter default privileges revoke execute on functions from public;
 
 -- ---------------------------------------------------------------------------
 -- Config

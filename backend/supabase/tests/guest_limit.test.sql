@@ -1,6 +1,8 @@
 -- Guest limit tests (T13). Run after migrations + seed; everything is rolled back.
 
 begin;
+create extension if not exists pgtap with schema extensions;
+select plan(1);
 
 insert into public.events (id, type, title_names, starts_at, venue_name, template_id)
 values ('55555555-5555-5555-5555-555555555555', 'birthday', 'Limit test', now() + interval '30 days', 'Hall', 'free-01');
@@ -99,5 +101,6 @@ do $$ begin
   assert public.event_guest_limit('55555555-5555-5555-5555-555555555555') = 300, 'refunded addon ignored';
 end $$;
 
-select 'guest_limit: ALL PASSED' as result;
+select pass('guest_limit: all assertions passed');
+select * from finish();
 rollback;

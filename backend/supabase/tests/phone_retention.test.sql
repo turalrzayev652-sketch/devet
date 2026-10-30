@@ -1,6 +1,8 @@
 -- Phone retention tests (T16). Run after migrations + seed; everything is rolled back.
 
 begin;
+create extension if not exists pgtap with schema extensions;
+select plan(1);
 
 insert into public.events (id, type, title_names, starts_at, venue_name, template_id) values
   ('77777777-7777-7777-7777-777777777777', 'wedding', 'Old', now() - interval '91 days', 'Hall', 'free-01'),
@@ -44,5 +46,6 @@ begin
 end $$;
 
 reset role;
-select 'phone_retention: ALL PASSED' as result;
+select pass('phone_retention: all assertions passed');
+select * from finish();
 rollback;

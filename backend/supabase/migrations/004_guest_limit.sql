@@ -33,6 +33,8 @@ begin
 end;
 $$;
 
+revoke all on function public.enforce_guest_limit() from public, anon, authenticated;
+
 create trigger guests_enforce_limit
   before insert or update of event_id on public.guests
   for each row execute function public.enforce_guest_limit();

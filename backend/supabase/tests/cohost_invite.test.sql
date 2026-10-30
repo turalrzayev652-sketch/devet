@@ -2,6 +2,8 @@
 -- A = seed owner (demo@devet.test), C = invited cohost, D = someone else, B = owner of another event.
 
 begin;
+create extension if not exists pgtap with schema extensions;
+select plan(1);
 
 insert into auth.users (id, email) values
   ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'Cohost@Devet.test'),
@@ -136,5 +138,6 @@ begin
 end $$;
 
 reset role;
-select 'cohost_invite: ALL PASSED' as result;
+select pass('cohost_invite: all assertions passed');
+select * from finish();
 rollback;

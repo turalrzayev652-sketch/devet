@@ -1,7 +1,9 @@
 -- Guest RPC tests (T12). Run after migrations + seed; everything is rolled back.
--- Plain SQL + ASSERT so it runs anywhere (psql, PGlite). T18 moves these to pgTAP.
+-- ASSERT-based checks wrapped in one pgTAP test (any failed assert aborts the file).
 
 begin;
+create extension if not exists pgtap with schema extensions;
+select plan(1);
 
 -- A past event (8 days ago) with one guest.
 insert into public.events (id, type, title_names, starts_at, venue_name, default_lang, template_id)
@@ -122,5 +124,6 @@ begin
 end $$;
 
 reset role;
-select 'guest_rpc: ALL PASSED' as result;
+select pass('guest_rpc: all assertions passed');
+select * from finish();
 rollback;

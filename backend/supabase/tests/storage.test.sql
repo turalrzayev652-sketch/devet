@@ -3,6 +3,8 @@
 -- A = seed owner (event 2222…), B = stranger.
 
 begin;
+create extension if not exists pgtap with schema extensions;
+select plan(1);
 
 insert into auth.users (id, email) values ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'b@devet.test');
 
@@ -25,6 +27,7 @@ begin
 exception when insufficient_privilege then
   return false;
 end $$;
+grant execute on function pg_temp.try_insert(text, text, jsonb) to anon, authenticated;
 
 set local role authenticated;
 
@@ -88,5 +91,6 @@ do $$ begin
 end $$;
 
 reset role;
-select 'storage: ALL PASSED' as result;
+select pass('storage: all assertions passed');
+select * from finish();
 rollback;
