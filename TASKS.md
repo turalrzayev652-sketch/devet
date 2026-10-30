@@ -69,7 +69,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Mövcud olmayan və ya keçmiş tədbirin kodu üçün aydın xəta kodu qaytarır.
   - Hazırdır, əgər: SQL testləri hər üç funksiyanı, o cümlədən səhv kod və limitdən çox nəfər hallarını yoxlayır.
 
-- [ ] **T13 Qonaq limiti**
+- [x] **T13 Qonaq limiti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/guest_limit.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T12
   - Trigger: tədbirdə qonaq sayı `guest_limit`-i keçə bilməz (insert və toplu import üçün).
   - Pulsuz şablon → 100, pullu → 300, hər `limit_addon` alışı → +200 (rəqəm konfiqurasiya cədvəlində saxlanır, koda yazılmır).
