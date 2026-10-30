@@ -49,7 +49,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `seed.sql`: 1 demo istifadəçi, 1 tədbir, 10 qonaq, 2 pulsuz şablon qeydi.
   - Hazırdır, əgər: `supabase db reset` səhvsiz işləyir, seed məlumatı görünür.
 
-- [ ] **T11 RLS qaydaları**
+- [x] **T11 RLS qaydaları**
+  - ⚠️ Qeyd: 53 RLS yoxlaması PGlite ilə keçib; rəsmi `supabase test db` testləri T18-də yazılacaq.
   - Asılılıq: T10
   - Bütün cədvəllərdə RLS aktivdir.
   - `profiles`: istifadəçi yalnız özünü görür və dəyişir.
