@@ -111,7 +111,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Mühit dəyişənləri: SUPABASE_URL, SUPABASE_ANON_KEY, PUBLIC_BASE_URL.
   - Hazırdır, əgər: lokal server açılır, `/i/test` səhifəsi 404 əvəzinə "kod tapılmadı" ekranını göstərir.
 
-- [ ] **T21 Qonaq səhifəsinin lüğəti**
+- [x] **T21 Qonaq səhifəsinin lüğəti**
   - Asılılıq: T01
   - `/spec/i18n/invite.json` — 4 dildə bütün sabit mətnlər (dəvət cümlələri, "Gəlirəm", "Gəlmirəm", "Neçə nəfər?", "Masanız", "Yol", geri sayım vahidləri, xəta mesajları).
   - Hitab qaydaları hər dil üçün: müəllim/xanım/bəy/yox + "ailəliklə" (məs. az: "Elçin müəllim və ailəsi", ru, en, tr formaları).
