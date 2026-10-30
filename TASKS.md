@@ -36,7 +36,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
 
 ## Faza 1 — Backend (Supabase)
 
-- [ ] **T10 Supabase layihəsi və əsas sxem**
+- [x] **T10 Supabase layihəsi və əsas sxem**
+  - ⚠️ Qeyd: PGlite ilə yoxlanıb; `supabase db reset` Docker quraşdırılanda hələ də yoxlanmalıdır.
   - Asılılıq: T01
   - `supabase init` (`/backend/supabase`). Miqrasiya `001_schema.sql`:
     - enum-lar: `event_type` (wedding, engagement, henna, birthday, jubilee), `member_role` (owner, cohost), `side` (groom, bride, none), `rsvp_status` (pending, yes, no), `salutation` (muellim, xanim, bey, none), `purchase_kind` (template, limit_addon), `store` (google, apple), `lang` (az, ru, en, tr).
