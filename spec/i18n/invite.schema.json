@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "invite.schema.json",
+  "title": "Guest page strings",
+  "description": "Flat map: dotted key -> text in az, ru, en, tr. Placeholders are {name}; every language must use the same set. Plural keys end in .one/.few/.many/.other (Intl.PluralRules categories).",
+  "type": "object",
+  "propertyNames": { "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)*$" },
+  "additionalProperties": {
+    "type": "object",
+    "required": ["az", "ru", "en", "tr"],
+    "additionalProperties": false,
+    "properties": {
+      "az": { "type": "string", "minLength": 1 },
+      "ru": { "type": "string", "minLength": 1 },
+      "en": { "type": "string", "minLength": 1 },
+      "tr": { "type": "string", "minLength": 1 }
+    }
+  }
+}
