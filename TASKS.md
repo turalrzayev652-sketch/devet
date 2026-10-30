@@ -89,7 +89,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Fayl ölçüsü limitləri: şəkil ≤ 2 MB, musiqi ≤ 5 MB, önizləmə ≤ 150 KB.
   - Hazırdır, əgər: icazə testləri keçir.
 
-- [ ] **T16 Məlumatların saxlanma müddəti**
+- [x] **T16 Məlumatların saxlanma müddəti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/phone_retention.sql` PGlite-də (pg_cron imitasiyası ilə) keçib; real pg_cron işi hələ yoxlanmayıb.
   - Asılılıq: T10
   - `pg_cron` işi: tədbir tarixindən 90 gün sonra qonaqların telefon nömrələri silinir (adlar və statistika qalır).
   - Hazırdır, əgər: test tarixi keçmiş tədbirdə telefonların silindiyini göstərir.
