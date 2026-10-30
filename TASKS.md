@@ -82,7 +82,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `event_invites` (event_id, email, side, token, accepted_at). RPC `create_cohost_invite(event_id, email, side)` (yalnız owner) və `accept_cohost_invite(token)` (girişli istifadəçi; e-poçt uyğun gəlməlidir).
   - Hazırdır, əgər: testdə ikinci istifadəçi dəvəti qəbul etdikdən sonra tədbiri görür, başqa tədbiri görmür.
 
-- [ ] **T15 Storage**
+- [x] **T15 Storage**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/storage.sql` PGlite-də (storage sxemi imitasiyası ilə) keçib; real Storage API ilə yüklənmə hələ sınanmayıb.
   - Asılılıq: T11
   - Bucket-lər: `event-media` (şəkil, musiqi; yalnız tədbir üzvləri yazır, ictimai oxuma imzalı URL ilə), `previews` (adlı önizləmə şəkilləri; ictimai oxuma, yazma yalnız tədbir üzvləri; fayl adı = qonaq kodu).
   - Fayl ölçüsü limitləri: şəkil ≤ 2 MB, musiqi ≤ 5 MB, önizləmə ≤ 150 KB.
