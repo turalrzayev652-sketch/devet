@@ -117,7 +117,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Hitab qaydaları hər dil üçün: müəllim/xanım/bəy/yox + "ailəliklə" (məs. az: "Elçin müəllim və ailəsi", ru, en, tr formaları).
   - Hazırdır, əgər: JSON sxemə uyğundur və hər açar 4 dildə var (yoxlama skripti).
 
-- [ ] **T22 Şablon müqaviləsi**
+- [x] **T22 Şablon müqaviləsi**
   - Asılılıq: T21
   - `/spec/templates.md`: `template.json` sxemi (id, ad, versiya, pulsuz/pullu, limit, CSS dəyişənləri, dəstəklənən bloklar), `data-bind` açarlarının siyahısı, blok konteynerləri (`rsvp`, `map`, `countdown`, `music`, `gallery`, `table`, `watermark`).
   - Hazırdır, əgər: sənəd hazırdır və T23-də istifadə olunur.
