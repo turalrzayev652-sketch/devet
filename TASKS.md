@@ -36,7 +36,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
 
 ## Faza 1 — Backend (Supabase)
 
-- [ ] **T10 Supabase layihəsi və əsas sxem**
+- [x] **T10 Supabase layihəsi və əsas sxem**
+  - ⚠️ Qeyd: PGlite ilə yoxlanıb; `supabase db reset` Docker quraşdırılanda hələ də yoxlanmalıdır.
   - Asılılıq: T01
   - `supabase init` (`/backend/supabase`). Miqrasiya `001_schema.sql`:
     - enum-lar: `event_type` (wedding, engagement, henna, birthday, jubilee), `member_role` (owner, cohost), `side` (groom, bride, none), `rsvp_status` (pending, yes, no), `salutation` (muellim, xanim, bey, none), `purchase_kind` (template, limit_addon), `store` (google, apple), `lang` (az, ru, en, tr).
@@ -48,7 +49,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `seed.sql`: 1 demo istifadəçi, 1 tədbir, 10 qonaq, 2 pulsuz şablon qeydi.
   - Hazırdır, əgər: `supabase db reset` səhvsiz işləyir, seed məlumatı görünür.
 
-- [ ] **T11 RLS qaydaları**
+- [x] **T11 RLS qaydaları**
+  - ⚠️ Qeyd: 53 RLS yoxlaması PGlite ilə keçib; rəsmi `supabase test db` testləri T18-də yazılacaq.
   - Asılılıq: T10
   - Bütün cədvəllərdə RLS aktivdir.
   - `profiles`: istifadəçi yalnız özünü görür və dəyişir.
@@ -57,7 +59,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `purchases`: istifadəçi yalnız öz alışlarını oxuyur; yazmaq yalnız service role.
   - Hazırdır, əgər: T18-dəki testlər keçir. Hesabatda "İnsan yoxlaması lazımdır" bölməsi var.
 
-- [ ] **T12 Qonaq funksiyaları (RPC)**
+- [x] **T12 Qonaq funksiyaları (RPC)**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/guest_rpc.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T11
   - `get_preview(code)` — **yan təsirsiz**: qonağın göstəriləcək adı (hitab ilə), tədbir başlığı, tarix, dil, önizləmə şəklinin yolu. WhatsApp-ın link yoxlayıcısı bunu çağırır, ona görə "baxdı" yazmır.
   - `get_invite(code)` — tədbirin ictimai sahələri, şablon, fərdiləşdirmə, qonaq məlumatı (ad, hitab, dəvət olunan nəfər, masa, cavab), `show_tablemates` açıqdırsa eyni masadakı qonaqların adları. İlk çağırışda `opened_at` yazır.
@@ -66,29 +69,34 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Mövcud olmayan və ya keçmiş tədbirin kodu üçün aydın xəta kodu qaytarır.
   - Hazırdır, əgər: SQL testləri hər üç funksiyanı, o cümlədən səhv kod və limitdən çox nəfər hallarını yoxlayır.
 
-- [ ] **T13 Qonaq limiti**
+- [x] **T13 Qonaq limiti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/guest_limit.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T12
   - Trigger: tədbirdə qonaq sayı `guest_limit`-i keçə bilməz (insert və toplu import üçün).
   - Pulsuz şablon → 100, pullu → 300, hər `limit_addon` alışı → +200 (rəqəm konfiqurasiya cədvəlində saxlanır, koda yazılmır).
   - Hazırdır, əgər: limitdən artıq insert rədd olunur və test bunu göstərir.
 
-- [ ] **T14 Ortaq ailə dəvəti**
+- [x] **T14 Ortaq ailə dəvəti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/cohost_invite.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T11
   - `event_invites` (event_id, email, side, token, accepted_at). RPC `create_cohost_invite(event_id, email, side)` (yalnız owner) və `accept_cohost_invite(token)` (girişli istifadəçi; e-poçt uyğun gəlməlidir).
   - Hazırdır, əgər: testdə ikinci istifadəçi dəvəti qəbul etdikdən sonra tədbiri görür, başqa tədbiri görmür.
 
-- [ ] **T15 Storage**
+- [x] **T15 Storage**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/storage.sql` PGlite-də (storage sxemi imitasiyası ilə) keçib; real Storage API ilə yüklənmə hələ sınanmayıb.
   - Asılılıq: T11
   - Bucket-lər: `event-media` (şəkil, musiqi; yalnız tədbir üzvləri yazır, ictimai oxuma imzalı URL ilə), `previews` (adlı önizləmə şəkilləri; ictimai oxuma, yazma yalnız tədbir üzvləri; fayl adı = qonaq kodu).
   - Fayl ölçüsü limitləri: şəkil ≤ 2 MB, musiqi ≤ 5 MB, önizləmə ≤ 150 KB.
   - Hazırdır, əgər: icazə testləri keçir.
 
-- [ ] **T16 Məlumatların saxlanma müddəti**
+- [x] **T16 Məlumatların saxlanma müddəti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/phone_retention.sql` PGlite-də (pg_cron imitasiyası ilə) keçib; real pg_cron işi hələ yoxlanmayıb.
   - Asılılıq: T10
   - `pg_cron` işi: tədbir tarixindən 90 gün sonra qonaqların telefon nömrələri silinir (adlar və statistika qalır).
   - Hazırdır, əgər: test tarixi keçmiş tədbirdə telefonların silindiyini göstərir.
 
-- [ ] **T18 Təhlükəsizlik testləri**
+- [x] **T18 Təhlükəsizlik testləri**
+  - ⚠️ Qeyd: 6 pgTAP faylı (42 test) PGlite-də pgTAP imitasiyası ilə keçib; `supabase test db` Docker qurulanda işlədilməlidir.
   - Asılılıq: T11–T15
   - `/backend/supabase/tests/` — pgTAP və ya SQL skriptləri: A istifadəçisi B-nin tədbirini, qonaqlarını, alışlarını görə və dəyişə bilmir; anon yalnız RPC çağıra bilir; cohost silə bilmir.
   - Hazırdır, əgər: `supabase test db` tam keçir.
@@ -126,6 +134,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Asılılıq: T23, T15
   - `functions/i/[code].js`: `get_preview` çağırır, şablonun `index.html`-ini `env.ASSETS` ilə götürür, `<head>`-ə `og:title` ("Elçin müəllim, sizi toyumuza dəvət edirik"), `og:description`, `og:image` (previews/<kod>.jpg, yoxdursa tədbirin ümumi şəkli), `og:url` əlavə edir və konfiqurasiya skriptini yerləşdirir.
   - Keşləmə: qısa müddətli (məs. 5 dəq), çünki ad dəyişə bilər.
+  - **Qərar (2026-10-29):** `event-media` qapalı bucket-dir. Qonaq səhifəsi üçün şəkil/musiqi imzalı linklərini bu Pages Function `SUPABASE_SERVICE_ROLE_KEY` ilə (yalnız Cloudflare mühit dəyişənində) yaradır və `customization` yollarını linklərlə əvəz edir. Açar heç vaxt `web/public`-ə düşmür.
   - Hazırdır, əgər: `curl -A "WhatsApp/2.0" https://.../i/<kod>` cavabında adlı og-teqlər var; real WhatsApp-da önizləmə adla görünür.
 
 - [ ] **T25 [SİZ] Şablon dizaynları**

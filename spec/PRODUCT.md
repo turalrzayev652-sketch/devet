@@ -78,6 +78,7 @@ Bütün cədvəllərdə `id uuid pk default gen_random_uuid()`, `created_at time
 | show_tablemates | boolean | defolt false |
 | is_paid | boolean | pullu şablon bu tədbir üçün alınıbmı |
 | status | text | `draft`, `active`, `archived` |
+| created_by | uuid fk null | yaradan istifadəçi (defolt `auth.uid()`); trigger onu avtomatik `owner` edir |
 
 `guest_limit` saxlanılmır — funksiya ilə hesablanır (bax 7).
 
