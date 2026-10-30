@@ -1,0 +1,46 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Node / Cloudflare
+node_modules/
+.wrangler/
+.dev.vars
+dist/
+npm-debug.log*
+
+# Supabase
+backend/supabase/.branches/
+backend/supabase/.temp/
+
+# Android
+*.iml
+.gradle/
+local.properties
+android/build/
+android/app/build/
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Xcode / iOS
+ios/build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.ipa
+*.dSYM.zip
+*.dSYM
+ios/Pods/
