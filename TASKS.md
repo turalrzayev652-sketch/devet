@@ -76,7 +76,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Pulsuz şablon → 100, pullu → 300, hər `limit_addon` alışı → +200 (rəqəm konfiqurasiya cədvəlində saxlanır, koda yazılmır).
   - Hazırdır, əgər: limitdən artıq insert rədd olunur və test bunu göstərir.
 
-- [ ] **T14 Ortaq ailə dəvəti**
+- [x] **T14 Ortaq ailə dəvəti**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/cohost_invite.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T11
   - `event_invites` (event_id, email, side, token, accepted_at). RPC `create_cohost_invite(event_id, email, side)` (yalnız owner) və `accept_cohost_invite(token)` (girişli istifadəçi; e-poçt uyğun gəlməlidir).
   - Hazırdır, əgər: testdə ikinci istifadəçi dəvəti qəbul etdikdən sonra tədbiri görür, başqa tədbiri görmür.
