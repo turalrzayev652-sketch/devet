@@ -59,7 +59,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `purchases`: istifadəçi yalnız öz alışlarını oxuyur; yazmaq yalnız service role.
   - Hazırdır, əgər: T18-dəki testlər keçir. Hesabatda "İnsan yoxlaması lazımdır" bölməsi var.
 
-- [ ] **T12 Qonaq funksiyaları (RPC)**
+- [x] **T12 Qonaq funksiyaları (RPC)**
+  - ⚠️ Qeyd: `backend/supabase/tests/sql/guest_rpc.sql` PGlite ilə keçib; real Supabase-də hələ işlədilməyib.
   - Asılılıq: T11
   - `get_preview(code)` — **yan təsirsiz**: qonağın göstəriləcək adı (hitab ilə), tədbir başlığı, tarix, dil, önizləmə şəklinin yolu. WhatsApp-ın link yoxlayıcısı bunu çağırır, ona görə "baxdı" yazmır.
   - `get_invite(code)` — tədbirin ictimai sahələri, şablon, fərdiləşdirmə, qonaq məlumatı (ad, hitab, dəvət olunan nəfər, masa, cavab), `show_tablemates` açıqdırsa eyni masadakı qonaqların adları. İlk çağırışda `opened_at` yazır.
