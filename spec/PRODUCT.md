@@ -166,7 +166,8 @@ Yalnız service role yazır (Edge Function `verify-purchase`).
 ```json
 { "ok": true, "lang": "az", "display_name": "Elçin müəllim və ailəsi",
   "event_type": "wedding", "title_names": "Aysel və Ramin",
-  "starts_at": "2027-07-10T18:00:00+04:00", "preview_url": "https://.../previews/K7D2M9QX.jpg",
+  "starts_at": "2027-07-10T18:00:00+04:00", "venue_name": "Gülüstan sarayı",
+  "preview_url": "https://.../previews/K7D2M9QX.jpg",
   "template_id": "premium-01" }
 ```
 

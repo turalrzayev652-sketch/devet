@@ -131,7 +131,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Xəta ekranları: kod tapılmadı, tədbir keçib, şəbəkə xətası.
   - Hazırdır, əgər: seed tədbirinin 3 qonaq kodu ilə səhifə 4 dildə düzgün açılır və cavab bazaya düşür.
 
-- [ ] **T24 Adlı WhatsApp önizləməsi (Pages Function)**
+- [x] **T24 Adlı WhatsApp önizləməsi (Pages Function)**
+  - ⚠️ Qeyd: `curl -A "WhatsApp/2.0"` real `wrangler pages dev`-də (PGlite RPC ilə) adlı og-teqləri göstərir. Real WhatsApp-da önizləmə ictimai deploy və real Supabase tələb edir — T2B-də yoxlanmalıdır.
   - Asılılıq: T23, T15
   - `functions/i/[code].js`: `get_preview` çağırır, şablonun `index.html`-ini `env.ASSETS` ilə götürür, `<head>`-ə `og:title` ("Elçin müəllim, sizi toyumuza dəvət edirik"), `og:description`, `og:image` (previews/<kod>.jpg, yoxdursa tədbirin ümumi şəkli), `og:url` əlavə edir və konfiqurasiya skriptini yerləşdirir.
   - Keşləmə: qısa müddətli (məs. 5 dəq), çünki ad dəyişə bilər.

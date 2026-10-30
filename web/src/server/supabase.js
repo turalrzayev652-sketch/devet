@@ -8,7 +8,7 @@ export function normalizeCode(raw) {
 }
 
 // Returns the RPC JSON ({ ok, ... } or { ok: false, error }) or { ok: false, error: 'network' }.
-export async function callRpc(env, fn, args, fetchImpl = fetch) {
+export async function callRpc(env, fn, args, fetchImpl = (...args) => fetch(...args)) {
   if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return { ok: false, error: 'network' };
   try {
     const res = await fetchImpl(`${env.SUPABASE_URL}/rest/v1/rpc/${fn}`, {

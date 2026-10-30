@@ -27,6 +27,7 @@ begin
   assert r->>'display_name' = 'Elçin müəllim və ailəsi', 'az muellim + family: ' || (r->>'display_name');
   assert r->>'lang' = 'az', 'event default lang';
   assert r->>'event_type' = 'wedding' and r->>'title_names' = 'Aysel və Ramin' and r->>'template_id' = 'free-01', 'preview event fields';
+  assert r->>'venue_name' = 'Gülüstan sarayı', 'preview venue_name (008)';
   assert r->'preview_url' = 'null'::jsonb, 'no preview_path -> null url';
   assert not (r ? 'phone_e164') and not (r ? 'name'), 'no phone / raw fields';
 
