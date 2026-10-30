@@ -122,7 +122,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `/spec/templates.md`: `template.json` sxemi (id, ad, versiya, pulsuz/pullu, limit, CSS dəyişənləri, dəstəklənən bloklar), `data-bind` açarlarının siyahısı, blok konteynerləri (`rsvp`, `map`, `countdown`, `music`, `gallery`, `table`, `watermark`).
   - Hazırdır, əgər: sənəd hazırdır və T23-də istifadə olunur.
 
-- [ ] **T23 invite-core.js**
+- [x] **T23 invite-core.js**
+  - ⚠️ Qeyd: E2E real SQL funksiyaları ilə PGlite-də (Supabase RPC imitasiyası) və real brauzerdə yoxlanıb; real Supabase ilə hələ sınanmayıb. Media (qalereya/musiqi) T24-dən sonra görünəcək.
   - Asılılıq: T20, T21, T22
   - `get_invite` çağırır, dili seçir (qonağın dili → tədbirin dili), hitabı formatlayır, `data-bind` sahələrini doldurur.
   - Bloklar: cavab forması (`submit_rsvp`), xəritə (Google Maps və Waze linkləri), geri sayım, musiqi (yalnız toxunuşla başlayır), qalereya, masa bloku (masadakılar açıqdırsa), pulsuz şablonda watermark.

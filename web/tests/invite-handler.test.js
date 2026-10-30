@@ -91,11 +91,19 @@ test('valid code -> serves the template page, calls RPC with anon key only', asy
     return new Response(JSON.stringify({ ok: true, lang: 'az', template_id: 'free-01' }), { status: 200 });
   };
   const res = await handleInvite(
-    { params: { code: 'k7d2m9qx' }, request: req('/i/k7d2m9qx'), env: env({ '/templates/free-01/index.html': '<p>tpl</p>' }) },
+    { params: { code: 'k7d2m9qx' }, request: req('/i/k7d2m9qx'), env: env({ '/templates/free-01/index.html': '<html><head><title>x</title></head><p>tpl</p></html>' }) },
     fetchImpl,
   );
   assert.equal(res.status, 200);
-  assert.equal(await res.text(), '<p>tpl</p>');
+  const html = await res.text();
+  assert.match(html, /<head>\n<base href="\/templates\/free-01\/">/);
+  assert.match(html, /<p>tpl<\/p>/);
+  const config = JSON.parse(/<script id="invite-config" type="application\/json">(.*?)<\/script>/.exec(html)[1]);
+  assert.deepEqual(config, {
+    code: 'K7D2M9QX', supabase_url: 'http://supabase.test', anon_key: 'anon-test-key',
+    brand: 'Devet', base_url: 'http://localhost:8788', media: { photos: [], music: null },
+  });
+  assert.doesNotMatch(html, /service_role/i);
   assert.equal(sent.url, 'http://supabase.test/rest/v1/rpc/get_preview');
   assert.deepEqual(JSON.parse(sent.init.body), { code: 'K7D2M9QX' });
   assert.equal(sent.init.headers.apikey, 'anon-test-key');
@@ -113,4 +121,11 @@ test('valid code but template missing -> not_found', async () => {
 test('error text is HTML-escaped', async () => {
   const { errorPageHtml } = await import('../src/server/error-page.js');
   assert.doesNotMatch(errorPageHtml('not_found', 'az'), /<script/);
+});
+
+test('injectHead escapes </script> in config values', async () => {
+  const { injectHead } = await import('../src/server/invite-handler.js');
+  const html = injectHead('<head></head>', { templateId: 'free-01', config: { brand: '</script><script>alert(1)</script>' } });
+  assert.doesNotMatch(html, /<\/script><script>alert/);
+  assert.match(html, /\u003c\/script>/);
 });

@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/build-strings.mjs",
+    "predev": "npm run build",
     "dev": "wrangler pages dev",
     "test": "node --test"
   },

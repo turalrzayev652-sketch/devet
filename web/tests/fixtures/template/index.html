@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Test fixture for invite-core.js: every block and binding from spec/templates.md. Not deployed. -->
+  <main class="dv-page" data-state="loading">
+    <section data-block="hero" class="hero">
+      <p class="hero__type" data-bind="event.type_label"></p>
+      <p class="hero__greeting" data-bind="guest.greeting"></p>
+      <h1 class="hero__names" data-bind="event.title_names"></h1>
+      <p data-bind="event.invite_sentence"></p>
+      <p class="hero__when"><span data-bind="event.weekday"></span>, <span data-bind="event.date"></span> · <span data-bind="event.time"></span></p>
+      <p data-bind="text.intro"></p>
+      <p class="hero__display" data-bind="guest.display_name"></p>
+    </section>
+    <section data-block="countdown"></section>
+    <section data-block="gallery"></section>
+    <section data-block="music"></section>
+    <section data-block="map"></section>
+    <section data-block="table"></section>
+    <section data-block="rsvp"></section>
+    <p class="closing" data-bind="event.hosts_line"></p>
+    <section data-block="watermark"></section>
+  </main>
+  <script type="module" src="/core/invite-core.js"></script>
+  <script type="module" src="motion.js"></script>
+</body>
+</html>

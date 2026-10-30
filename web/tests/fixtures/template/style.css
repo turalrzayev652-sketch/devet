@@ -1,0 +1,20 @@
+:root { --dv-color-bg: #faf7f2; --dv-color-text: #2b2622; --dv-color-accent: #8a5a44; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--dv-color-bg); color: var(--dv-color-text); font: 16px/1.5 var(--dv-font-body, system-ui), sans-serif; }
+.dv-page { max-width: 480px; margin: 0 auto; padding: 24px 16px; }
+.dv-page[data-state="loading"] { opacity: 0; }
+section { margin: 24px 0; text-align: center; }
+[hidden] { display: none !important; }
+h1, h2 { font-family: var(--dv-font-heading, serif); color: var(--dv-color-accent); }
+.dv-countdown__units { display: flex; justify-content: center; gap: 16px; }
+.dv-countdown__unit { display: grid; }
+.dv-countdown__value { font-size: 2rem; }
+.dv-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.dv-gallery img { width: 100%; display: block; }
+.dv-rsvp__choices { display: flex; gap: 8px; justify-content: center; }
+.dv-rsvp button { padding: 10px 16px; border-radius: 999px; border: 1px solid var(--dv-color-accent); background: none; color: inherit; font: inherit; }
+.dv-rsvp__choice[aria-pressed="true"], .dv-rsvp__submit { background: var(--dv-color-accent); color: var(--dv-color-bg); }
+.dv-rsvp__count-row { margin: 12px 0; }
+.dv-map__links { display: flex; gap: 12px; justify-content: center; }
+.dv-watermark { font-size: 12px; color: inherit; opacity: .7; }
+.dv-error { text-align: center; padding-top: 30vh; }
