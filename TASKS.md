@@ -105,7 +105,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
 
 ## Faza 2 — Qonaq səhifəsi və şablonlar (Cloudflare Pages)
 
-- [ ] **T20 Web layihəsi**
+- [x] **T20 Web layihəsi**
   - Asılılıq: T12
   - `/web`: `public/core/`, `public/templates/<template_id>/`, `functions/i/[code].js`, `wrangler.toml`. Lokal işə salma: `npx wrangler pages dev`.
   - Mühit dəyişənləri: SUPABASE_URL, SUPABASE_ANON_KEY, PUBLIC_BASE_URL.

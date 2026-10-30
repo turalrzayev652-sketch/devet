@@ -1,1 +1,44 @@
-{}
+{
+  "error.not_found.title": {
+    "az": "Dəvətnamə tapılmadı",
+    "ru": "Приглашение не найдено",
+    "en": "Invitation not found",
+    "tr": "Davetiye bulunamadı"
+  },
+  "error.not_found.body": {
+    "az": "Linki yoxlayın və ya sizi dəvət edən ailə ilə əlaqə saxlayın.",
+    "ru": "Проверьте ссылку или свяжитесь с семьёй, которая вас пригласила.",
+    "en": "Check the link or contact the family who invited you.",
+    "tr": "Bağlantıyı kontrol edin veya sizi davet eden aileyle iletişime geçin."
+  },
+  "error.event_past.title": {
+    "az": "Bu tədbir artıq keçib",
+    "ru": "Это мероприятие уже прошло",
+    "en": "This event has already taken place",
+    "tr": "Bu etkinlik sona erdi"
+  },
+  "error.event_past.body": {
+    "az": "Bu dəvətnamə artıq aktiv deyil.",
+    "ru": "Это приглашение больше не действует.",
+    "en": "This invitation is no longer active.",
+    "tr": "Bu davetiye artık geçerli değil."
+  },
+  "error.network.title": {
+    "az": "Bağlantı xətası",
+    "ru": "Ошибка соединения",
+    "en": "Connection error",
+    "tr": "Bağlantı hatası"
+  },
+  "error.network.body": {
+    "az": "İnternet bağlantınızı yoxlayıb səhifəni yeniləyin.",
+    "ru": "Проверьте подключение к интернету и обновите страницу.",
+    "en": "Check your internet connection and reload the page.",
+    "tr": "İnternet bağlantınızı kontrol edip sayfayı yenileyin."
+  },
+  "error.retry": {
+    "az": "Yenidən cəhd et",
+    "ru": "Повторить",
+    "en": "Try again",
+    "tr": "Tekrar dene"
+  }
+}

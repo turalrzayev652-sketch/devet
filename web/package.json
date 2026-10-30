@@ -1,0 +1,12 @@
+{
+  "name": "devet-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "wrangler": "4.150.0"
+  }
+}
