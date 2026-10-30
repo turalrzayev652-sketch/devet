@@ -2,7 +2,8 @@
 --
 -- event-media (private): <event_id>/photos/<file>  images, <= 2 MB
 --                        <event_id>/music/<file>   audio,  <= 5 MB
---   Only event members read/write. Guests get signed URLs.
+--   Only event members read/write. Guests get signed URLs created by the Cloudflare Pages Function
+--   with the service role key (decision 2026-10-29; see TASKS.md T24).
 -- previews (public):     <guest_code>.jpg          JPEG,   <= 150 KB
 --   Public URL read; no listing (codes must not be enumerable). Only members of the guest's event write.
 --

@@ -132,6 +132,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Asılılıq: T23, T15
   - `functions/i/[code].js`: `get_preview` çağırır, şablonun `index.html`-ini `env.ASSETS` ilə götürür, `<head>`-ə `og:title` ("Elçin müəllim, sizi toyumuza dəvət edirik"), `og:description`, `og:image` (previews/<kod>.jpg, yoxdursa tədbirin ümumi şəkli), `og:url` əlavə edir və konfiqurasiya skriptini yerləşdirir.
   - Keşləmə: qısa müddətli (məs. 5 dəq), çünki ad dəyişə bilər.
+  - **Qərar (2026-10-29):** `event-media` qapalı bucket-dir. Qonaq səhifəsi üçün şəkil/musiqi imzalı linklərini bu Pages Function `SUPABASE_SERVICE_ROLE_KEY` ilə (yalnız Cloudflare mühit dəyişənində) yaradır və `customization` yollarını linklərlə əvəz edir. Açar heç vaxt `web/public`-ə düşmür.
   - Hazırdır, əgər: `curl -A "WhatsApp/2.0" https://.../i/<kod>` cavabında adlı og-teqlər var; real WhatsApp-da önizləmə adla görünür.
 
 - [ ] **T25 [SİZ] Şablon dizaynları**
