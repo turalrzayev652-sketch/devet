@@ -10,6 +10,7 @@ extension AuthFailure {
         case .rateLimited: "auth.error.rate_limited"
         case .linkInvalid: "auth.error.link_invalid"
         case .network: "common.error.network"
+        case .forbidden: "common.error.forbidden"
         case .emailNotConfirmed, .unauthorized, .notConfigured, .unknown: "common.error.unknown"
         }
     }

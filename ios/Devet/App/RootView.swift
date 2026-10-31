@@ -8,6 +8,12 @@ enum AuthRoute: Hashable {
 /// Pushed screens inside the app. Filled in module by module (T43+).
 enum AppRoute: Hashable {
     case settings
+    case createEvent
+    case editEvent(String)
+    /// Inside an event: guests [6] (T45/T46).
+    case eventHome(id: String, title: String)
+    case templates(eventId: String)
+    case joinByCode
 }
 
 /// Root for the session: sign-in flow when signed out, the app when signed in (Android `DevetNavHost`).
@@ -87,19 +93,46 @@ private struct AuthFlow: View {
 private struct AppFlow: View {
     @EnvironmentObject private var deps: AppDependencies
     @State private var path: [AppRoute] = []
+    /// Bumped by create/edit so the list reloads when it comes back.
+    @State private var reload = 0
 
     var body: some View {
         NavigationStack(path: $path) {
-            EventsView(onSettings: { path.append(.settings) })
-                .navigationDestination(for: AppRoute.self) { route in
-                    switch route {
-                    case .settings:
-                        SettingsView(
-                            vm: SettingsViewModel(account: deps.account, auth: deps.auth, language: deps.language),
-                            termsURL: deps.termsURL, privacyURL: deps.privacyURL
-                        )
-                    }
+            EventsView(
+                vm: EventsViewModel(repo: deps.events, archive: deps.archive), reloadToken: reload,
+                onSettings: { path.append(.settings) },
+                onOpen: { path.append(.eventHome(id: $0.id, title: $0.titleNames)) },
+                onCreate: { path.append(.createEvent) },
+                onEdit: { path.append(.editEvent($0.id)) },
+                onJoin: { path.append(.joinByCode) }
+            )
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .settings:
+                    SettingsView(
+                        vm: SettingsViewModel(account: deps.account, auth: deps.auth, language: deps.language),
+                        termsURL: deps.termsURL, privacyURL: deps.privacyURL
+                    )
+                case .createEvent:
+                    CreateEventView(
+                        vm: CreateEventViewModel(repo: deps.events, language: deps.language),
+                        onClose: { path.removeLast() },
+                        onCreated: { reload += 1 },
+                        onChooseTemplate: { path = [.templates(eventId: $0)] }
+                    )
+                case let .editEvent(id):
+                    EditEventView(vm: EditEventViewModel(repo: deps.events, eventId: id), onSaved: {
+                        reload += 1
+                        path.removeLast()
+                    })
+                case let .eventHome(_, title):
+                    ComingSoonView(title: Text(verbatim: title))
+                case .templates:
+                    ComingSoonView(title: Text("create.success.choose_template"))
+                case .joinByCode:
+                    ComingSoonView(title: Text("events.join"))
                 }
+            }
         }
     }
 }

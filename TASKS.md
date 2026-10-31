@@ -215,12 +215,13 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - [x] T42I (iOS) — eyni ekranlar və qaydalar; 42 unit test keçir (Android testlərinin eyni halları + supabase-swift stub HTTP ilə), simulyatorda az/ru/en/tr yoxlanıb. Tətbiqin dili iOS Ayarlarında seçilir (sahibin qərarı 2026-10-31).
   - ⚠️ Qeyd: real Supabase layihəsi olmadığı üçün giriş/qeydiyyat/e-poçt linkləri hər iki platformada real serverlə sınanmayıb (Auth cavabları MockEngine / URLProtocol ilə yoxlanıb); Parametrlər ekranı cihazda açılmayıb (sessiya tələb edir). Supabase panelində Redirect URLs-ə `az.devet.app://auth/**` əlavə edilməlidir.
 
-- [ ] **T43A / T43I Tədbirlər və tədbir yaratma**
+- [x] **T43A / T43I Tədbirlər və tədbir yaratma**
   - Asılılıq: T42
   - Tədbirlər siyahısı; yaratma addımları: növ → adlar → tarix/saat → məkan (ad + xəritə linki) → əsas dil → masadakıları göstər (defolt bağlı).
   - Hazırdır, əgər: tədbir bazada yaranır, redaktə və silmə (yalnız owner) işləyir.
   - [x] T43A (Android) — siyahı (rol, mini statistika, arxiv, aşağı çəkib yeniləmə), 6 addımlı yaratma + uğur ekranı, redaktə, silmə (yalnız owner); xəritə linki `maps.json` vektorları ilə; 55 unit test keçir; emulyatorda demo rejimində az/ru/en/tr yoxlanıb.
-  - ⚠️ Qeyd: real Supabase ilə sınanmayıb (PostgREST sorğuları MockEngine ilə yoxlanıb). Şablon miniatürü T44-də (şəkil yükləyici ilə); "Kodla qoşul" (T4A), qonaqlar (T45/T46) və şablon seçimi (T44) hələlik "növbəti mərhələdə" ekranıdır.
+  - [x] T43I (iOS) — eyni ekranlar, qaydalar və `maps.json` vektorları; 62 unit test keçir (Android hallarının eynisi + stub HTTP); simulyatorda demo rejimində (`-DevetDemo YES`) az/ru/en/tr yoxlanıb.
+  - ⚠️ Qeyd: real Supabase ilə hər iki platformada sınanmayıb (PostgREST sorğuları MockEngine / URLProtocol ilə yoxlanıb). Şablon miniatürü T44-də (şəkil yükləyici ilə); "Kodla qoşul" (T4A), qonaqlar (T45/T46) və şablon seçimi (T44) hələlik "növbəti mərhələdə" ekranıdır.
 
 - [ ] **T44A / T44I Şablon kataloqu və fərdiləşdirmə**
   - Asılılıq: T43, T26
