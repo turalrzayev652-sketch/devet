@@ -28,7 +28,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `/spec/PRODUCT.md` artıq mövcuddur — onu dəyişmə. `/spec` içində əlavə boş şablon fayllar yarat: `screens.md`, `api.md`, `templates.md`, `design.md`, `i18n/app.json`, `i18n/invite.json`, `test-vectors/`.
   - Hazırdır, əgər: struktur yaradılıb, git-də ilk commit var, heç bir sirr commit olunmayıb.
 
-- [ ] **T02 [SİZ] Ekran eskizləri** (~5 saat)
+- [x] **T02 [SİZ] Ekran eskizləri** (~5 saat)
+  - Əvəz olundu (sahibin qərarı, 2026-10-31): `spec/DESIGN_PROMPT.md` brifi əsasında HTML prototip — `design/prototype/` (13 ekran, 106 hal), `design/components.html`.
   - 12 əsas ekranın kağız və ya Figma eskizi: giriş, tədbirlər siyahısı, tədbir yaratma (addımlar), şablon kataloqu, şablon fərdiləşdirmə, qonaqlar siyahısı, qonaq əlavə etmə (əl/kontakt/Excel), göndərmə axını, statistika, masalar, ortaq ailə, alış ekranı.
   - Şəkilləri `/spec/sketches/` qovluğuna qoyun.
 
@@ -184,8 +185,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `/spec/i18n/app.json` (açar → az/ru/en/tr) və `/tools/i18n` skripti: Android `values*/strings.xml` və iOS `Localizable.xcstrings` yaradır. Çatışmayan tərcümədə skript xəta verir.
   - Hazırdır, əgər: nümunə açarlarla hər iki platforma faylı yaranır.
 
-- [ ] **T33 Ortaq test vektorları**
-  - Vəziyyət: `phones.json`, `excel.json` və qaydalar (`spec/test-vectors/README.md`) hazırdır, JS istinad testi keçir. **Qalıb:** `design.md` — T02 eskizlərini gözləyir.
+- [x] **T33 Ortaq test vektorları**
+  - Vəziyyət: `phones.json`, `excel.json`, `maps.json` və qaydalar (`spec/test-vectors/README.md`), JS istinad testi keçir. `spec/design.md` dizayn tapşırığında yazıldı (tokenlər, şriftlər yoxlanılıb, kontrast AA).
   - Asılılıq: T01
   - `/spec/test-vectors/phones.json`: Azərbaycan nömrələrinin müxtəlif yazılışları → E.164 (`050 123 45 67`, `+994501234567`, `994 50 123-45-67`, `0501234567`, səhv nömrələr) və gözlənilən nəticə.
   - `/spec/test-vectors/excel.json`: Excel sütun adlarının 4 dildə variantları (Ad, Имя, Name, İsim; Telefon, Телефон, Phone…) və xətalı sətir nümunələri.
