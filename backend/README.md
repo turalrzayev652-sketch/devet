@@ -49,3 +49,10 @@ node --experimental-strip-types --test supabase/functions/_tests/purchase.test.t
 supabase test db          # purchases.test.sql
 supabase functions serve  # local run (needs Docker)
 ```
+
+## Account deletion (T17)
+
+`delete-account` Edge Function (POST, user's access token, no body): removes the user's owned events' files
+(event-media photos/music, previews) through the Storage API, then `delete_account_data` (owned events deleted,
+cohost memberships removed), then the Auth user. Purchases made as cohost stay with the event (buyer set to null).
+Storage failure → nothing is deleted (retry is safe). Tests: `_tests/account.test.ts`, `account_deletion.test.sql`.
