@@ -247,6 +247,7 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Hazırdır, əgər: fayllar Excel/Numbers və PDF oxuyucusunda düzgün açılır, 4 dildə başlıqlar.
 
 - [ ] **T4C Ödənişin server yoxlaması (Edge Function)**
+  - Vəziyyət: kod, SQL (009) və testlər hazırdır (pgTAP 24, TS 38 — mağazalar imitasiya ilə). **Qalıb:** real sandbox/test alışları ilə sınaq — Play Console xidmət hesabı və App Store Connect açarı lazımdır (T00).
   - Asılılıq: T13
   - `verify-purchase` Edge Function: Google Play Developer API və App Store Server API ilə qəbzi yoxlayır, `purchases`-a yazır, tədbirin şablonunu açır və ya limiti artırır. İdempotent (eyni əməliyyat iki dəfə sayılmır). Geri qaytarma (refund) bildirişləri üçün endpoint.
   - Hazırdır, əgər: sandbox/test alışları ilə testlər keçir. Hesabatda "İnsan yoxlaması lazımdır" bölməsi var.
