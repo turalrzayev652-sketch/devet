@@ -18,6 +18,18 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<!-- Supabase Auth e-mail links: az.devet.app://auth/callback and az.devet.app://auth/reset-password. -->
+			<key>CFBundleURLName</key>
+			<string>az.devet.app.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>az.devet.app</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>

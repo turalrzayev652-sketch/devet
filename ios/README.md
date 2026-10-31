@@ -30,8 +30,12 @@ Without them the app still builds and starts; `AppDependencies.supabase` is nil 
 - `Devet/Theme/` — design tokens from `/spec/design.md`: `Color.DS.*` (Asset Catalog `Resources/Colors.xcassets`, Any/Dark), `DevetType.*` + `.devetFont(_:)`, `Spacing`, `Radius`, `Sizes`, `Motion`. Same names and values as Android `ui/theme/`. `DesignTokensTests` fails if they drift from the spec.
 - Colours are written by `swift scripts/generate-colors.swift ../spec/design.md Devet/Resources` (run from `ios/`) when design.md changes.
 - `Devet/App/` — app entry, `AppDependencies` (environment object, the counterpart of Android's Koin module), `RootView` with `NavigationStack`.
-- `Devet/Data/` — Supabase config and client.
+- `Devet/Data/` — Supabase config and client; `Data/Auth/` — Supabase Auth (sign in/up, resend, reset, PKCE code exchange), errors mapped to `AuthFailure` (spec/api.md §0.2, same set as Android); `Data/Account/` — profile and `delete-account`.
+- `Devet/UI/Auth/` — screens of [1]; `UI/Settings/` — [12b]; `UI/Events/` — [2] shell until T43. `App/AppModel` decides the root screen from the session (`rootFor`, same rule as Android).
+- E-mail links: `az.devet.app://auth/callback` and `az.devet.app://auth/reset-password` (URL scheme in `Config/Info.plist`, handled by `.onOpenURL`). Supabase → Authentication → URL Configuration → Redirect URLs must contain `az.devet.app://auth/**`.
+- App language: chosen in iOS Settings → Devet → Language (owner's decision 2026-10-31); the Settings screen opens that page and keeps `profiles.ui_lang` equal to the UI language.
 - Languages: az (development language), ru, en, tr. The app follows the system language; the per-app language (Settings → Devet → Language) works because the bundle ships all four localizations.
+- Tests: `AuthRulesTests` and `AuthViewModelsTests` mirror the Android tests case by case; `SupabaseAuthRepositoryTests` runs the real supabase-swift client against a stubbed `URLProtocol` (GoTrue 2024-01-01 error format).
 - Fonts: `Resources/Fonts/` — the same variable TTFs as Android, registered in `Config/Info.plist` (`UIAppFonts`); the weight is set on the `wght` axis.
 - The project file is hand-written (no XcodeGen/Tuist): with synchronized folders new files under `Devet/` and `DevetTests/` are picked up automatically, so the project file rarely changes and one less tool is needed.
 
