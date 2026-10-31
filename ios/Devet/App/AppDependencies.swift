@@ -8,14 +8,18 @@ final class AppDependencies: ObservableObject {
     let auth: any AuthRepository
     let account: any AccountRepository
     let events: any EventRepository
+    let guests: any GuestRepository
+    /// Rules from /spec bundled at build time; the app cannot work without them.
+    let guestSpec: GuestSpec = try! GuestSpec.load()
     let archive: any ArchiveStore
     let connectivity: Connectivity
     let language: any AppLanguage
 
     init(
         config: SupabaseConfig, auth: any AuthRepository, account: any AccountRepository, events: any EventRepository,
-        archive: any ArchiveStore = DefaultsArchiveStore(), connectivity: Connectivity, language: any AppLanguage
+        guests: any GuestRepository, archive: any ArchiveStore = DefaultsArchiveStore(), connectivity: Connectivity, language: any AppLanguage
     ) {
+        self.guests = guests
         self.config = config
         self.auth = auth
         self.account = account
@@ -32,7 +36,7 @@ final class AppDependencies: ObservableObject {
         // Demo mode (debug builds only): launch with `-DevetDemo YES` to try screens without Supabase.
         if UserDefaults.standard.bool(forKey: "DevetDemo") {
             return AppDependencies(
-                config: config, auth: DemoAuth(), account: DemoAccount(), events: DemoEvents(),
+                config: config, auth: DemoAuth(), account: DemoAccount(), events: DemoEvents(), guests: DemoGuests(),
                 connectivity: Connectivity(), language: SystemAppLanguage()
             )
         }
@@ -40,14 +44,16 @@ final class AppDependencies: ObservableObject {
         let client = makeDevetSupabase(config)
         return AppDependencies(
             config: config, auth: SupabaseAuthRepository(client: client), account: SupabaseAccountRepository(client: client),
-            events: SupabaseEventRepository(client: client), connectivity: Connectivity(), language: SystemAppLanguage()
+            events: SupabaseEventRepository(client: client), guests: SupabaseGuestRepository(client: client),
+            connectivity: Connectivity(), language: SystemAppLanguage()
         )
     }
 
     static let preview = AppDependencies(
         config: SupabaseConfig(url: "", anonKey: "", publicBaseURL: "https://devet.example"),
         auth: SupabaseAuthRepository(client: nil), account: SupabaseAccountRepository(client: nil),
-        events: SupabaseEventRepository(client: nil), connectivity: .fixed(true), language: SystemAppLanguage()
+        events: SupabaseEventRepository(client: nil), guests: SupabaseGuestRepository(client: nil),
+        connectivity: .fixed(true), language: SystemAppLanguage()
     )
 
     /// Legal pages on the guest site, in the UI language (web/public/legal; privacy arrives with T50).

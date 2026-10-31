@@ -63,9 +63,9 @@
         <item quantity="many">%1$d davetli ekle</item>
         <item quantity="other">%1$d davetli ekle</item>
     </plurals>
-    <string name="contacts_body">Kişileri tek tek seçin — her seçimde numarayı da seçersiniz. Hitabı ve kişi sayısını her satırda belirleyebilirsiniz.</string>
+    <string name="contacts_body">Kişileri seçin. Hitabı ve kişi sayısını her satırda belirleyebilirsiniz.</string>
     <string name="contacts_no_mobile">Cep numarası değil — telefonsuz eklenecek</string>
-    <string name="contacts_pick">Kişi seç</string>
+    <string name="contacts_pick">Kişileri seç</string>
     <string name="contacts_pick_more">Bir kişi daha</string>
     <string name="contacts_privacy">Yalnızca seçtiğiniz kişiler eklenir.</string>
     <string name="contacts_remove">Kaldır</string>

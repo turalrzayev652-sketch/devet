@@ -2,9 +2,9 @@ name: Android
 
 on:
   push:
-    paths: ['android/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/android.yml']
+    paths: ['android/**', 'spec/i18n/**', 'spec/design.md', 'spec/test-vectors/**', 'tools/i18n/**', '.github/workflows/android.yml']
   pull_request:
-    paths: ['android/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/android.yml']
+    paths: ['android/**', 'spec/i18n/**', 'spec/design.md', 'spec/test-vectors/**', 'tools/i18n/**', '.github/workflows/android.yml']
 
 permissions:
   contents: read

@@ -63,9 +63,9 @@
         <item quantity="many">%1$d qonaq əlavə et</item>
         <item quantity="other">%1$d qonaq əlavə et</item>
     </plurals>
-    <string name="contacts_body">Kontaktları bir-bir seçin — hər seçimdə nömrəni də seçirsiniz. Hitabı və nəfər sayını hər sətirdə dəqiqləşdirə bilərsiniz.</string>
+    <string name="contacts_body">Kontaktları seçin. Hitabı və nəfər sayını hər sətirdə dəqiqləşdirə bilərsiniz.</string>
     <string name="contacts_no_mobile">Mobil nömrə deyil — telefonsuz əlavə olunacaq</string>
-    <string name="contacts_pick">Kontakt seç</string>
+    <string name="contacts_pick">Kontaktları seç</string>
     <string name="contacts_pick_more">Daha bir kontakt</string>
     <string name="contacts_privacy">Yalnız seçdiyiniz kontaktlar əlavə olunur.</string>
     <string name="contacts_remove">Sil</string>

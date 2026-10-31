@@ -1756,25 +1756,25 @@
         "az": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kontaktları bir-bir seçin — hər seçimdə nömrəni də seçirsiniz. Hitabı və nəfər sayını hər sətirdə dəqiqləşdirə bilərsiniz."
+            "value": "Kontaktları seçin. Hitabı və nəfər sayını hər sətirdə dəqiqləşdirə bilərsiniz."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выбирайте контакты по одному — вместе с номером. Обращение и количество человек можно уточнить в каждой строке."
+            "value": "Выберите контакты. Обращение и количество человек можно уточнить в каждой строке."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pick contacts one at a time — you choose the number as you pick. You can set the salutation and number of people on each row."
+            "value": "Pick contacts. You can set the salutation and number of people on each row."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kişileri tek tek seçin — her seçimde numarayı da seçersiniz. Hitabı ve kişi sayısını her satırda belirleyebilirsiniz."
+            "value": "Kişileri seçin. Hitabı ve kişi sayısını her satırda belirleyebilirsiniz."
           }
         }
       }
@@ -1814,25 +1814,25 @@
         "az": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kontakt seç"
+            "value": "Kontaktları seç"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выбрать контакт"
+            "value": "Выбрать контакты"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pick a contact"
+            "value": "Pick contacts"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kişi seç"
+            "value": "Kişileri seç"
           }
         }
       }

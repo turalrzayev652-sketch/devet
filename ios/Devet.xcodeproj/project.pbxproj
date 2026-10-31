@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D1000000000000000000B001 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D1000000000000000000C001 /* Supabase */; };
+		D1000000000000000000B002 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D1000000000000000000C002 /* ZIPFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1000000000000000000B001 /* Supabase in Frameworks */,
+				D1000000000000000000B002 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +101,7 @@
 				D1000000000000000000B201 /* Sources */,
 				D1000000000000000000B101 /* Frameworks */,
 				D1000000000000000000B301 /* Resources */,
+				D1000000000000000000B401 /* Copy shared spec files */,
 			);
 			buildRules = (
 			);
@@ -110,6 +113,7 @@
 			name = Devet;
 			packageProductDependencies = (
 				D1000000000000000000C001 /* Supabase */,
+				D1000000000000000000C002 /* ZIPFoundation */,
 			);
 			productName = Devet;
 			productReference = D1000000000000000000F001 /* Devet.app */;
@@ -169,6 +173,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D1000000000000000000C101 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				D1000000000000000000C102 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D1000000000000000000G003 /* Products */;
@@ -197,6 +202,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D1000000000000000000B401 /* Copy shared spec files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../spec/test-vectors/excel.json",
+				"$(SRCROOT)/../spec/test-vectors/phones.json",
+				"$(SRCROOT)/../spec/i18n/invite.json",
+				"$(SRCROOT)/../android/app/src/main/assets/sample/guests-sample.xlsx",
+			);
+			name = "Copy shared spec files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/spec/excel.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/spec/phones.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/spec/invite.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/sample/guests-sample.xlsx",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Shared rules from /spec (single source, never edited by hand) and the sample guest list (same file as Android).\nset -e\ndest=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\nmkdir -p \"$dest/spec\" \"$dest/sample\"\ncp \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"\ncp \"$SCRIPT_INPUT_FILE_1\" \"$SCRIPT_OUTPUT_FILE_1\"\ncp \"$SCRIPT_INPUT_FILE_2\" \"$SCRIPT_OUTPUT_FILE_2\"\ncp \"$SCRIPT_INPUT_FILE_3\" \"$SCRIPT_OUTPUT_FILE_3\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D1000000000000000000B201 /* Sources */ = {
@@ -394,6 +428,14 @@
 				version = 2.55.6;
 			};
 		};
+		D1000000000000000000C102 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = exactVersion;
+				version = 0.9.20;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -401,6 +443,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D1000000000000000000C101 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		D1000000000000000000C002 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1000000000000000000C102 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

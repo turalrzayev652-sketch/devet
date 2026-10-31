@@ -63,9 +63,9 @@
         <item quantity="many">Добавить %1$d гостей</item>
         <item quantity="other">Добавить %1$d гостя</item>
     </plurals>
-    <string name="contacts_body">Выбирайте контакты по одному — вместе с номером. Обращение и количество человек можно уточнить в каждой строке.</string>
+    <string name="contacts_body">Выберите контакты. Обращение и количество человек можно уточнить в каждой строке.</string>
     <string name="contacts_no_mobile">Не мобильный номер — гость добавится без телефона</string>
-    <string name="contacts_pick">Выбрать контакт</string>
+    <string name="contacts_pick">Выбрать контакты</string>
     <string name="contacts_pick_more">Ещё один контакт</string>
     <string name="contacts_privacy">Добавляются только выбранные контакты.</string>
     <string name="contacts_remove">Убрать</string>

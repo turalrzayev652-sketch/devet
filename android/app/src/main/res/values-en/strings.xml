@@ -63,9 +63,9 @@
         <item quantity="many">Add %1$d guests</item>
         <item quantity="other">Add %1$d guests</item>
     </plurals>
-    <string name="contacts_body">Pick contacts one at a time — you choose the number as you pick. You can set the salutation and number of people on each row.</string>
+    <string name="contacts_body">Pick contacts. You can set the salutation and number of people on each row.</string>
     <string name="contacts_no_mobile">Not a mobile number — the guest is added without a phone</string>
-    <string name="contacts_pick">Pick a contact</string>
+    <string name="contacts_pick">Pick contacts</string>
     <string name="contacts_pick_more">Another contact</string>
     <string name="contacts_privacy">Only the contacts you pick are added.</string>
     <string name="contacts_remove">Remove</string>
