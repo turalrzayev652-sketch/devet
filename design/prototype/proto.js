@@ -38,6 +38,30 @@
     sheet: '<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7M12.5 11v8"/>',
     skip: '<path d="M5 6l8 6-8 6zM17 6v12"/>',
     filter: '<path d="M4 6h16M7 12h10M10 18h4"/>',
+    gem: '<path d="M7 4h10l4 5-9 11L3 9z"/><path d="M3 9h18M9.5 4L12 9l2.5-5M12 9v11"/>',
+    leaf: '<path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19c3-4 6-7 10-10"/>',
+    cake: '<path d="M4 20h16M5 20v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/><path d="M5 15.5c1.2 1 2.3 1 3.5 0s2.3-1 3.5 0 2.3 1 3.5 0 2.3-1 3.5 0M12 11V7.5M12 4.5v.01"/>',
+    star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/>',
+    calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    pin: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+    link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+    copy: '<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+    share: '<path d="M12 15V3.5M7.5 8L12 3.5 16.5 8"/><path d="M5 12.5v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
+    play: '<path d="M8 5.5v13l10.5-6.5z"/>',
+    pause: '<path d="M8.5 5.5v13M15.5 5.5v13"/>',
+    upload: '<path d="M12 15.5V4M7.5 8.5L12 4l4.5 4.5"/><path d="M4 15.5V19a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 19v-3.5"/>',
+    download: '<path d="M12 4v11.5M7.5 11l4.5 4.5 4.5-4.5"/><path d="M4 15.5V19a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 19v-3.5"/>',
+    image: '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8.5 8.5"/>',
+    music: '<path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+    palette: '<path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6s.8-1.7 1.9-1.7h2.1a3.7 3.7 0 0 0 3.7-3.7C20.5 7 16.7 3.5 12 3.5z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/>',
+    type: '<path d="M4 19l5.5-14L15 19M6 14h7M15.5 11.5c.7-.9 1.7-1.4 2.8-1.4 1.7 0 2.7 1 2.7 2.7V19M21 15.3c-3.8 0-5.5.7-5.5 2.1 0 1 .8 1.6 2 1.6 2 0 3.5-1.5 3.5-3.7"/>',
+    text: '<path d="M5 6h14M5 11h14M5 16h9"/>',
+    drag: '<circle cx="9" cy="6.5" r="1"/><circle cx="15" cy="6.5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="17.5" r="1"/><circle cx="15" cy="17.5" r="1"/>',
+    settings: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+    receipt: '<path d="M6 3.5h12v17l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8.5h6M9 12h6M9 15.5h3"/>',
+    archive: '<rect x="3.5" y="4.5" width="17" height="4.5" rx="1.5"/><path d="M5 9v9.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V9M10 13h4"/>',
+    key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16 7l2.5 2.5M14 9l1.5 1.5"/>',
   };
   const icon = (name, cls = '') => `<svg class="icon ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ''}</svg>`;
   // WhatsApp mark as a functional indicator only (simplified glyph, its own colour).
@@ -63,7 +87,7 @@
   };
 
   // Screens that exist in this phase; links to others show a toast instead of a 404.
-  const BUILT = new Set(['01-giris.html', '06-qonaqlar.html', '08-gonderme.html']);
+  const BUILT = new Set(['01-giris.html', '02-tedbirler.html', '03-tedbir-yarat.html', '04-sablonlar.html', '05-ferdilesdir.html', '06-qonaqlar.html', '07-qonaq-elave.html', '08-gonderme.html', '09-statistika.html', '10-masalar.html']);
 
   // ------------------------------------------------------------------ shared copy
   const COMMON = {
@@ -194,18 +218,17 @@
         location.replace(url.toString());
         return;
       }
-      const go = e.target.closest('[data-go]');
-      if (go) {
+      // The innermost element with an action wins (e.g. a menu button inside a clickable card).
+      const target = e.target.closest('[data-go], [data-state], [data-toast]');
+      if (target && target.dataset.go) {
         e.preventDefault();
-        const file = go.dataset.go.split('?')[0];
-        if (BUILT.has(file)) location.href = go.dataset.go;
+        const file = target.dataset.go.split('?')[0];
+        if (BUILT.has(file)) location.href = target.dataset.go;
         else toast(t('notBuilt'));
         return;
       }
-      const st = e.target.closest('[data-state]');
-      if (st) { e.preventDefault(); current = st.dataset.state; render(); return; }
-      const tst = e.target.closest('[data-toast]');
-      if (tst) { e.preventDefault(); toast(tst.dataset.toast); return; }
+      if (target && target.dataset.state) { e.preventDefault(); current = target.dataset.state; render(); return; }
+      if (target && target.dataset.toast) { e.preventDefault(); toast(target.dataset.toast); return; }
       const pw = e.target.closest('[data-toggle-password]');
       if (pw) {
         const input = pw.closest('.input').querySelector('input');

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masalar — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .mini-table { padding: 12px; border-radius: 14px; background: linear-gradient(160deg, #FBF7F0, #EFE5D6); color: #4A2C4F; text-align: center; }
+  .mini-table .lbl { font: 500 9px/1.4 var(--font-family-sans); letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
+  .mini-table .no { font: 500 24px/1.1 var(--font-family-serif); }
+  .tbl-card { margin: 0 16px 12px; }
+  .tbl-card .head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; }
+  .tbl-card .names { padding: 0 16px 14px 64px; margin: 0; list-style: none; font-size: calc(14px * var(--font-scale)); line-height: 1.9; }
+  .num-big { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--color-brand-subtle); color: var(--color-brand-primary); font: 600 15px var(--font-family-sans); flex: none; }
+  .num-input { font: 500 calc(44px * var(--font-scale)) / 1 var(--font-family-serif); text-align: center; padding: 18px 0; border-radius: var(--radius-card); border: 1.5px solid var(--color-border-focus); background: var(--color-bg-surface); }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Masalar', show: 'Masadakıları göstər', showHelp: 'Qonaq dəvətnaməsində eyni masadakı qonaqların adlarını görəcək.', yourTable: 'Masanız', mates: 'Masada: Rəşad bəy, Leyla xanım',
+    table: 'Masa {n}', tSummary: '{g} qonaq · {p} nəfər', unassigned: 'Masasız qonaqlar', bulk: 'Toplu təyin et',
+    selectTitle: 'Qonaqları seçin', selected: '{n} seçildi', next: 'Davam et', numberTitle: 'Masa nömrəsi', numberHelp: 'Rəqəm və ya ad: 12, VIP-1 (12 simvola qədər)', existing: 'Mövcud masalar', assign: '3 qonağı Masa 14-ə təyin et',
+    doneToast: '3 qonaq Masa 14-ə təyin olundu', emptyTitle: 'Qonaqlara masa təyin edin', emptyBody: 'Masa nömrəsi qonağın dəvətnaməsində görünəcək. Vizual zal planı bu versiyada yoxdur.',
+  },
+  ru: {
+    title: 'Столы', show: 'Показывать соседей по столу', showHelp: 'Гость увидит в приглашении имена гостей за тем же столом.', yourTable: 'Ваш стол', mates: 'За столом: Rəşad бей, Leyla ханум',
+    table: 'Стол {n}', tSummary: '{g} гостей · {p} чел.', unassigned: 'Гости без стола', bulk: 'Назначить столы',
+    selectTitle: 'Выберите гостей', selected: 'Выбрано: {n}', next: 'Продолжить', numberTitle: 'Номер стола', numberHelp: 'Число или название: 12, VIP-1 (до 12 символов)', existing: 'Существующие столы', assign: 'Назначить 3 гостей за стол 14',
+    doneToast: '3 гостя назначены за стол 14', emptyTitle: 'Назначьте гостям столы', emptyBody: 'Номер стола появится в приглашении гостя. Визуального плана зала в этой версии нет.',
+  },
+};
+const G = Proto.DATA.guests;
+const head = (c, back = '13-daha-cox.html') => `<div class="topbar"><button class="icon-btn" data-go="${back}" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div><div class="pad" style="margin-bottom:14px"><h1 class="t-title" style="margin:0">${c.t('title')}</h1></div>`;
+const toggleCard = (c, on) => `<div class="card" style="margin:0 16px 20px;padding:14px 16px;display:flex;gap:14px;align-items:center">
+  <div style="flex:1"><div class="row-flex" style="justify-content:space-between"><span class="t-headline">${c.t('show')}</span><span class="toggle ${on ? 'is-on' : ''}" role="switch" aria-checked="${on}" data-state="${on ? 'list' : 'list-on'}"></span></div><p class="t-footnote muted" style="margin:6px 0 0">${c.t('showHelp')}</p></div>
+  <div class="mini-table" style="width:96px"><div class="lbl">${c.t('yourTable')}</div><div class="no">12</div><div style="font-size:9px;line-height:1.3;opacity:${on ? 1 : .35}">${on ? c.t('mates') : '—'}</div></div></div>`;
+const tableCard = (c, n, g, p, names) => `<div class="card tbl-card"><div class="head" data-state="list"><span class="num-big">${n}</span><span style="flex:1"><span class="t-headline" style="display:block">${c.t('table', { n })}</span><span class="t-footnote muted">${c.t('tSummary', { g, p })}</span></span>${c.icon(names ? 'chevronDown' : 'chevronRight')}</div>${names ? `<ul class="names">${names.map((x) => `<li>${x}</li>`).join('')}</ul>` : ''}</div>`;
+const list = (c, on) => ({
+  html: `${head(c)}${toggleCard(c, on)}
+    ${tableCard(c, 12, 4, 10, [c.displayName(G[0]), c.displayName(G[2]), 'Vüqar müəllim', 'Nigar xanım'])}
+    ${tableCard(c, 7, 3, 9)}${tableCard(c, 3, 2, 6)}${tableCard(c, 'VIP-1', 2, 4)}
+    <div class="list"><a class="menu-row" data-go="06-qonaqlar.html?state=list"><span class="ic">${c.icon('users')}</span><span class="k t-headline">${c.t('unassigned')}</span><strong style="font-variant-numeric:tabular-nums">37</strong>${c.icon('chevronRight')}</a></div><div style="height:120px"></div>`,
+  overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="bulk-select">${c.icon('table', 'icon-sm')}${c.t('bulk')}</button></div>`,
+});
+
+Proto.screen({
+  number: 10,
+  title: { az: 'Masalar', ru: 'Столы' },
+  strings: S,
+  states: [
+    { key: 'list', label: { az: 'Masalar', ru: 'Столы' }, render: (c) => list(c, false),
+      note: { az: 'Açar defolt bağlıdır. Masa kartına toxun → adlar açılır/bağlanır. Vizual zal planı yoxdur.', ru: 'Переключатель по умолчанию выключен. Плана зала нет.' } },
+    { key: 'list-on', label: { az: 'Göstərmə açıq', ru: 'Показ включён' }, render: (c) => list(c, true) },
+    { key: 'bulk-select', label: { az: 'Toplu · seçim', ru: 'Массово · выбор' }, render: (c) => ({
+        html: `<div class="topbar"><button class="icon-btn" data-state="list" aria-label="Bağla">${c.icon('close')}</button><span class="title">${c.t('selectTitle')}</span><span style="width:44px"></span></div>
+          <div class="chips" style="margin-bottom:10px">${[['noTable', true], ['groom', false], ['bride', false]].map(([k, s]) => `<button class="chip ${s ? 'is-selected' : ''}">${c.t(k)}</button>`).join('')}</div>
+          <div class="list">${[G[3], G[4], { ...G[1], name: 'Nərmin', table: null }, { ...G[0], name: 'Kamran', family: false, sal: 'muellim', table: null }].map((g, i) => `<div class="guest-row"><span class="select-box ${i < 3 ? 'is-checked' : ''}">${i < 3 ? c.icon('check', 'icon-sm') : ''}</span><div class="main"><div class="name">${c.displayName(g)}</div><div class="meta">${c.meta({ ...g, table: null })}</div></div></div>`).join('')}</div><div style="height:120px"></div>`,
+        overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="bulk-number">${c.t('next')} · ${c.t('selected', { n: 3 })}</button></div>`,
+      }) },
+    { key: 'bulk-number', label: { az: 'Toplu · nömrə', ru: 'Массово · номер' }, render: (c) => ({
+        html: `<div class="topbar"><button class="icon-btn" data-state="bulk-select" aria-label="Geri">${c.icon('back')}</button><span class="title">${c.t('numberTitle')}</span><span style="width:44px"></span></div>
+          <div class="pad stack"><div class="num-input">14</div><p class="t-footnote muted center" style="margin:0">${c.t('numberHelp')}</p>
+          <p class="t-footnote muted" style="margin:12px 0 0;font-weight:600">${c.t('existing')}</p><div class="row-flex" style="flex-wrap:wrap;gap:8px">${['3', '7', '12', 'VIP-1'].map((n) => `<button class="chip">${c.t('table', { n })}</button>`).join('')}</div></div>`,
+        overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="list">${c.t('assign')}</button></div>`,
+      }), after: () => {}, note: { az: 'Təsdiqdən sonra siyahıya qayıdır və bildiriş göstərir.', ru: 'После подтверждения — возврат к списку и уведомление.' } },
+    { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => ({ html: `${head(c)}${toggleCard(c, false)}<div class="empty" style="padding-top:8px"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p></div>`, overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="bulk-select">${c.t('bulk')}</button></div>` }) },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => `${head(c)}<div class="pad stack">${'<div class="skeleton" style="height:72px;border-radius:20px"></div>'.repeat(4)}</div>` },
+  ],
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Şablonlar — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .full-preview { position: absolute; inset: 0; z-index: 21; background: var(--color-bg-canvas); display: flex; flex-direction: column; padding-top: 54px; animation: sheet-in var(--motion-duration-base) var(--motion-easing-standard); }
+  .full-preview .stage { flex: 1; display: grid; place-items: center; padding: 8px 0 0; }
+  .full-preview .big { width: 250px; aspect-ratio: 9 / 16; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-raised); border: 6px solid #1C1A1E; }
+  .full-preview .acts { padding: 16px var(--layout-gutter) 40px; display: flex; flex-direction: column; gap: 6px; }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Şablon seçin', all: 'Hamısı', free: 'Pulsuz', premium: 'Premium', upTo100: '100 qonağa qədər', g300: '300 qonaq',
+    choose: 'Bu şablonu seç', tryPremium: 'Önizlə — almadan əvvəl fərdiləşdirə bilərsiniz', close: 'Bağla', loadError: 'Şablonlar yüklənmədi',
+    tpl1: 'Klassik', tpl2: 'Bahar', tpl3: 'Gecə', tpl4: 'Zərif', invite: 'Toyumuza dəvət edirik', perEvent: 'bir tədbir üçün',
+  },
+  ru: {
+    title: 'Выберите шаблон', all: 'Все', free: 'Бесплатные', premium: 'Премиум', upTo100: 'До 100 гостей', g300: '300 гостей',
+    choose: 'Выбрать этот шаблон', tryPremium: 'Попробовать — можно настроить до покупки', close: 'Закрыть', loadError: 'Не удалось загрузить шаблоны',
+    tpl1: 'Классика', tpl2: 'Весна', tpl3: 'Ночь', tpl4: 'Изящный', invite: 'Приглашаем на свадьбу', perEvent: 'за мероприятие',
+  },
+};
+const TPL = [
+  { k: 'tpl1', art: 'tpl-art-1', premium: false, selected: true },
+  { k: 'tpl2', art: 'tpl-art-2', premium: false },
+  { k: 'tpl3', art: 'tpl-art-3', premium: true },
+  { k: 'tpl4', art: 'tpl-art-4', premium: true },
+];
+const art = (c, t) => `<div class="tpl-art ${t.art}"><div><div class="t1">${c.t('invite')}</div><div class="orn"></div><div class="t2">Aysel<br>&amp; Ramin</div><div class="orn"></div><div class="t3">12 · 07 · 2027</div></div></div>`;
+const card = (c, t) => `<button class="tpl-card ${t.selected ? 'is-selected' : ''}" data-state="${t.premium ? 'preview-premium' : 'preview'}">
+  <span class="phone">${art(c, t)}<span class="badge ${t.premium ? 'badge-premium' : 'badge-neutral'}">${t.premium ? c.icon('sparkle', 'icon-sm') + ' ' + c.t('premium') : c.t('free')}</span>${t.selected ? `<span class="sel">${c.icon('check', 'icon-sm')}</span>` : ''}</span>
+  <span class="name">${c.t(t.k)}</span><span class="sub">${t.premium ? c.t('g300') : c.t('upTo100')}${t.premium ? ` · <span class="price">19,99 ₼</span>` : ''}</span></button>`;
+const head = (c, filter = 'all') => `<div class="topbar"><button class="icon-btn" data-go="03-tedbir-yarat.html?state=success" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div>
+  <div class="pad"><h1 class="t-title" style="margin:0 0 12px">${c.t('title')}</h1></div>
+  <div class="chips" style="margin-bottom:14px">${['all', 'free', 'premium'].map((k) => `<button class="chip ${k === filter ? 'is-selected' : ''}" data-state="${k === 'premium' ? 'premium' : 'grid'}">${c.t(k)}</button>`).join('')}</div>`;
+const grid = (c, list) => `<div class="tpl-grid">${list.map((t) => card(c, t)).join('')}</div><div style="height:40px"></div>`;
+const preview = (c, t) => `<div class="full-preview" role="dialog"><div class="topbar"><button class="icon-btn" data-state="grid" aria-label="${c.t('close')}">${c.icon('close')}</button><span class="title">${c.t(t.k)}</span><span class="badge ${t.premium ? 'badge-premium' : 'badge-neutral'}" style="margin-right:8px">${t.premium ? c.t('premium') : c.t('free')}</span></div>
+  <div class="stage"><div class="big">${art(c, t)}</div></div>
+  <div class="acts">${t.premium ? `<p class="t-callout center" style="margin:0 0 6px"><span class="price-big" style="font-size:22px">19,99 ₼</span> <span class="muted">· ${c.t('perEvent')} · ${c.t('g300')}</span></p>
+    <button class="btn btn-primary btn-block" data-go="05-ferdilesdir.html?state=premium">${c.t('tryPremium')}</button>`
+    : `<button class="btn btn-primary btn-block" data-go="05-ferdilesdir.html">${c.t('choose')}</button>`}</div></div>`;
+
+Proto.screen({
+  number: 4,
+  title: { az: 'Şablon kataloqu', ru: 'Каталог шаблонов' },
+  strings: S,
+  states: [
+    { key: 'grid', label: { az: 'Hamısı', ru: 'Все' }, render: (c) => head(c) + grid(c, TPL),
+      note: { az: 'Kart → tam ekran önizləmə (animasiyalı şablon, WebView ?preview=1). Qiymət mağazadan gəlir, koda yazılmır.', ru: 'Карточка → полноэкранный превью. Цена приходит из магазина.' } },
+    { key: 'premium', label: { az: 'Filtr: Premium', ru: 'Фильтр: Премиум' }, render: (c) => head(c, 'premium') + grid(c, TPL.filter((t) => t.premium)) },
+    { key: 'preview', label: { az: 'Önizləmə · pulsuz', ru: 'Превью · бесплатный' }, render: (c) => ({ html: head(c) + grid(c, TPL), overlay: preview(c, TPL[0]) }) },
+    { key: 'preview-premium', label: { az: 'Önizləmə · premium', ru: 'Превью · премиум' }, render: (c) => ({ html: head(c) + grid(c, TPL), overlay: preview(c, TPL[2]) }),
+      note: { az: 'Premium: alışdan əvvəl fərdiləşdirmə pulsuzdur; göndərmə alışdan sonra açılır.', ru: 'Премиум: настройка до покупки бесплатна; отправка — после покупки.' } },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => head(c) + `<div class="tpl-grid">${'<div><div class="skeleton" style="aspect-ratio:9/16;border-radius:18px"></div><div class="skeleton mt-1" style="height:14px;width:60%"></div></div>'.repeat(4)}</div>` },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => head(c) + `<div class="pad"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('loadError')}</strong><br>${c.t('networkError')}</span><button class="btn btn-text" data-state="loading">${c.t('retry')}</button></div></div>` },
+  ],
+});
+</script>
+</body>
+</html>

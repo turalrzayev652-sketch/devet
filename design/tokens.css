@@ -113,7 +113,8 @@
 }
 
 /* ---- Color: dark ---- */
-:root[data-theme="dark"] {
+:root[data-theme="dark"],
+[data-theme="dark"] {
   --color-bg-canvas: #151217;
   --color-bg-surface: #211C24;
   --color-bg-sunken: #1A161D;
