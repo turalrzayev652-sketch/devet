@@ -29,5 +29,8 @@ After editing `/spec/i18n/invite.json` run `npm run build` and commit `public/co
 (a test fails if it is out of sync).
 
 Environment variables (Cloudflare Pages dashboard in production): `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
-`PUBLIC_BASE_URL`, `BRAND_NAME` (optional, default `Devet`). Only the anon key is used here; the service role key
-is added for signed media URLs in T24 and lives only in Cloudflare env.
+`SUPABASE_SERVICE_ROLE_KEY` (secret; used only by the Function to sign event-media URLs), `PUBLIC_BASE_URL`,
+`BRAND_NAME` (optional, default `Devet`). The page itself only ever receives the anon key.
+
+`/i/<code>` responses carry personalised `og:` tags (WhatsApp preview) and are cached for 5 minutes.
+Check: `curl -A "WhatsApp/2.0" http://localhost:8788/i/<code>`
