@@ -31,6 +31,8 @@ import az.devet.app.ui.auth.ResetPasswordScreen
 import az.devet.app.ui.auth.ResetSentScreen
 import az.devet.app.ui.auth.SignInScreen
 import az.devet.app.ui.events.ComingSoonScreen
+import az.devet.app.ui.guests.AddGuestScreen
+import az.devet.app.ui.guests.EventHomeScreen
 import az.devet.app.ui.events.CreateEventScreen
 import az.devet.app.ui.events.EditEventScreen
 import az.devet.app.ui.events.EventsScreen
@@ -56,6 +58,9 @@ sealed interface Route {
     /** Inside an event: guests [6] (T45/T46). */
     @Serializable data class EventHome(val id: String, val title: String) : Route
     @Serializable data class Templates(val eventId: String) : Route
+    @Serializable data class AddGuests(val eventId: String, val tab: Int) : Route
+    /** Purchase [12] (T4D). */
+    @Serializable data object Purchase : Route
     @Serializable data object JoinByCode : Route
 }
 
@@ -139,7 +144,24 @@ fun DevetNavHost(app: AppViewModel) {
                     nav.popBackStack()
                 })
             }
-            composable<Route.EventHome> { ComingSoonScreen(it.toRoute<Route.EventHome>().title, onBack = { nav.popBackStack() }) }
+            composable<Route.EventHome> { entry ->
+                val r = entry.toRoute<Route.EventHome>()
+                val reload by entry.savedStateHandle.getStateFlow(GUESTS_KEY, 0).collectAsStateWithLifecycle()
+                EventHomeScreen(r.id, r.title, reload, onBack = { nav.popBackStack() }, onAdd = { tab -> nav.navigate(Route.AddGuests(r.id, tab)) })
+            }
+            composable<Route.AddGuests> {
+                val r = it.toRoute<Route.AddGuests>()
+                AddGuestScreen(
+                    r.eventId, r.tab, onBack = { nav.popBackStack() },
+                    onPremium = { nav.navigate(Route.Templates(r.eventId)) },
+                    onAddon = { nav.navigate(Route.Purchase) },
+                    onChanged = {
+                        nav.previousBackStackEntry?.savedStateHandle?.let { h -> h[GUESTS_KEY] = (h.get<Int>(GUESTS_KEY) ?: 0) + 1 }
+                        nav.markEventsChanged()
+                    },
+                )
+            }
+            composable<Route.Purchase> { ComingSoonScreen(context.getString(R.string.limit_addon), onBack = { nav.popBackStack() }) }
             composable<Route.Templates> { ComingSoonScreen(context.getString(R.string.create_success_choose_template), onBack = { nav.popBackStack() }) }
             composable<Route.JoinByCode> { ComingSoonScreen(context.getString(R.string.events_join), onBack = { nav.popBackStack() }) }
             composable<Route.Settings> {
@@ -151,6 +173,7 @@ fun DevetNavHost(app: AppViewModel) {
 }
 
 private const val RELOAD_KEY = "events_reload"
+private const val GUESTS_KEY = "guests_reload"
 
 private fun NavHostController.markEventsChanged() {
     runCatching { getBackStackEntry<Route.Events>() }.getOrNull()?.savedStateHandle?.let { it[RELOAD_KEY] = (it.get<Int>(RELOAD_KEY) ?: 0) + 1 }

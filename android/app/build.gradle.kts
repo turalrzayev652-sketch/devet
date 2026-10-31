@@ -14,6 +14,15 @@ val localProps = Properties().apply {
 }
 fun config(name: String): String = (localProps.getProperty(name) ?: System.getenv(name) ?: "").trim()
 
+// Shared rules from /spec are copied into the app at build time (single source, never edited by hand):
+// excel.json (Excel aliases/values), phones.json (mobile prefixes), invite.json (salutation forms for the preview).
+val specAssets = layout.buildDirectory.dir("generated/specAssets")
+val copySpecAssets by tasks.registering(Copy::class) {
+    from(rootProject.file("../spec/test-vectors/excel.json"), rootProject.file("../spec/test-vectors/phones.json"), rootProject.file("../spec/i18n/invite.json"))
+    into(specAssets.map { it.dir("spec") })
+}
+tasks.named("preBuild") { dependsOn(copySpecAssets) }
+
 android {
     namespace = "az.devet.app"
     compileSdk = 36
@@ -56,6 +65,8 @@ android {
         compose = true
         buildConfig = true
     }
+
+    sourceSets["main"].assets.srcDir(specAssets)
 
     testOptions {
         unitTests.all { it.systemProperty("devet.repoRoot", rootProject.projectDir.parentFile.absolutePath) }
