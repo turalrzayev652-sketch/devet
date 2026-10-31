@@ -170,10 +170,10 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
 
 ## Faza 3 — Tətbiq spesifikasiyası
 
-- [ ] **T30 Ekran axınları**
+- [x] **T30 Ekran axınları**
   - Asılılıq: T02
   - Agent `/spec/sketches/` və bu plana əsasən `/spec/screens.md` qaralamasını yazır: hər ekran üçün məzmun, düymələr, keçidlər, boş və xəta halları, validasiya. **[SİZ] sonra redaktə edib təsdiqləyirsiniz.**
-  - Vəziyyət: qaralama HTML prototipə uyğunlaşdırılıb (2026-10-31): alt naviqasiya, 12a Daha çox, 12b Parametrlər, hər ekranda prototip linki; §15 qərarları daxil; xəta kodları backend ilə yoxlanıb. **Qalıb:** sizin təsdiqiniz.
+  - Vəziyyət: qaralama HTML prototipə uyğunlaşdırılıb (2026-10-31): alt naviqasiya, 12a Daha çox, 12b Parametrlər, hər ekranda prototip linki; §15 qərarları daxil; xəta kodları backend ilə yoxlanıb. Sahib tərəfindən təsdiqləndi (2026-10-31).
   - Hazırdır, əgər: 12 ekranın hamısı təsvir olunub və siz təsdiqləmisiniz.
 
 - [ ] **T31 API müqaviləsi**
