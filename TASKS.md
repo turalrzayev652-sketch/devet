@@ -178,6 +178,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Hazırdır, əgər: nümunə açarlarla hər iki platforma faylı yaranır.
 
 - [ ] **T33 Ortaq test vektorları**
+  - Vəziyyət: `phones.json`, `excel.json` və qaydalar (`spec/test-vectors/README.md`) hazırdır, JS istinad testi keçir. **Qalıb:** `design.md` — T02 eskizlərini gözləyir.
   - Asılılıq: T01
   - `/spec/test-vectors/phones.json`: Azərbaycan nömrələrinin müxtəlif yazılışları → E.164 (`050 123 45 67`, `+994501234567`, `994 50 123-45-67`, `0501234567`, səhv nömrələr) və gözlənilən nəticə.
   - `/spec/test-vectors/excel.json`: Excel sütun adlarının 4 dildə variantları (Ad, Имя, Name, İsim; Telefon, Телефон, Phone…) və xətalı sətir nümunələri.
