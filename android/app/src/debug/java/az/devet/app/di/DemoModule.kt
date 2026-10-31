@@ -11,6 +11,10 @@ import az.devet.app.data.events.EventRules
 import az.devet.app.data.events.EventSummary
 import az.devet.app.data.events.EventType
 import az.devet.app.data.events.MemberRole
+import az.devet.app.data.guests.AddResult
+import az.devet.app.data.guests.GuestPhone
+import az.devet.app.data.guests.GuestRepository
+import az.devet.app.data.guests.NewGuest
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -26,6 +30,21 @@ fun demoModule(): Module = module {
     single<AuthRepository> { DemoAuth() }
     single<AccountRepository> { DemoAccount() }
     single<EventRepository> { DemoEvents() }
+    single<GuestRepository> { DemoGuests() }
+}
+
+/** In-memory guests with the free limit (100), so the limit sheet can be tried too. */
+private class DemoGuests : GuestRepository {
+    private val byEvent = mutableMapOf<String, MutableList<NewGuest>>()
+    override suspend fun phones(eventId: String) =
+        AuthResult.Ok(byEvent[eventId].orEmpty().mapNotNull { g -> g.phoneE164?.let { GuestPhone(g.name, it) } })
+    override suspend fun count(eventId: String) = AuthResult.Ok(byEvent[eventId]?.size ?: 0)
+    override suspend fun add(eventId: String, guests: List<NewGuest>): AddResult {
+        val list = byEvent.getOrPut(eventId) { mutableListOf() }
+        if (list.size + guests.size > 100) return AddResult.LimitExceeded(100)
+        list += guests
+        return AddResult.Added(guests.size)
+    }
 }
 
 private class DemoAuth : AuthRepository {

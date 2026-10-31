@@ -14,7 +14,14 @@ import az.devet.app.data.events.ArchiveStore
 import az.devet.app.data.events.EventRepository
 import az.devet.app.data.events.PrefsArchiveStore
 import az.devet.app.data.events.SupabaseEventRepository
+import az.devet.app.data.guests.GuestRepository
+import az.devet.app.data.guests.GuestSpec
+import az.devet.app.data.guests.SupabaseGuestRepository
 import az.devet.app.ui.AppViewModel
+import az.devet.app.ui.guests.ContactsViewModel
+import az.devet.app.ui.guests.ExcelImportViewModel
+import az.devet.app.ui.guests.GuestContext
+import az.devet.app.ui.guests.ManualGuestViewModel
 import az.devet.app.ui.events.CreateEventViewModel
 import az.devet.app.ui.events.EditEventViewModel
 import az.devet.app.ui.events.EventsViewModel
@@ -42,6 +49,8 @@ val appModule = module {
     single<AppLanguage> { AndroidAppLanguage() }
     single<EventRepository> { SupabaseEventRepository(get<SupabaseHolder>().client) }
     single<ArchiveStore> { PrefsArchiveStore(androidContext()) }
+    single<GuestRepository> { SupabaseGuestRepository(get<SupabaseHolder>().client) }
+    single { GuestSpec.load(androidContext()) }
 
     viewModel { AppViewModel(get()) }
     viewModel { SignInViewModel(get(), get()) }
@@ -53,6 +62,9 @@ val appModule = module {
     viewModel { EventsViewModel(get(), get()) }
     viewModel { CreateEventViewModel(get(), get()) }
     viewModel { (id: String) -> EditEventViewModel(get(), id) }
+    viewModel { (id: String) -> ManualGuestViewModel(GuestContext(id, get(), get()), get()) }
+    viewModel { (id: String) -> ContactsViewModel(GuestContext(id, get(), get()), get()) }
+    viewModel { (id: String) -> ExcelImportViewModel(GuestContext(id, get(), get()), get()) }
 }
 
 /** Koin cannot hold a nullable single directly. */
