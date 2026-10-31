@@ -32,3 +32,11 @@ Helper scripts.
   ```bash
   node --test tools/test-vectors/reference.test.mjs
   ```
+
+- `check-api.mjs` — checks `/spec/api.md` against the backend: writable-columns table vs. column grants in the
+  migrations, RPCs exist and are granted to `authenticated`, Edge Function folders exist, every backend error code
+  is documented.
+
+  ```bash
+  node tools/check-api.mjs
+  ```

@@ -176,7 +176,8 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Vəziyyət: qaralama HTML prototipə uyğunlaşdırılıb (2026-10-31): alt naviqasiya, 12a Daha çox, 12b Parametrlər, hər ekranda prototip linki; §15 qərarları daxil; xəta kodları backend ilə yoxlanıb. Sahib tərəfindən təsdiqləndi (2026-10-31).
   - Hazırdır, əgər: 12 ekranın hamısı təsvir olunub və siz təsdiqləmisiniz.
 
-- [ ] **T31 API müqaviləsi**
+- [x] **T31 API müqaviləsi**
+  - Vəziyyət: `spec/api.md` hazırdır, `node tools/check-api.mjs` ilə backend-ə qarşı yoxlanılır. Yolda tapılan səhv düzəldildi: `event_guest_limit` (miqrasiya 012).
   - Asılılıq: T30, T18
   - `/spec/api.md`: hər ekranın hansı cədvəl/RPC/Storage çağırışını etdiyi, sorğu və cavab formaları, xəta kodları.
 
