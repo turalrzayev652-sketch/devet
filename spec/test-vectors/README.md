@@ -65,3 +65,18 @@ the "error rows" list and not imported; the rest are imported.
 
 **File** (`file_cases`): no data rows → `no_rows`. The same normalised phone in two rows → warning
 `duplicate_phone` on the later row (1-based data row number), not an error. Empty phones never count as duplicates.
+
+## maps
+
+`maps.json` — the venue map link the family pastes (screens.md §3, step 4). The link itself is stored in
+`events.maps_url`; coordinates, when they can be read, go to `venue_lat` / `venue_lng` (the Waze button needs them).
+
+1. Trim. Empty → `empty` (no link; the field is optional).
+2. Must parse as an absolute `http:` / `https:` URL, else `invalid_url` (the guest page refuses other schemes too).
+3. Coordinates are read only from known map hosts: `google.<tld>` / `www.google.<tld>` / `maps.google.<tld>`
+   (path or host containing maps), `waze.com`, `maps.apple.com`. Any other host → link kept, no coordinates.
+4. Order of sources: `!3d<lat>!4d<lng>` in the URL (Google's place pin) → `@<lat>,<lng>` in the path (map view) →
+   query parameter `q`, `query` or `ll` whose whole value is `<lat>,<lng>` (spaces allowed after the comma).
+5. Numbers are decimal (optional `-`); latitude must be within ±90 and longitude within ±180, else no coordinates.
+6. Short links (`maps.app.goo.gl`, `goo.gl/maps`) are kept without coordinates: resolving them needs a network
+   request, which the app does not make.
