@@ -9,6 +9,8 @@ enum class AuthError {
     RateLimited,
     LinkInvalid,
     Unauthorized,
+    /** RLS refused the change (PostgREST 42501 or 0 rows updated/deleted). */
+    Forbidden,
     Network,
     /** Build has no Supabase settings (local.properties); only happens in development. */
     NotConfigured,

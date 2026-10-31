@@ -30,6 +30,9 @@ import az.devet.app.ui.auth.RegisterScreen
 import az.devet.app.ui.auth.ResetPasswordScreen
 import az.devet.app.ui.auth.ResetSentScreen
 import az.devet.app.ui.auth.SignInScreen
+import az.devet.app.ui.events.ComingSoonScreen
+import az.devet.app.ui.events.CreateEventScreen
+import az.devet.app.ui.events.EditEventScreen
 import az.devet.app.ui.events.EventsScreen
 import az.devet.app.ui.settings.SettingsScreen
 import az.devet.app.ui.theme.DevetTheme
@@ -48,6 +51,12 @@ sealed interface Route {
     @Serializable data object NewPassword : Route
     @Serializable data object Events : Route
     @Serializable data object Settings : Route
+    @Serializable data object CreateEvent : Route
+    @Serializable data class EditEvent(val id: String) : Route
+    /** Inside an event: guests [6] (T45/T46). */
+    @Serializable data class EventHome(val id: String, val title: String) : Route
+    @Serializable data class Templates(val eventId: String) : Route
+    @Serializable data object JoinByCode : Route
 }
 
 /** Root screen for the session: sign-in flow when signed out, the app when signed in (screens.md §1). */
@@ -105,13 +114,46 @@ fun DevetNavHost(app: AppViewModel) {
             }
             composable<Route.ResetSent> { ResetSentScreen(onBackToLogin = { nav.popBackStack() }) }
             composable<Route.NewPassword> { NewPasswordScreen(onDone = app::passwordUpdated) }
-            composable<Route.Events> { EventsScreen(onSettings = { nav.navigate(Route.Settings) }) }
+            composable<Route.Events> { entry ->
+                // Bumped by create/edit/delete elsewhere so the list reloads when it comes back.
+                val reload by entry.savedStateHandle.getStateFlow(RELOAD_KEY, 0).collectAsStateWithLifecycle()
+                EventsScreen(
+                    onSettings = { nav.navigate(Route.Settings) },
+                    onOpen = { nav.navigate(Route.EventHome(it.id, it.titleNames)) },
+                    onCreate = { nav.navigate(Route.CreateEvent) },
+                    onEdit = { nav.navigate(Route.EditEvent(it.id)) },
+                    onJoin = { nav.navigate(Route.JoinByCode) },
+                    reloadKey = reload,
+                )
+            }
+            composable<Route.CreateEvent> {
+                CreateEventScreen(
+                    onClose = { nav.popBackStack() },
+                    onCreated = { nav.markEventsChanged() },
+                    onChooseTemplate = { id -> nav.navigate(Route.Templates(id)) { popUpTo<Route.Events>() } },
+                )
+            }
+            composable<Route.EditEvent> {
+                EditEventScreen(it.toRoute<Route.EditEvent>().id, onBack = { nav.popBackStack() }, onSaved = {
+                    nav.markEventsChanged()
+                    nav.popBackStack()
+                })
+            }
+            composable<Route.EventHome> { ComingSoonScreen(it.toRoute<Route.EventHome>().title, onBack = { nav.popBackStack() }) }
+            composable<Route.Templates> { ComingSoonScreen(context.getString(R.string.create_success_choose_template), onBack = { nav.popBackStack() }) }
+            composable<Route.JoinByCode> { ComingSoonScreen(context.getString(R.string.events_join), onBack = { nav.popBackStack() }) }
             composable<Route.Settings> {
                 SettingsScreen(termsUrl = links.terms, privacyUrl = links.privacy, onBack = { nav.popBackStack() })
             }
         }
         SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter))
     }
+}
+
+private const val RELOAD_KEY = "events_reload"
+
+private fun NavHostController.markEventsChanged() {
+    runCatching { getBackStackEntry<Route.Events>() }.getOrNull()?.savedStateHandle?.let { it[RELOAD_KEY] = (it.get<Int>(RELOAD_KEY) ?: 0) + 1 }
 }
 
 private fun NavHostController.resetTo(route: Route) {

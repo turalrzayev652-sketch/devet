@@ -219,6 +219,8 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Asılılıq: T42
   - Tədbirlər siyahısı; yaratma addımları: növ → adlar → tarix/saat → məkan (ad + xəritə linki) → əsas dil → masadakıları göstər (defolt bağlı).
   - Hazırdır, əgər: tədbir bazada yaranır, redaktə və silmə (yalnız owner) işləyir.
+  - [x] T43A (Android) — siyahı (rol, mini statistika, arxiv, aşağı çəkib yeniləmə), 6 addımlı yaratma + uğur ekranı, redaktə, silmə (yalnız owner); xəritə linki `maps.json` vektorları ilə; 55 unit test keçir; emulyatorda demo rejimində az/ru/en/tr yoxlanıb.
+  - ⚠️ Qeyd: real Supabase ilə sınanmayıb (PostgREST sorğuları MockEngine ilə yoxlanıb). Şablon miniatürü T44-də (şəkil yükləyici ilə); "Kodla qoşul" (T4A), qonaqlar (T45/T46) və şablon seçimi (T44) hələlik "növbəti mərhələdə" ekranıdır.
 
 - [ ] **T44A / T44I Şablon kataloqu və fərdiləşdirmə**
   - Asılılıq: T43, T26

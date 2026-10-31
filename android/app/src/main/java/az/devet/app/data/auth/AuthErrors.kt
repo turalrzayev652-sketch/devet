@@ -22,8 +22,13 @@ internal suspend fun <T> runAuth(block: suspend () -> T): AuthResult<T> =
 
 internal fun Throwable.toAuthError(): AuthError = when (this) {
     is AuthCodeException -> AuthError.fromCode(code)
+    is az.devet.app.data.events.ForbiddenException -> AuthError.Forbidden
     is AuthRestException -> AuthError.fromCode(error).let { if (it == AuthError.Unknown && statusCode == 401) AuthError.Unauthorized else it }
-    is RestException -> if (statusCode == 401) AuthError.Unauthorized else AuthError.Unknown
+    is RestException -> when {
+        statusCode == 401 -> AuthError.Unauthorized
+        statusCode == 403 || error == "42501" -> AuthError.Forbidden
+        else -> AuthError.Unknown
+    }
     is HttpRequestException, is HttpRequestTimeoutException, is IOException -> AuthError.Network
     else -> if (cause != null && cause !== this) cause!!.toAuthError() else AuthError.Unknown
 }
