@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Not generated: brand name is a config value ({{BRAND_NAME}}, PRODUCT.md), the same in every language. -->
+<resources>
+    <string name="app_name" translatable="false">Devet</string>
+</resources>

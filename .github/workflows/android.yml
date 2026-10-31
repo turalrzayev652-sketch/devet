@@ -1,0 +1,44 @@
+name: Android
+
+on:
+  push:
+    paths: ['android/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/android.yml']
+  pull_request:
+    paths: ['android/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/android.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Generated strings must be committed and match spec/i18n/app.json.
+      - name: i18n generator is in sync
+        run: |
+          node tools/i18n/generate.mjs --ios "$RUNNER_TEMP/Localizable.xcstrings"
+          git diff --exit-code -- android/app/src/main/res
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Unit tests and debug build
+        working-directory: android
+        run: ./gradlew --no-daemon test assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: devet-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 7

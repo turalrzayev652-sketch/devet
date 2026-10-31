@@ -44,3 +44,6 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 ios/Pods/
+
+# Kotlin 2 compiler cache
+.kotlin/

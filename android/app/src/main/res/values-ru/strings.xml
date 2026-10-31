@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from spec/i18n/app.json by tools/i18n/generate.mjs. Do not edit. -->
+<resources>
+    <string name="app_language">Язык: русский</string>
+    <string name="app_tagline">Именные приглашения на свадьбы и семейные праздники</string>
+    <string name="app_welcome">Добро пожаловать</string>
+    <string name="auth_email">Эл. почта</string>
+    <string name="auth_error_invalid_credentials">Неверная эл. почта или пароль.</string>
+    <string name="auth_login_title">Вход</string>
+    <string name="auth_password">Пароль</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_error_network">Нет подключения к интернету. Попробуйте ещё раз.</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_retry">Повторить</string>
+    <string name="common_save">Сохранить</string>
+    <plurals name="guests_count">
+        <item quantity="one">%1$d гость</item>
+        <item quantity="few">%1$d гостя</item>
+        <item quantity="many">%1$d гостей</item>
+        <item quantity="other">%1$d гостя</item>
+    </plurals>
+    <string name="guests_limit_reached">Достигнут лимит гостей (%1$s). Купите расширение лимита.</string>
+    <string name="template_text_closing">Заключительные слова</string>
+    <string name="template_text_intro">Вступительный текст</string>
+    <string name="template_var_color_accent">Акцентный цвет</string>
+    <string name="template_var_color_bg">Цвет фона</string>
+    <string name="template_var_color_text">Цвет текста</string>
+    <string name="template_var_font_body">Шрифт текста</string>
+    <string name="template_var_font_heading">Шрифт заголовков</string>
+    <string name="wa_message_birthday">Здравствуйте, %1$s! Приглашаем вас на день рождения: %2$s. Приглашение: %3$s</string>
+    <string name="wa_message_engagement">Здравствуйте, %1$s! Приглашаем вас на помолвку: %2$s. Приглашение: %3$s</string>
+    <string name="wa_message_henna">Здравствуйте, %1$s! Приглашаем вас на вечер хны: %2$s. Приглашение: %3$s</string>
+    <string name="wa_message_jubilee">Здравствуйте, %1$s! Приглашаем вас на юбилей: %2$s. Приглашение: %3$s</string>
+    <string name="wa_message_wedding">Здравствуйте, %1$s! Приглашаем вас на свадьбу: %2$s. Приглашение: %3$s</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from spec/i18n/app.json by tools/i18n/generate.mjs. Do not edit. -->
+<resources>
+    <string name="app_language">Dil: Türkçe</string>
+    <string name="app_tagline">Düğün ve aile kutlamaları için kişiye özel davetiyeler</string>
+    <string name="app_welcome">Hoş geldiniz</string>
+    <string name="auth_email">E-posta</string>
+    <string name="auth_error_invalid_credentials">E-posta veya şifre hatalı.</string>
+    <string name="auth_login_title">Giriş yap</string>
+    <string name="auth_password">Şifre</string>
+    <string name="common_cancel">İptal</string>
+    <string name="common_error_network">İnternet bağlantısı yok. Lütfen tekrar deneyin.</string>
+    <string name="common_ok">Tamam</string>
+    <string name="common_retry">Tekrar dene</string>
+    <string name="common_save">Kaydet</string>
+    <plurals name="guests_count">
+        <item quantity="one">%1$d misafir</item>
+        <item quantity="few">%1$d misafir</item>
+        <item quantity="many">%1$d misafir</item>
+        <item quantity="other">%1$d misafir</item>
+    </plurals>
+    <string name="guests_limit_reached">Misafir sınırına ulaşıldı (%1$s). Sınırı artırmak için satın alın.</string>
+    <string name="template_text_closing">Kapanış sözleri</string>
+    <string name="template_text_intro">Giriş metni</string>
+    <string name="template_var_color_accent">Vurgu rengi</string>
+    <string name="template_var_color_bg">Arka plan rengi</string>
+    <string name="template_var_color_text">Metin rengi</string>
+    <string name="template_var_font_body">Metin yazı tipi</string>
+    <string name="template_var_font_heading">Başlık yazı tipi</string>
+    <string name="wa_message_birthday">Sayın %1$s, doğum gününe davetlisiniz: %2$s. Davetiye: %3$s</string>
+    <string name="wa_message_engagement">Sayın %1$s, nişana davetlisiniz: %2$s. Davetiye: %3$s</string>
+    <string name="wa_message_henna">Sayın %1$s, kına gecesine davetlisiniz: %2$s. Davetiye: %3$s</string>
+    <string name="wa_message_jubilee">Sayın %1$s, jübileye davetlisiniz: %2$s. Davetiye: %3$s</string>
+    <string name="wa_message_wedding">Sayın %1$s, düğüne davetlisiniz: %2$s. Davetiye: %3$s</string>
+</resources>
