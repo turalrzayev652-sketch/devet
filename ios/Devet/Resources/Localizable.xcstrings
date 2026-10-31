@@ -1,0 +1,856 @@
+{
+  "sourceLanguage": "az",
+  "strings": {
+    "app.language": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dil: Azərbaycan"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык: русский"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language: English"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dil: Türkçe"
+          }
+        }
+      }
+    },
+    "app.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toy və ailə şənlikləri üçün fərdi dəvətnamələr"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Именные приглашения на свадьбы и семейные праздники"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal invitations for weddings and family celebrations"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düğün ve aile kutlamaları için kişiye özel davetiyeler"
+          }
+        }
+      }
+    },
+    "app.welcome": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xoş gəlmisiniz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добро пожаловать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoş geldiniz"
+          }
+        }
+      }
+    },
+    "auth.email": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-poçt"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эл. почта"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-posta"
+          }
+        }
+      }
+    },
+    "auth.error.invalid_credentials": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-poçt və ya şifrə səhvdir."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неверная эл. почта или пароль."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incorrect email or password."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-posta veya şifre hatalı."
+          }
+        }
+      }
+    },
+    "auth.login.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daxil ol"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вход"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giriş yap"
+          }
+        }
+      }
+    },
+    "auth.password": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şifrə"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пароль"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şifre"
+          }
+        }
+      }
+    },
+    "common.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ləğv et"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İptal"
+          }
+        }
+      }
+    },
+    "common.error.network": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İnternet bağlantısı yoxdur. Yenidən cəhd edin."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет подключения к интернету. Попробуйте ещё раз."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No internet connection. Please try again."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İnternet bağlantısı yok. Lütfen tekrar deneyin."
+          }
+        }
+      }
+    },
+    "common.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ОК"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam"
+          }
+        }
+      }
+    },
+    "common.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenidən cəhd et"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekrar dene"
+          }
+        }
+      }
+    },
+    "common.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yadda saxla"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaydet"
+          }
+        }
+      }
+    },
+    "guests.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld qonaq"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld qonaq"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld qonaq"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld qonaq"
+                }
+              }
+            }
+          }
+        },
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld гость"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld гостя"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld гостей"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld гостя"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld guest"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld guests"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld guests"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld guests"
+                }
+              }
+            }
+          }
+        },
+        "tr": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld misafir"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld misafir"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld misafir"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld misafir"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "guests.limit_reached": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qonaq limiti doldu (%1$@). Limiti artırmaq üçün alış edin."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Достигнут лимит гостей (%1$@). Купите расширение лимита."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guest limit reached (%1$@). Buy an add-on to raise it."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Misafir sınırına ulaşıldı (%1$@). Sınırı artırmak için satın alın."
+          }
+        }
+      }
+    },
+    "template.text.closing": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Son söz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заключительные слова"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Closing words"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapanış sözleri"
+          }
+        }
+      }
+    },
+    "template.text.intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giriş mətni"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вступительный текст"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intro text"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giriş metni"
+          }
+        }
+      }
+    },
+    "template.var.color_accent": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Əsas rəng"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Акцентный цвет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accent colour"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vurgu rengi"
+          }
+        }
+      }
+    },
+    "template.var.color_bg": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fon rəngi"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цвет фона"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background colour"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arka plan rengi"
+          }
+        }
+      }
+    },
+    "template.var.color_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mətn rəngi"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цвет текста"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text colour"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metin rengi"
+          }
+        }
+      }
+    },
+    "template.var.font_body": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mətn şrifti"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шрифт текста"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Body font"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metin yazı tipi"
+          }
+        }
+      }
+    },
+    "template.var.font_heading": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başlıq şrifti"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шрифт заголовков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heading font"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başlık yazı tipi"
+          }
+        }
+      }
+    },
+    "wa_message.birthday": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hörmətli %1$@! %2$@ ad gününə dəvətlisiniz. Dəvətnamə: %3$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте, %1$@! Приглашаем вас на день рождения: %2$@. Приглашение: %3$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dear %1$@, you are invited to the birthday of %2$@. Invitation: %3$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayın %1$@, doğum gününe davetlisiniz: %2$@. Davetiye: %3$@"
+          }
+        }
+      }
+    },
+    "wa_message.engagement": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hörmətli %1$@! %2$@ nişanına dəvətlisiniz. Dəvətnamə: %3$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте, %1$@! Приглашаем вас на помолвку: %2$@. Приглашение: %3$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dear %1$@, you are invited to the engagement of %2$@. Invitation: %3$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayın %1$@, nişana davetlisiniz: %2$@. Davetiye: %3$@"
+          }
+        }
+      }
+    },
+    "wa_message.henna": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hörmətli %1$@! %2$@ xınayaxdısına dəvətlisiniz. Dəvətnamə: %3$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте, %1$@! Приглашаем вас на вечер хны: %2$@. Приглашение: %3$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dear %1$@, you are invited to the henna night of %2$@. Invitation: %3$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayın %1$@, kına gecesine davetlisiniz: %2$@. Davetiye: %3$@"
+          }
+        }
+      }
+    },
+    "wa_message.jubilee": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hörmətli %1$@! %2$@ yubileyinə dəvətlisiniz. Dəvətnamə: %3$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте, %1$@! Приглашаем вас на юбилей: %2$@. Приглашение: %3$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dear %1$@, you are invited to the jubilee of %2$@. Invitation: %3$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayın %1$@, jübileye davetlisiniz: %2$@. Davetiye: %3$@"
+          }
+        }
+      }
+    },
+    "wa_message.wedding": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hörmətli %1$@! %2$@ toyuna dəvətlisiniz. Dəvətnamə: %3$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте, %1$@! Приглашаем вас на свадьбу: %2$@. Приглашение: %3$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dear %1$@, you are invited to the wedding of %2$@. Invitation: %3$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayın %1$@, düğüne davetlisiniz: %2$@. Davetiye: %3$@"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

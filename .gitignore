@@ -47,3 +47,6 @@ ios/Pods/
 
 # Kotlin 2 compiler cache
 .kotlin/
+
+# iOS secrets (anon key only)
+ios/Config/Secrets.xcconfig
