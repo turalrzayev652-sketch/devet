@@ -50,3 +50,25 @@ export function recordPurchase(
 export function recordRefund(cfg: DbConfig, store: 'google' | 'apple', transactionId: string, fetchImpl: Fetch) {
   return rpc(cfg, 'record_refund', { p_store: store, p_transaction_id: transactionId }, fetchImpl);
 }
+
+export interface DeletionPlan {
+  owned_events: string[];
+  cohost_events: string[];
+  preview_files: string[];
+}
+
+export function accountDeletionPlan(cfg: DbConfig, userId: string, fetchImpl: Fetch): Promise<DeletionPlan> {
+  return rpc(cfg, 'account_deletion_plan', { p_user_id: userId }, fetchImpl);
+}
+
+export function deleteAccountData(cfg: DbConfig, userId: string, fetchImpl: Fetch) {
+  return rpc(cfg, 'delete_account_data', { p_user_id: userId }, fetchImpl);
+}
+
+export async function deleteAuthUser(cfg: DbConfig, userId: string, fetchImpl: Fetch): Promise<void> {
+  const res = await fetchImpl(`${cfg.url}/auth/v1/admin/users/${encodeURIComponent(userId)}`, {
+    method: 'DELETE',
+    headers: { apikey: cfg.serviceKey, authorization: `Bearer ${cfg.serviceKey}` },
+  });
+  if (!res.ok && res.status !== 404) throw new Error(`auth delete failed: ${res.status}`);
+}

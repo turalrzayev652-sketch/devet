@@ -420,3 +420,7 @@ verify_jwt = true
 # T4C: called by Google Pub/Sub and Apple (no Supabase JWT); each store is authenticated inside the function.
 [functions.store-notifications]
 verify_jwt = false
+
+# T17: "Delete account", called by the app with the user's access token.
+[functions.delete-account]
+verify_jwt = true

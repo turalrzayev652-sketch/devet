@@ -95,6 +95,12 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - `pg_cron` işi: tədbir tarixindən 90 gün sonra qonaqların telefon nömrələri silinir (adlar və statistika qalır).
   - Hazırdır, əgər: test tarixi keçmiş tədbirdə telefonların silindiyini göstərir.
 
+- [x] **T17 Hesabın silinməsi** (sahibin qərarı 2026-10-30; App Store və Google Play tələbi)
+  - ⚠️ Qeyd: SQL (pgTAP 14) və Edge Function (TS 6) testləri PGlite/imitasiya ilə keçib; real Supabase-də hələ işlədilməyib. Tətbiq UI-si — T42 (Parametrlər).
+  - Asılılıq: T11, T15
+  - `delete-account` Edge Function: owner olduğu tədbirlərin faylları (event-media, previews) Storage API ilə silinir, sonra tədbirlər silinir, cohost üzvlükləri çıxarılır, sonra Auth istifadəçisi silinir. Cohost kimi edilən alışlar tədbirdə qalır.
+  - Hazırdır, əgər: testlər silinmə sırasını, başqasının tədbirinin qalmasını və Storage xətasında heç nəyin silinmədiyini göstərir.
+
 - [x] **T18 Təhlükəsizlik testləri**
   - ⚠️ Qeyd: 6 pgTAP faylı (42 test) PGlite-də pgTAP imitasiyası ilə keçib; `supabase test db` Docker qurulanda işlədilməlidir.
   - Asılılıq: T11–T15
