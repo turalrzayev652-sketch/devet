@@ -23,7 +23,11 @@ SUPABASE_ANON_KEY = <anon key>                      # anon only — never servic
 PUBLIC_BASE_URL = https:/$()/<guest domain>
 ```
 
-Without them the app still builds and starts; `AppDependencies.supabase` is nil (`SupabaseConfig.isConfigured`).
+Without them the app still builds and starts; repositories report `AuthFailure.notConfigured` (`SupabaseConfig.isConfigured`).
+
+**Demo mode (Debug builds only):** launch with the argument `-DevetDemo YES` (Xcode: scheme → Run → Arguments, or
+`xcrun simctl launch <device> az.devet.app -DevetDemo YES`) to start signed in with in-memory events
+(`App/DemoBackend.swift`, inside `#if DEBUG`). Same sample data as Android's demo mode; not compiled into Release.
 
 ## Structure
 
@@ -31,6 +35,7 @@ Without them the app still builds and starts; `AppDependencies.supabase` is nil 
 - Colours are written by `swift scripts/generate-colors.swift ../spec/design.md Devet/Resources` (run from `ios/`) when design.md changes.
 - `Devet/App/` — app entry, `AppDependencies` (environment object, the counterpart of Android's Koin module), `RootView` with `NavigationStack`.
 - `Devet/Data/` — Supabase config and client; `Data/Auth/` — Supabase Auth (sign in/up, resend, reset, PKCE code exchange), errors mapped to `AuthFailure` (spec/api.md §0.2, same set as Android); `Data/Account/` — profile and `delete-account`.
+- `Devet/Data/Events/` — screens [2] and [3]: `EventRepository`, `EventRules` (validation, Baku time, 7-day archive, changed columns), `MapsLink` (`spec/test-vectors/maps.json`), local "Arxivlə" (`ArchiveStore`). `UI/Events/` — list, 6-step wizard, edit page. The map field uses the system `PasteButton` (no paste prompt; its label comes from iOS).
 - `Devet/UI/Auth/` — screens of [1]; `UI/Settings/` — [12b]; `UI/Events/` — [2] shell until T43. `App/AppModel` decides the root screen from the session (`rootFor`, same rule as Android).
 - E-mail links: `az.devet.app://auth/callback` and `az.devet.app://auth/reset-password` (URL scheme in `Config/Info.plist`, handled by `.onOpenURL`). Supabase → Authentication → URL Configuration → Redirect URLs must contain `az.devet.app://auth/**`.
 - App language: chosen in iOS Settings → Devet → Language (owner's decision 2026-10-31); the Settings screen opens that page and keeps `profiles.ui_lang` equal to the UI language.

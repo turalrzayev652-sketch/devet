@@ -11,6 +11,8 @@ enum AuthFailure: Error, Equatable {
     case rateLimited
     case linkInvalid
     case unauthorized
+    /// RLS refused the change (PostgREST 42501, 403, or 0 rows updated/deleted).
+    case forbidden
     case network
     /// Build has no Supabase settings (Secrets.xcconfig); only happens in development.
     case notConfigured
@@ -40,6 +42,8 @@ enum AuthFailure: Error, Equatable {
             let mapped = fromCode(auth.errorCode.rawValue)
             if mapped == .unknown, case let .api(_, _, _, response) = auth, response.statusCode == 401 { return .unauthorized }
             return mapped
+        case let postgrest as PostgrestError:
+            return postgrest.code == "42501" ? .forbidden : postgrest.code == "PGRST301" ? .unauthorized : .unknown
         case let functions as FunctionsError:
             if case let .httpError(code, _) = functions, code == 401 { return .unauthorized }
             return .unknown
