@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alış — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .addon { display: flex; align-items: center; gap: 12px; margin: 0 16px; padding: 14px 16px; }
+  .legal { font-size: calc(12px * var(--font-scale)); color: var(--color-text-secondary); line-height: 1.5; text-align: center; padding: 0 var(--layout-gutter); }
+  .legal a { color: var(--color-text-link); }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    tplName: 'Gecə — premium şablon', get1: '300 qonaq', get2: 'Animasiyalı premium dizayn', get3: 'Loqo yazısı olmadan', get4: 'Bu tədbir üçün birdəfəlik',
+    once: 'Birdəfəlik ödəniş, abunə deyil', buy: 'Al', restore: 'Alışları bərpa et', addonTitle: 'Limiti artır: +200 qonaq', addonSub: 'Bu tədbir üçün · 212/300 → 500', addonPrice: '9,99 ₼',
+    legal: 'Ödəniş Google Play / App Store hesabınız vasitəsilə alınır. Kart məlumatlarınızı görmürük. Alış yalnız bu tədbirə aiddir.', terms: 'İstifadə şərtləri', privacy: 'Məxfilik siyasəti',
+    processing: 'Ödəniş yoxlanılır…', processingBody: 'Tətbiqi bağlamayın. Bu, adətən bir neçə saniyə çəkir.',
+    successTitle: 'Premium aktivdir', successBody: 'İndi 300 qonağa qədər əlavə edib dəvət göndərə bilərsiniz.', continue: 'Davam et',
+    failTitle: 'Ödəniş alınmadı', failBody: 'Kartınızdan pul tutulmayıb. Başqa ödəniş üsulu ilə yenidən cəhd edə bilərsiniz.',
+    pendingTitle: 'Ödəniş təsdiq gözləyir', pendingBody: 'Mağaza ödənişi hələ təsdiqləməyib (məs. nağd və ya bank təsdiqi). Təsdiqlənən kimi Premium avtomatik açılacaq.', ok: 'Oldu',
+    addonHero: '+200 qonaq', addonBody: 'Limit 300-dən 500-ə qalxır. Əlavə etdiyiniz qonaqlar saxlanılır.', restored: 'Alışlar yoxlanıldı — Premium aktivdir', addonPerEvent: 'Bu tədbir üçün',
+  },
+  ru: {
+    tplName: 'Ночь — премиум-шаблон', get1: '300 гостей', get2: 'Анимированный премиум-дизайн', get3: 'Без надписи с логотипом', get4: 'Разовая покупка для этого мероприятия',
+    once: 'Разовый платёж, не подписка', buy: 'Купить', restore: 'Восстановить покупки', addonTitle: 'Увеличить лимит: +200 гостей', addonSub: 'Для этого мероприятия · 212/300 → 500', addonPrice: '9,99 ₼',
+    legal: 'Оплата проходит через ваш аккаунт Google Play / App Store. Мы не видим данные карты. Покупка относится только к этому мероприятию.', terms: 'Условия использования', privacy: 'Политика конфиденциальности',
+    processing: 'Проверяем оплату…', processingBody: 'Не закрывайте приложение. Обычно это занимает несколько секунд.',
+    successTitle: 'Премиум активен', successBody: 'Теперь можно добавить до 300 гостей и отправлять приглашения.', continue: 'Продолжить',
+    failTitle: 'Оплата не прошла', failBody: 'Деньги с карты не списаны. Можно попробовать другой способ оплаты.',
+    pendingTitle: 'Оплата ожидает подтверждения', pendingBody: 'Магазин ещё не подтвердил платёж (например, наличные или подтверждение банка). Премиум откроется автоматически.', ok: 'Понятно',
+    addonHero: '+200 гостей', addonBody: 'Лимит вырастет с 300 до 500. Добавленные гости сохраняются.', restored: 'Покупки проверены — премиум активен', addonPerEvent: 'Для этого мероприятия',
+  },
+};
+const close = (c) => `<div class="topbar"><button class="icon-btn" data-go="08-gonderme.html?state=locked" aria-label="Bağla">${c.icon('close')}</button><span class="title"></span><button class="btn btn-text" data-toast="${c.t('restored')}">${c.t('restore')}</button></div>`;
+const hero = (c) => `<div class="hero-tpl"><span class="badge badge-premium">${c.icon('sparkle', 'icon-sm')} Premium</span><div class="tpl-art tpl-art-3"><div><div class="t1">${c.lang === 'ru' ? 'Приглашаем на свадьбу' : 'Toyumuza dəvət edirik'}</div><div class="orn"></div><div class="t2">Aysel<br>&amp; Ramin</div><div class="orn"></div><div class="t3">12 · 07 · 2027</div></div></div></div>`;
+const legal = (c) => `<p class="legal mt-3">${c.t('legal')}<br><a href="#" data-toast="${c.t('terms')}">${c.t('terms')}</a> · <a href="#" data-toast="${c.t('privacy')}">${c.t('privacy')}</a></p>`;
+const premium = (c) => ({
+  html: `${close(c)}${hero(c)}<div class="pad"><h1 class="t-title" style="margin:18px 0 14px">${c.t('tplName')}</h1>
+    <ul class="checklist">${['get1', 'get2', 'get3', 'get4'].map((k) => `<li><span class="ok">${c.icon('check', 'icon-sm')}</span>${c.t(k)}</li>`).join('')}</ul>
+    <div class="row-flex" style="margin:22px 0 2px;align-items:baseline;gap:10px"><span class="price-big">19,99 ₼</span></div><p class="t-footnote muted" style="margin:0 0 18px">${c.t('once')}</p></div>
+    <div class="card addon" data-state="addon" style="cursor:pointer"><span class="avatar">${c.icon('userPlus')}</span><span style="flex:1"><span class="t-headline" style="display:block;font-size:calc(15px * var(--font-scale))">${c.t('addonTitle')}</span><span class="t-footnote muted">${c.t('addonSub')}</span></span><strong>${c.t('addonPrice')}</strong></div>
+    ${legal(c)}<div style="height:120px"></div>`,
+  overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="processing">${c.t('buy')} — 19,99 ₼</button></div>`,
+});
+const result = (c, art, title, body, btn) => ({ html: `<div class="empty" style="padding-top:150px"><div class="art">${art}</div><h1 class="t-title" style="margin:0">${title}</h1><p class="t-callout muted" style="margin:0">${body}</p></div>`, overlay: `<div class="bottom-actions">${btn}</div>` });
+
+Proto.screen({
+  number: 12,
+  title: { az: 'Alış', ru: 'Покупка' },
+  strings: S,
+  states: [
+    { key: 'premium', label: { az: 'Premium şablon', ru: 'Премиум-шаблон' }, render: (c) => premium(c),
+      note: { az: '"Al" mağazanın öz pəncərəsini açır (Google Play Billing / StoreKit 2), sonra verify-purchase. Qiymət mağazadan, koda yazılmır. Limit artırma qiyməti (9,99 ₼) nümunədir — hələ seçilməyib.', ru: '«Купить» открывает окно магазина, затем verify-purchase. Цена — из магазина.' } },
+    { key: 'addon', label: { az: 'Limit artırma', ru: 'Увеличение лимита' }, render: (c) => ({
+        html: `${close(c)}<div class="empty" style="padding-top:40px"><span class="avatar avatar-lg">${c.icon('userPlus')}</span><h1 class="t-display" style="margin:0">${c.t('addonHero')}</h1><p class="t-callout muted" style="margin:0">${c.t('addonBody')}</p>
+          <div class="price-big mt-2">${c.t('addonPrice')}</div><p class="t-footnote muted" style="margin:0">${c.t('addonPerEvent')} · ${c.t('once')}</p></div>${legal(c)}`,
+        overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="processing">${c.t('buy')} — ${c.t('addonPrice')}</button></div>`,
+      }) },
+    { key: 'processing', label: { az: 'Yoxlanılır', ru: 'Проверка' }, render: (c) => `<div class="empty" style="padding-top:240px"><span class="btn" style="background:none;border:0"><span class="spinner"></span></span><h2 class="t-headline-serif" style="margin:0">${c.t('processing')}</h2><p class="t-callout muted" style="margin:0">${c.t('processingBody')}</p></div>`,
+      after: () => setTimeout(() => { if (window.__proto.state === 'processing') window.__proto.setState('success'); }, 1500) },
+    { key: 'success', label: { az: 'Uğurlu', ru: 'Успех' }, render: (c) => result(c, c.ART.celebrate, c.t('successTitle'), c.t('successBody'), `<button class="btn btn-primary btn-block" data-go="08-gonderme.html?state=check">${c.t('continue')}</button>`),
+      note: { az: 'Uğur anı: bir dəfəlik parıltı, haptik. Azaldılmış hərəkətdə statik.', ru: 'Момент успеха: однократная искра.' } },
+    { key: 'failure', label: { az: 'Alınmadı', ru: 'Не прошла' }, render: (c) => result(c, `<svg viewBox="0 0 180 140" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="color:var(--color-feedback-danger)"><circle cx="90" cy="70" r="34"/><path d="M78 58l24 24M102 58L78 82" stroke-width="2"/></svg>`, c.t('failTitle'), c.t('failBody'), `<button class="btn btn-primary btn-block" data-state="premium">${c.t('retry')}</button><button class="btn btn-text btn-block" data-go="08-gonderme.html?state=locked">${c.t('cancel')}</button>`) },
+    { key: 'pending', label: { az: 'Gözləmədə', ru: 'Ожидание' }, render: (c) => result(c, `<svg viewBox="0 0 180 140" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="color:var(--color-accent-gold-strong)"><circle cx="90" cy="70" r="34"/><path d="M90 52v20l12 8" stroke-width="2"/></svg>`, c.t('pendingTitle'), c.t('pendingBody'), `<button class="btn btn-primary btn-block" data-go="08-gonderme.html?state=locked">${c.t('ok')}</button>`),
+      note: { az: 'Google "pending" alışlar: tətbiq açılanda verify-purchase təkrar çağırılır.', ru: 'Отложенные покупки Google: при открытии приложения verify-purchase вызывается снова.' } },
+  ],
+});
+</script>
+</body>
+</html>

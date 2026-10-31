@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daha çox — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Daha çox', design: 'Şablon və dizayn', designSub: 'Klassik · rəng, şrift, mətn, şəkil, musiqi', tables: 'Masalar', tablesSub: '4 masa · 37 qonaq masasız',
+    cohost: 'Ortaq ailə', cohostSub: 'Gəlin tərəfi: Ramin Əliyev', edit: 'Tədbiri redaktə et', editSub: 'Ad, tarix, məkan, dil', purchases: 'Alışlar', purchasesSub: 'Pulsuz plan · 84/100',
+    exportL: 'Siyahını ixrac et', exportSub: 'Excel / PDF', del: 'Tədbiri sil', delSub: 'Yalnız sahib', cohostView: 'Ortaq idarəçi görünüşü',
+  },
+  ru: {
+    title: 'Ещё', design: 'Шаблон и дизайн', designSub: 'Классика · цвет, шрифт, текст, фото, музыка', tables: 'Столы', tablesSub: '4 стола · 37 гостей без стола',
+    cohost: 'Вторая семья', cohostSub: 'Сторона невесты: Ramin Əliyev', edit: 'Изменить мероприятие', editSub: 'Название, дата, место, язык', purchases: 'Покупки', purchasesSub: 'Бесплатный план · 84/100',
+    exportL: 'Экспорт списка', exportSub: 'Excel / PDF', del: 'Удалить мероприятие', delSub: 'Только владелец', cohostView: 'Вид совладельца',
+  },
+};
+const row = (c, ic, k, sub, go, cls = '') => `<a class="menu-row ${cls}" ${go.startsWith('state:') ? `data-state="${go.slice(6)}"` : go.startsWith('toast:') ? `data-toast="${go.slice(6)}"` : `data-go="${go}"`}><span class="ic">${c.icon(ic)}</span><span class="k"><span class="t-headline" style="display:block">${c.t(k)}</span><span class="t-footnote ${cls ? '' : 'muted'}">${c.t(sub)}</span></span>${cls ? '' : c.icon('chevronRight')}</a>`;
+const menu = (c, owner) => ({
+  html: `<div class="topbar"><span style="width:44px"></span><span class="title">${c.t('eventTitle')}</span><span style="width:44px"></span></div>
+    <div class="pad" style="margin-bottom:14px"><h1 class="t-title" style="margin:0">${c.t('title')}</h1></div>
+    <div class="list">${row(c, 'palette', 'design', 'designSub', '05-ferdilesdir.html')}${row(c, 'table', 'tables', 'tablesSub', '10-masalar.html')}${row(c, 'users', 'cohost', 'cohostSub', owner ? '11-ortaq-aile.html?state=members' : '11-ortaq-aile.html?state=members')}</div>
+    <div class="list mt-2">${row(c, 'pencil', 'edit', 'editSub', '03-tedbir-yarat.html?state=step2')}${row(c, 'receipt', 'purchases', 'purchasesSub', '12-alis.html')}${row(c, 'download', 'exportL', 'exportSub', '09-statistika.html?state=export')}</div>
+    ${owner ? `<div class="list mt-2">${row(c, 'trash', 'del', 'delSub', '02-tedbirler.html?state=delete', 'danger')}</div>` : ''}<div style="height:24px"></div>`,
+  tabbar: 'more',
+});
+Proto.screen({
+  number: 13,
+  title: { az: 'Daha çox', ru: 'Ещё' },
+  strings: S,
+  states: [
+    { key: 'owner', label: { az: 'Sahib', ru: 'Владелец' }, render: (c) => menu(c, true),
+      note: { az: 'Alt naviqasiyanın 4-cü bölməsi: tədbirin ikinci dərəcəli bölmələri. "Tədbiri sil" yalnız sahibə görünür.', ru: '4-й раздел нижней навигации. «Удалить» видит только владелец.' } },
+    { key: 'cohost', label: { az: 'Ortaq idarəçi', ru: 'Совладелец' }, render: (c) => menu(c, false) },
+  ],
+});
+</script>
+</body>
+</html>

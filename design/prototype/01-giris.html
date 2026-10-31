@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giriş — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .hero { position: relative; height: 210px; margin-top: -59px; padding-top: 59px; color: var(--color-accent-gold); overflow: hidden; }
+  .hero svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .brand { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: -64px; position: relative; }
+  .logo { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--color-bg-surface); box-shadow: var(--shadow-card), inset 0 0 0 1px var(--color-accent-gold); }
+  .logo span { font: 500 30px/1 var(--font-family-serif); color: var(--color-brand-primary); margin-top: -2px; }
+  .divider { display: flex; align-items: center; gap: 12px; color: var(--color-text-secondary); }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--color-border-hairline); }
+  .auth-foot { text-align: center; }
+  .sent { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding-top: 48px; }
+  .sent .art { width: 160px; height: 124px; color: var(--color-accent-gold); }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    welcome: 'Xoş gəlmisiniz', email: 'E-poçt', password: 'Şifrə', signIn: 'Daxil ol', forgot: 'Şifrəni unutmusunuz?',
+    noAccount: 'Hesabınız yoxdur?', register: 'Qeydiyyatdan keçin', or: 'və ya', wrong: 'E-poçt və ya şifrə yanlışdır',
+    regTitle: 'Hesab yarat', name: 'Adınız', passwordRepeat: 'Şifrəni təkrarlayın', terms: 'İstifadə şərtləri və məxfilik siyasəti ilə razıyam',
+    createAccount: 'Hesab yarat', haveAccount: 'Hesabınız var?', signInLink: 'Daxil olun', pwHelp: 'Ən azı 6 simvol',
+    mismatch: 'Şifrələr eyni deyil', termsRequired: 'Davam etmək üçün şərtlərlə razılaşın', emailTaken: 'Bu e-poçtla hesab artıq var',
+    confirmTitle: 'E-poçtunuzu təsdiqləyin', confirmBody: 'aysel.mammadova@example.com ünvanına link göndərdik. Linkə toxunun və tətbiqə qayıdın.', resend: 'Linki yenidən göndər',
+    resetTitle: 'Şifrə bərpası', resetBody: 'Hesabınızın e-poçtunu yazın — şifrəni yeniləmək üçün link göndərəcəyik.', sendLink: 'Link göndər',
+    sentTitle: 'E-poçtunuzu yoxlayın', sentBody: 'Bu e-poçtla hesab varsa, şifrəni yeniləmək üçün link göndərdik. Gəlməyibsə, spam qovluğuna baxın.', backToSignIn: 'Girişə qayıt',
+    toEvents: '→ Ekran 2: Tədbirlərim',
+  },
+  ru: {
+    welcome: 'Добро пожаловать', email: 'Эл. почта', password: 'Пароль', signIn: 'Войти', forgot: 'Забыли пароль?',
+    noAccount: 'Нет аккаунта?', register: 'Зарегистрируйтесь', or: 'или', wrong: 'Неверная эл. почта или пароль',
+    regTitle: 'Создать аккаунт', name: 'Ваше имя', passwordRepeat: 'Повторите пароль', terms: 'Я согласен(на) с условиями использования и политикой конфиденциальности',
+    createAccount: 'Создать аккаунт', haveAccount: 'Уже есть аккаунт?', signInLink: 'Войдите', pwHelp: 'Не менее 6 символов',
+    mismatch: 'Пароли не совпадают', termsRequired: 'Чтобы продолжить, примите условия', emailTaken: 'Аккаунт с этой почтой уже существует',
+    confirmTitle: 'Подтвердите эл. почту', confirmBody: 'Мы отправили ссылку на aysel.mammadova@example.com. Нажмите на неё и вернитесь в приложение.', resend: 'Отправить ссылку ещё раз',
+    resetTitle: 'Восстановление пароля', resetBody: 'Введите почту аккаунта — мы пришлём ссылку для смены пароля.', sendLink: 'Отправить ссылку',
+    sentTitle: 'Проверьте почту', sentBody: 'Если аккаунт с этой почтой существует, мы отправили ссылку для смены пароля. Если письма нет, проверьте папку «Спам».', backToSignIn: 'Вернуться ко входу',
+    toEvents: '→ Экран 2: Мои мероприятия',
+  },
+};
+
+const pwField = (c, { value = 'aysel2027', state = '', label = 'password', help = '' } = {}) => `
+  <div class="field"><label>${c.t(label)}</label>
+    <div class="input ${state}">${c.icon('lock')}<input type="password" value="${value}" aria-label="${c.t(label)}">
+      <button class="icon-btn" type="button" data-toggle-password aria-label="Göstər">${c.icon('eye')}</button></div>
+    ${help}</div>`;
+const emailField = (c, { value = 'aysel.mammadova@example.com', state = '' } = {}) => `
+  <div class="field"><label>${c.t('email')}</label>
+    <div class="input ${state}">${c.icon('mail')}<input type="email" value="${value}" aria-label="${c.t('email')}" inputmode="email"></div></div>`;
+const brand = (c) => `
+  <div class="hero">${c.ART.botanical}</div>
+  <div class="brand"><div class="logo"><span>D</span></div><div class="t-display">Devet</div><p class="t-callout muted" style="margin:0">${c.t('welcome')}</p></div>`;
+
+const signIn = (c, { error = false, loading = false, offline = false } = {}) => `
+  ${offline ? `<div class="pad" style="position:relative;z-index:2"><div class="banner banner-offline mt-1">${c.icon('wifiOff')}<span class="text">${c.t('offline')}</span></div></div>` : ''}
+  ${brand(c)}
+  <form class="pad stack mt-4" onsubmit="return false">
+    ${emailField(c, { state: error ? 'is-error' : '' })}
+    ${pwField(c, { value: error ? 'aysel2026' : 'aysel2027', state: error ? 'is-error' : '', help: error ? `<p class="error" role="alert">${c.icon('alert', 'icon-sm')}${c.t('wrong')}</p>` : '' })}
+    <button class="btn btn-primary btn-block mt-1" ${loading ? 'aria-busy="true"' : `data-state="signin-loading"`} ${offline ? 'disabled' : ''}>
+      ${loading ? '<span class="spinner" aria-hidden="true"></span>' : c.t('signIn')}</button>
+    <a href="#" class="btn btn-text" data-state="reset">${c.t('forgot')}</a>
+    <div class="divider t-footnote">${c.t('or')}</div>
+    <p class="auth-foot t-callout" style="margin:0"><span class="muted">${c.t('noAccount')}</span> <a href="#" class="btn btn-text" style="display:inline-flex;padding:0 4px" data-state="register">${c.t('register')}</a></p>
+  </form>`;
+
+const register = (c, { error = false } = {}) => `
+  <div class="topbar"><button class="icon-btn" data-state="signin" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div>
+  <div class="pad">
+    <h1 class="t-title" style="margin:8px 0 24px">${c.t('regTitle')}</h1>
+    <div class="stack">
+      <div class="field"><label>${c.t('name')}</label><div class="input">${c.icon('user')}<input value="Aysel Məmmədova" aria-label="${c.t('name')}"></div></div>
+      ${emailField(c)}
+      ${pwField(c, { value: 'aysel2027', help: `<p class="help">${c.t('pwHelp')}</p>` })}
+      ${pwField(c, { label: 'passwordRepeat', value: error ? 'aysel2028' : 'aysel2027', state: error ? 'is-error' : '', help: error ? `<p class="error" role="alert">${c.icon('alert', 'icon-sm')}${c.t('mismatch')}</p>` : '' })}
+      <label class="checkbox ${error ? '' : 'is-checked'}"><span class="box">${error ? '' : c.icon('check', 'icon-sm')}</span><span class="t-callout">${c.t('terms')}</span></label>
+      ${error ? `<p class="t-footnote" style="color:var(--color-feedback-danger);margin:-8px 0 0 36px">${c.t('termsRequired')}</p>` : ''}
+      <button class="btn btn-primary btn-block mt-1" data-state="register-confirm" ${error ? 'disabled' : ''}>${c.t('createAccount')}</button>
+      <p class="auth-foot t-callout" style="margin:0"><span class="muted">${c.t('haveAccount')}</span> <a href="#" class="btn btn-text" style="display:inline-flex;padding:0 4px" data-state="signin">${c.t('signInLink')}</a></p>
+    </div>
+  </div>`;
+
+const message = (c, title, body, primary) => `
+  <div class="topbar"><button class="icon-btn" data-state="signin" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div>
+  <div class="pad sent"><div class="art">${c.ART.emptyGuests}</div><h1 class="t-headline-serif" style="margin:0">${title}</h1><p class="t-callout muted" style="margin:0">${body}</p>${primary}</div>`;
+
+Proto.screen({
+  number: 1,
+  title: { az: 'Giriş', ru: 'Вход' },
+  strings: S,
+  states: [
+    { key: 'signin', label: { az: 'Giriş', ru: 'Вход' }, render: (c) => signIn(c),
+      note: { az: 'Əsas hərəkət "Daxil ol". Android: eyni ekran, sistem geri jesti tətbiqi bağlayır.', ru: 'Основное действие — «Войти». Android: системный жест «назад» закрывает приложение.' } },
+    { key: 'signin-error', label: { az: 'Səhv şifrə', ru: 'Неверный пароль' }, render: (c) => signIn(c, { error: true }),
+      note: { az: 'Xəta mətni sahənin altında, rəng + ikon + mətn. Hansı sahənin səhv olduğu açıqlanmır (təhlükəsizlik).', ru: 'Текст ошибки под полем: цвет + иконка + текст.' } },
+    { key: 'signin-loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => signIn(c, { loading: true }),
+      after: (d, c) => setTimeout(() => window.__proto.toast(c.t('toEvents')), 900),
+      note: { az: 'Spinner düymənin içində; uğurlu girişdən sonra Ekran 2 (Tədbirlərim).', ru: 'Спиннер внутри кнопки; после входа — экран 2.' } },
+    { key: 'signin-offline', label: { az: 'Oflayn', ru: 'Офлайн' }, render: (c) => signIn(c, { offline: true }) },
+    { key: 'register', label: { az: 'Qeydiyyat', ru: 'Регистрация' }, render: (c) => register(c) },
+    { key: 'register-error', label: { az: 'Qeydiyyat — xəta', ru: 'Регистрация — ошибка' }, render: (c) => register(c, { error: true }) },
+    { key: 'register-confirm', label: { az: 'E-poçt təsdiqi', ru: 'Подтверждение почты' },
+      render: (c) => message(c, c.t('confirmTitle'), c.t('confirmBody'), `<button class="btn btn-secondary btn-block mt-2" data-toast="✓">${c.t('resend')}</button>`) },
+    { key: 'reset', label: { az: 'Şifrə bərpası', ru: 'Восстановление' }, render: (c) => `
+      <div class="topbar"><button class="icon-btn" data-state="signin" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div>
+      <div class="pad stack"><h1 class="t-title" style="margin:8px 0 0">${c.t('resetTitle')}</h1><p class="t-callout muted" style="margin:0 0 8px">${c.t('resetBody')}</p>
+        ${emailField(c, { state: 'is-focused' })}<button class="btn btn-primary btn-block mt-1" data-state="reset-sent">${c.t('sendLink')}</button></div>` },
+    { key: 'reset-sent', label: { az: 'Link göndərildi', ru: 'Ссылка отправлена' },
+      render: (c) => message(c, c.t('sentTitle'), c.t('sentBody'), `<button class="btn btn-primary btn-block mt-2" data-state="signin">${c.t('backToSignIn')}</button>`),
+      note: { az: 'Hesab olub-olmadığı açıqlanmır (screens.md §1).', ru: 'Не раскрываем, существует ли аккаунт.' } },
+  ],
+});
+</script>
+</body>
+</html>

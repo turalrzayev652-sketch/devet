@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Göndərmə — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .check-row { display: flex; gap: 12px; align-items: center; padding: 12px 16px; }
+  .check-row + .check-row { border-top: 1px solid var(--color-border-hairline); }
+  .check-row .main { flex: 1; min-width: 0; }
+  .check-row .name { font-weight: 600; font-size: calc(15px * var(--font-scale)); line-height: 1.35; overflow-wrap: anywhere; }
+  .warn-row { background: var(--color-feedback-warning-bg); }
+  .send-card { margin: 0 var(--space-2); padding: 20px; }
+  .send-card .who { display: flex; gap: 14px; align-items: center; }
+  .send-card .who .main { flex: 1; min-width: 0; }
+  .send-card .name { font: 600 calc(19px * var(--font-scale)) / 1.3 var(--font-family-sans); overflow-wrap: anywhere; }
+  .sticky-bottom { position: absolute; left: 0; right: 0; bottom: 83px; z-index: 7; padding: 12px var(--layout-gutter) 12px; background: linear-gradient(to top, var(--color-bg-canvas) 70%, transparent); }
+  .done { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 40px var(--layout-gutter) 0; }
+  .done .art { width: 180px; height: 140px; color: var(--color-accent-gold); }
+  .stat-line { display: flex; gap: 16px; justify-content: center; }
+  .stat-line div { display: flex; flex-direction: column; align-items: center; }
+  @media (prefers-reduced-motion: no-preference) { .sparkle { animation: pop 1.2s var(--motion-easing-standard) 1; } }
+  @keyframes pop { 0% { transform: scale(.8); opacity: 0; } 60% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    send: 'Göndərmə', checkTitle: 'Adları yoxlayın', checkBody: '212 qonaq bu adla dəvətnamə alacaq. Səhv varsa, sətrə toxunub düzəldin.',
+    noPhone: 'Telefon yoxdur: 3', emptyName: 'Boş ad: 0', allGood: 'Hamısı düzgündür — başla', fixPhone: 'Telefon yoxdur',
+    generating: 'Adlı önizləmə şəkilləri hazırlanır', generatingBody: 'Hər qonaq WhatsApp-da öz adını görəcək.', progressGen: '{a} / {b} şəkil',
+    progressSent: '{a} / {b} göndərildi', waSend: 'WhatsApp-da göndər', skip: 'Keç', message: 'Mesaj', langTag: 'AZ',
+    sentQ: 'Göndərildi?', sentQBody: 'WhatsApp-da mesajı göndərdinizsə, təsdiqləyin — qonaq "göndərildi" kimi qeyd olunacaq.', yesNext: 'Bəli, növbəti', noRetry: 'Xeyr, yenidən',
+    warn120: 'Bu gün çox mesaj göndərdiniz. Nömrənizin məhdudlaşdırılmaması üçün qalanını sabah davam etdirin.', continueAnyway: 'Yenə də davam et',
+    doneTitle: 'Bütün dəvətlər göndərildi', doneBody: '209 qonağa göndərildi. Cavablar gəldikcə Statistikada görəcəksiniz.', toStats: 'Statistikaya bax',
+    noPhoneTitle: 'Telefonu olmayan qonaqlar', noPhoneBody: 'Onlara linki özünüz istədiyiniz yolla göndərin.', copyLink: 'Linki kopyala', copied: 'Link kopyalandı',
+    lockedTitle: 'Premium şablonu alın', lockedBody: 'Seçdiyiniz premium şablonla dəvət göndərmək üçün onu bu tədbir üçün alın. Önizləmə və fərdiləşdirmə pulsuzdur.', buy: 'Al — 19,99 ₼', changeTpl: 'Pulsuz şablon seç',
+    uploadError: '12 önizləmə şəkli yüklənmədi', uploadErrorBody: 'Bağlantı kəsildi. Hazır olanlar saxlanılıb.',
+    emptyTitle: 'Göndəriləcək qonaq yoxdur', emptyBody: 'Bütün telefonu olan qonaqlara artıq göndərilib. Yeni qonaq əlavə etsəniz, burada görünəcək.', addGuest: 'Qonaq əlavə et',
+    resend: 'Yenidən göndərmək: qonağın kartında "Yenidən göndər".',
+    waTitle: '{d}, sizi Aysel və Ramin toyuna dəvət edirik',
+    waMsg: 'Hörmətli {d}! Aysel və Ramin toyuna dəvətlisiniz. Dəvətnamə: {link}',
+  },
+  ru: {
+    send: 'Отправка', checkTitle: 'Проверьте имена', checkBody: '212 гостей получат приглашение с этим именем. Если есть ошибка, нажмите на строку и исправьте.',
+    noPhone: 'Нет телефона: 3', emptyName: 'Пустое имя: 0', allGood: 'Всё верно — начать', fixPhone: 'Нет телефона',
+    generating: 'Готовим именные превью', generatingBody: 'Каждый гость увидит в WhatsApp своё имя.', progressGen: '{a} / {b} изображений',
+    progressSent: 'Отправлено {a} из {b}', waSend: 'Отправить в WhatsApp', skip: 'Пропустить', message: 'Сообщение', langTag: 'RU',
+    sentQ: 'Отправлено?', sentQBody: 'Если вы отправили сообщение в WhatsApp, подтвердите — гость будет отмечен как «отправлено».', yesNext: 'Да, следующий', noRetry: 'Нет, ещё раз',
+    warn120: 'Сегодня вы отправили много сообщений. Чтобы номер не ограничили, продолжите завтра.', continueAnyway: 'Всё равно продолжить',
+    doneTitle: 'Все приглашения отправлены', doneBody: 'Отправлено 209 гостям. Ответы будут появляться в Статистике.', toStats: 'Открыть статистику',
+    noPhoneTitle: 'Гости без телефона', noPhoneBody: 'Отправьте им ссылку сами любым удобным способом.', copyLink: 'Скопировать ссылку', copied: 'Ссылка скопирована',
+    lockedTitle: 'Купите премиум-шаблон', lockedBody: 'Чтобы отправлять приглашения с выбранным премиум-шаблоном, купите его для этого мероприятия. Просмотр и настройка бесплатны.', buy: 'Купить — 19,99 ₼', changeTpl: 'Выбрать бесплатный шаблон',
+    uploadError: 'Не загрузились 12 превью', uploadErrorBody: 'Соединение прервалось. Готовые сохранены.',
+    emptyTitle: 'Некому отправлять', emptyBody: 'Всем гостям с телефоном уже отправлено. Новые гости появятся здесь.', addGuest: 'Добавить гостя',
+    resend: 'Отправить повторно: «Отправить ещё раз» в карточке гостя.',
+    waTitle: '{d}, приглашаем вас на свадьбу: Aysel və Ramin',
+    waMsg: 'Здравствуйте, {d}! Приглашаем вас на свадьбу: Aysel və Ramin. Приглашение: {link}',
+  },
+};
+
+const topBar = (c, title) => `<div class="topbar"><button class="icon-btn" data-go="06-qonaqlar.html" aria-label="Geri">${c.icon('back')}</button><span class="title">${title}</span><span style="width:44px"></span></div>`;
+const art = (initials = 'A & R') => `<div class="art-invite"><span class="line"></span><span class="mono">${initials}</span></div>`;
+const G = Proto.DATA.guests;
+
+const checkList = (c) => {
+  const rows = [...G, { id: 7, name: 'Fərid Quliyev', sal: 'none', family: false, count: 1, side: 'groom', status: 'unsent', phone: null }];
+  return `<div class="list mt-2">${rows.map((g) => `
+    <div class="check-row ${g.phone ? '' : 'warn-row'}">
+      <span class="thumb">${art()}</span>
+      <div class="main"><div class="name">${c.greeting(g)}</div>
+        <div class="t-footnote ${g.phone ? 'muted' : ''}" style="${g.phone ? '' : 'color:var(--color-feedback-warning);font-weight:600'}">${g.phone ? g.phone : '⚠ ' + c.t('fixPhone')}</div></div>
+      ${c.icon('chevronRight')}
+    </div>`).join('')}</div>`;
+};
+
+const card = (c, g = G[0]) => {
+  const d = c.displayName(g);
+  return `<div class="card send-card">
+    <div class="who"><span class="avatar avatar-lg">${c.initials(g)}</span><div class="main"><div class="name">${d}</div>
+      <div class="t-footnote muted" style="margin-top:2px">${g.phone} · <span class="lang-tag">${c.t('langTag')}</span></div></div></div>
+    <div class="wa-preview mt-2"><div class="img">${art()}</div><div class="body"><div class="site">${c.DATA.link.split('/')[0]}</div><div class="ttl">${c.t('waTitle', { d })}</div></div></div>
+    <p class="t-footnote muted" style="margin:12px 0 6px">${c.t('message')}</p>
+    <div class="message">${c.t('waMsg', { d: d, link: c.DATA.link })}</div>
+  </div>`;
+};
+
+const progress = (c, a, b, key = 'progressSent') => `<div class="pad" style="margin:4px 0 14px"><div class="row-flex" style="margin-bottom:8px"><span class="t-headline">${c.t(key, { a, b })}</span></div><div class="progress"><span style="width:${(a / b * 100).toFixed(1)}%"></span></div></div>`;
+const sendButtons = (c, disabled = false) => `<div class="sticky-bottom"><button class="btn btn-primary btn-block btn-wa" data-state="confirm" ${disabled ? 'disabled' : ''}>${c.WA}${c.t('waSend')}</button><button class="btn btn-text btn-block">${c.icon('skip', 'icon-sm')}${c.t('skip')}</button></div>`;
+
+const sending = (c, extra = '') => ({ html: `${topBar(c, c.t('send'))}${progress(c, 45, 212)}${extra}${card(c)}<div style="height:150px"></div>`, tabbar: 'send', overlay: sendButtons(c) });
+
+Proto.screen({
+  number: 8,
+  title: { az: 'Göndərmə', ru: 'Отправка' },
+  strings: S,
+  states: [
+    { key: 'check', label: { az: 'A · Adları yoxla', ru: 'A · Проверка имён' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="pad"><h1 class="t-title" style="margin:4px 0 6px">${c.t('checkTitle')}</h1><p class="t-callout muted" style="margin:0 0 12px">${c.t('checkBody')}</p>
+          <div class="row-flex" style="flex-wrap:wrap;gap:8px"><span class="badge badge-warn">${c.icon('alert', 'icon-sm')} ${c.t('noPhone')}</span><span class="badge badge-neutral">${c.t('emptyName')}</span></div></div>
+          ${checkList(c)}<div style="height:130px"></div>`,
+        tabbar: 'send',
+        overlay: `<div class="sticky-bottom"><button class="btn btn-primary btn-block" data-state="generating">${c.t('allGood')}</button></div>`,
+      }), note: { az: 'Məcburi addım: göndərmədən əvvəl bütün adlar qonağın dilində göstərilir (T47). Telefonsuzlar sarı fonla.', ru: 'Обязательный шаг: перед отправкой все имена показываются на языке гостя.' } },
+    { key: 'generating', label: { az: 'Şəkillər hazırlanır', ru: 'Готовим превью' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="done"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('generating')}</h2><p class="t-callout muted" style="margin:0">${c.t('generatingBody')}</p></div>${progress(c, 140, 212, 'progressGen')}`,
+        tabbar: 'send',
+      }), after: () => setTimeout(() => { if (window.__proto.state === 'generating') window.__proto.setState('sending'); }, 1600),
+      note: { az: 'Yüklənmə halı: 300 şəkil < 30 san (T47). Sonra avtomatik göndərmə kartına keçir.', ru: 'Состояние загрузки; затем автоматически карточка отправки.' } },
+    { key: 'sending', label: { az: 'B · Göndərmə kartı', ru: 'B · Карточка отправки' }, render: (c) => sending(c),
+      note: { az: '"WhatsApp-da göndər" wa.me linkini açır; Göndər düyməsini istifadəçi WhatsApp-da özü basır. Kart dəyişəndə yay animasiyası (azaldılmış hərəkətdə yalnız solma).', ru: '«Отправить в WhatsApp» открывает ссылку wa.me; кнопку «Отправить» пользователь нажимает сам.' } },
+    { key: 'confirm', label: { az: '"Göndərildi?"', ru: '«Отправлено?»' }, render: (c) => ({
+        ...sending(c),
+        overlay: `<div class="scrim"></div><div class="sheet" role="dialog" aria-label="${c.t('sentQ')}"><div class="grabber"></div>
+          <h2 class="t-headline-serif" style="margin:0 0 6px">${c.t('sentQ')}</h2><p class="t-callout muted" style="margin:0 0 18px">${c.t('sentQBody')}</p>
+          <button class="btn btn-primary btn-block" data-state="warning">${c.t('yesNext')}</button>
+          <button class="btn btn-secondary btn-block mt-1" data-state="sending">${c.t('noRetry')}</button></div>`,
+      }), note: { az: 'Tətbiqə qayıdanda avtomatik açılır. "Bəli" → sent_at yazılır, növbəti qonaq.', ru: 'Открывается при возврате в приложение. «Да» → sent_at, следующий гость.' } },
+    { key: 'warning', label: { az: '120 xəbərdarlığı', ru: 'Предупреждение 120' }, render: (c) => sending(c, `<div class="pad" style="margin-bottom:12px"><div class="banner banner-warn" role="status">${c.icon('alert')}<span class="text">${c.t('warn120')}<br><button class="btn btn-text mt-1">${c.t('continueAnyway')}</button></span></div></div>`),
+      note: { az: 'Bloklamır — yalnız xəbərdarlıq (app_config.daily_send_warning = 120).', ru: 'Не блокирует — только предупреждение.' } },
+    { key: 'no-phone', label: { az: 'Telefonsuzlar', ru: 'Без телефона' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="pad"><h1 class="t-title" style="margin:4px 0 6px">${c.t('noPhoneTitle')}</h1><p class="t-callout muted" style="margin:0 0 12px">${c.t('noPhoneBody')}</p></div>
+          <div class="list">${['Fərid Quliyev', 'Nərmin Həsənova', 'Kamran Rzayev'].map((n) => `<div class="check-row"><span class="avatar">${n.split(' ').map((w) => w[0]).join('')}</span><div class="main"><div class="name">${n}</div><div class="t-footnote muted">${c.DATA.link.replace('K7D2M9QX', 'Q2W3E4R5')}</div></div><button class="btn btn-secondary" style="min-height:44px;padding:8px 14px;font-size:15px" data-toast="${c.t('copied')}">${c.t('copyLink')}</button></div>`).join('')}</div>`,
+        tabbar: 'send',
+      }), note: { az: 'Qərar §15.5: tətbiq özü heç nə göndərmir; "göndərildi" yalnız təsdiqdən sonra.', ru: 'Решение §15.5: приложение само ничего не отправляет.' } },
+    { key: 'done', label: { az: 'Tamamlandı', ru: 'Готово' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="done"><div class="art sparkle">${c.ART.celebrate}</div><h1 class="t-title" style="margin:0">${c.t('doneTitle')}</h1><p class="t-callout muted" style="margin:0">${c.t('doneBody')}</p>
+          <button class="btn btn-primary btn-block mt-2" data-go="09-statistika.html">${c.t('toStats')}</button><button class="btn btn-text" data-state="no-phone">${c.t('noPhoneTitle')} (3)</button><p class="t-footnote muted">${c.t('resend')}</p></div>`,
+        tabbar: 'send',
+      }), note: { az: 'Uğur anı: bir dəfəlik parıltı (≤ 1.2 s); azaldılmış hərəkətdə statik.', ru: 'Момент успеха: однократная искра; при reduce motion — статично.' } },
+    { key: 'locked', label: { az: 'Premium alınmayıb', ru: 'Премиум не куплен' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="done"><span class="badge badge-premium" style="font-size:13px">${c.icon('sparkle', 'icon-sm')} Premium</span><h1 class="t-title" style="margin:0">${c.t('lockedTitle')}</h1><p class="t-callout muted" style="margin:0">${c.t('lockedBody')}</p>
+          <button class="btn btn-primary btn-block mt-2" data-go="12-alis.html">${c.t('buy')}</button><button class="btn btn-secondary btn-block" data-go="04-sablonlar.html">${c.t('changeTpl')}</button></div>`,
+        tabbar: 'send',
+      }) },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="pad"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('uploadError')}</strong><br>${c.t('uploadErrorBody')}</span><button class="btn btn-text" data-state="generating">${c.t('retry')}</button></div></div>${progress(c, 200, 212, 'progressGen')}`,
+        tabbar: 'send',
+      }) },
+    { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => ({
+        html: `${topBar(c, c.t('send'))}<div class="empty"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p><button class="btn btn-primary btn-block mt-2" data-go="07-qonaq-elave.html">${c.t('addGuest')}</button></div>`,
+        tabbar: 'send',
+      }) },
+  ],
+});
+</script>
+</body>
+</html>

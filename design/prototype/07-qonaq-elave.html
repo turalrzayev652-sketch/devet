@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qonaq əlavə et — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .prefix { padding-right: 10px; margin-right: 2px; border-right: 1px solid var(--color-border-hairline); font-weight: 600; color: var(--color-text-secondary); }
+  .err-list { margin: 0; padding: 0; list-style: none; }
+  .err-list li { display: flex; gap: 10px; padding: 10px 14px; font-size: calc(14px * var(--font-scale)); }
+  .err-list li + li { border-top: 1px solid var(--color-border-hairline); }
+  .err-list .rn { flex: none; font-weight: 600; color: var(--color-feedback-danger); font-variant-numeric: tabular-nums; }
+  .contact-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+  .contact-row + .contact-row { border-top: 1px solid var(--color-border-hairline); }
+  .contact-row .main { flex: 1; min-width: 0; }
+  .sal-chips { display: flex; gap: 4px; margin-top: 6px; }
+  .sal-chips .chip { min-height: 30px; padding: 3px 10px; font-size: 13px; }
+  .mini-stepper { display: inline-flex; align-items: center; border: 1px solid var(--color-border-control); border-radius: 10px; }
+  .mini-stepper button { width: 32px; height: 36px; border: 0; background: none; color: var(--color-brand-primary); font-size: 18px; cursor: pointer; }
+  .mini-stepper span { min-width: 18px; text-align: center; font-weight: 600; font-size: 14px; }
+  .table-scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Qonaq əlavə et', manual: 'Əl ilə', contacts: 'Kontaktlar', excel: 'Excel', salutation: 'Hitab', sMuellim: 'Müəllim', sXanim: 'Xanım', sBey: 'Bəy', sNone: 'Yox',
+    name: 'Ad', phone: 'Telefon', count: 'Nəfər', side: 'Tərəf', tableNo: 'Masa', none: 'Ümumi', saveNext: 'Yadda saxla və növbəti', withFamily: 'Ailəliklə',
+    contactsTitle: 'Telefon kontaktlarından', contactsBody: 'Bir neçə kontaktı birdən seçin. Hitabı və nəfər sayını sonra hər sətirdə dəqiqləşdirə bilərsiniz.', pick: 'Kontaktları seç', privacy: 'Yalnız seçdiyiniz kontaktlar əlavə olunur.',
+    add23: '23 qonaq əlavə et', selected23: '23 kontakt seçildi', multiPhone: '2 nömrə — seçin',
+    excelTitle: 'Excel faylı seçin (.xlsx)', excelBody: 'İlk sətir başlıqdır: Ad, Telefon, Hitab, Nəfər, Tərəf, Masa, Dil. Rus, ingilis və türk başlıqları da tanınır.', choose: 'Fayl seç', sample: 'Nümunə faylı yüklə',
+    mapTitle: 'Sütunları uyğunlaşdırın', mapBody: 'qonaqlar_toy.xlsx · 254 sətir', skip: 'Nəzərə alma', preview5: 'İlk 5 sətir', next: 'Davam et',
+    fName: 'Ad', fPhone: 'Telefon', fSal: 'Hitab', fCount: 'Nəfər', fSide: 'Tərəf', fTable: 'Masa', fLang: 'Dil',
+    summary: '248 sətir hazırdır · 6 sətirdə xəta', errors: 'Xətalı sətirlər (idxal olunmayacaq)', dup: '3 nömrə təkrarlanır — xəbərdarlıq, qonaqlar yenə əlavə olunacaq', import248: '248 qonağı idxal et',
+    e14: 'telefon nömrəsi yanlışdır', e37: 'ad boşdur', e52: 'nəfər sayı 1–50 olmalıdır', e88: 'WhatsApp üçün mobil nömrə lazımdır (ev telefonu)', e120: 'tərəf tanınmadı: "qonşu"', e201: 'telefon nömrəsi yanlışdır',
+    importing: 'İdxal olunur… 140 / 248', limitTitle: 'Limit doldu: 100/100', limitBody: 'Bu idxalla 148 qonaq limitdən artıq olardı — heç biri əlavə olunmadı. İdxal saxlanılıb, alışdan sonra davam edin.',
+    toPremium: 'Premium şablona keç — 300 qonaq', addLimit: 'Limiti artır: +200 qonaq', fileError: 'Fayl oxunmadı', fileErrorBody: 'Fayl .xlsx formatında olmalıdır. Excel-də "Fərqli saxla → Excel iş kitabı" seçin.',
+    savedToast: 'Elçin müəllim və ailəsi əlavə olundu',
+  },
+  ru: {
+    title: 'Добавить гостей', manual: 'Вручную', contacts: 'Контакты', excel: 'Excel', salutation: 'Обращение', sMuellim: 'Муаллим', sXanim: 'Ханум', sBey: 'Бей', sNone: 'Нет',
+    name: 'Имя', phone: 'Телефон', count: 'Человек', side: 'Сторона', tableNo: 'Стол', none: 'Общая', saveNext: 'Сохранить и следующий', withFamily: 'С семьёй',
+    contactsTitle: 'Из контактов телефона', contactsBody: 'Выберите сразу несколько контактов. Обращение и количество человек можно уточнить в каждой строке.', pick: 'Выбрать контакты', privacy: 'Добавляются только выбранные контакты.',
+    add23: 'Добавить 23 гостя', selected23: 'Выбрано 23 контакта', multiPhone: '2 номера — выберите',
+    excelTitle: 'Выберите файл Excel (.xlsx)', excelBody: 'Первая строка — заголовки: Имя, Телефон, Обращение, Кол-во, Сторона, Стол, Язык. Распознаются и азербайджанские, английские, турецкие заголовки.', choose: 'Выбрать файл', sample: 'Скачать образец',
+    mapTitle: 'Сопоставьте столбцы', mapBody: 'qonaqlar_toy.xlsx · 254 строки', skip: 'Не учитывать', preview5: 'Первые 5 строк', next: 'Продолжить',
+    fName: 'Имя', fPhone: 'Телефон', fSal: 'Обращение', fCount: 'Кол-во', fSide: 'Сторона', fTable: 'Стол', fLang: 'Язык',
+    summary: '248 строк готовы · ошибки в 6 строках', errors: 'Строки с ошибками (не будут импортированы)', dup: '3 номера повторяются — предупреждение, гости всё равно будут добавлены', import248: 'Импортировать 248 гостей',
+    e14: 'неверный номер телефона', e37: 'пустое имя', e52: 'количество должно быть от 1 до 50', e88: 'для WhatsApp нужен мобильный номер (городской)', e120: 'сторона не распознана: «qonşu»', e201: 'неверный номер телефона',
+    importing: 'Импорт… 140 / 248', limitTitle: 'Лимит исчерпан: 100/100', limitBody: 'С этим импортом лимит превысили бы 148 гостей — никто не добавлен. Импорт сохранён, продолжите после покупки.',
+    toPremium: 'Перейти на премиум — 300 гостей', addLimit: 'Увеличить лимит: +200 гостей', fileError: 'Не удалось прочитать файл', fileErrorBody: 'Нужен формат .xlsx. В Excel выберите «Сохранить как → Книга Excel».',
+    savedToast: 'Elçin муаллим с семьёй добавлен',
+  },
+};
+
+const head = (c, tab) => `<div class="topbar"><button class="icon-btn" data-go="06-qonaqlar.html" aria-label="Geri">${c.icon('back')}</button><span class="title">${c.t('title')}</span><span style="width:44px"></span></div>
+  <div class="pad" style="margin-bottom:16px"><div class="segmented" role="tablist">${['manual', 'contacts', 'excel'].map((k) => `<button role="tab" aria-pressed="${k === tab}" data-state="${k}">${c.t(k)}</button>`).join('')}</div></div>`;
+const bottom = (c, label, state, secondary) => `<div class="bottom-actions"><button class="btn btn-primary btn-block" ${state.startsWith('go:') ? `data-go="${state.slice(3)}"` : `data-state="${state}"`}>${label}</button>${secondary || ''}</div>`;
+const field = (label, inner) => `<div class="field"><label>${label}</label>${inner}</div>`;
+
+const manual = (c) => ({
+  html: `${head(c, 'manual')}<div class="pad stack">
+    ${field(c.t('salutation'), `<div class="segmented">${['sMuellim', 'sXanim', 'sBey', 'sNone'].map((k, i) => `<button aria-pressed="${i === 0}">${c.t(k)}</button>`).join('')}</div>`)}
+    ${field(c.t('name'), `<div class="input is-focused"><input value="Elçin"></div>`)}
+    <div class="setting-row" style="border:0;padding:0"><span class="label t-body">${c.t('withFamily')}</span><span class="toggle is-on"></span></div>
+    ${field(c.t('phone'), `<div class="input"><span class="prefix">+994</span><input value="50 123 45 67" inputmode="tel"></div>`)}
+    <div class="row-flex" style="gap:12px;align-items:flex-end">${field(c.t('count'), `<span class="stepper"><button>−</button><span class="val">4</span><button>+</button></span>`)}<div style="flex:1;min-width:0">${field(c.t('tableNo'), `<div class="input"><input value="12"></div>`)}</div></div>
+    ${field(c.t('side'), `<div class="segmented">${['groom', 'bride', 'none'].map((k, i) => `<button aria-pressed="${i === 0}">${c.t(k)}</button>`).join('')}</div>`)}
+  </div><div style="height:160px"></div>`,
+  overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-toast="${c.t('savedToast')}">${c.t('saveNext')}</button><button class="btn btn-text btn-block" data-go="06-qonaqlar.html">${c.t('save')}</button></div>`,
+});
+
+const contactsList = (c) => {
+  const people = [['Elçin Hüseynov', 'muellim', 4, '+994 50 123 45 67'], ['Leyla Kərimova', 'xanim', 1, '+994 55 111 22 33'], ['Rəşad Babayev', 'bey', 2, null], ['Günel Məmmədova', 'none', 3, '+994 51 765 43 21']];
+  return `<div class="list">${people.map(([n, s, cnt, ph]) => `<div class="contact-row"><span class="select-box is-checked">${c.icon('check', 'icon-sm')}</span><div class="main"><div class="t-headline" style="font-size:calc(15px * var(--font-scale))">${n}</div>
+    <div class="t-footnote ${ph ? 'muted' : ''}" style="${ph ? '' : 'color:var(--color-feedback-warning);font-weight:600'}">${ph || c.t('multiPhone')}</div>
+    <div class="sal-chips">${['sMuellim', 'sXanim', 'sBey', 'sNone'].map((k) => `<button class="chip ${'s' + s[0].toUpperCase() + s.slice(1) === k ? 'is-selected' : ''}">${c.t(k)}</button>`).join('')}</div></div>
+    <span class="mini-stepper"><button>−</button><span>${cnt}</span><button>+</button></span></div>`).join('')}</div>`;
+};
+
+const mapping = (c) => {
+  const rows = [['A: Ad Soyad', 'fName'], ['B: Tel', 'fPhone'], ['C: Müraciət', 'fSal'], ['D: Neçə nəfər', 'fCount'], ['E: Tərəf', 'fSide'], ['F: Masa №', 'fTable'], ['G: Qeyd', null]];
+  return `<div class="list">${rows.map(([col, f]) => `<div class="map-row"><span class="col">${col}</span>${c.icon('chevronRight', 'icon-sm')}<span class="dropdown ${f ? '' : 'is-skip'}">${f ? c.t(f) : c.t('skip')}${c.icon('chevronDown', 'icon-sm')}</span></div>`).join('')}</div>
+    <p class="section-title" style="margin-left:24px">${c.t('preview5')}</p>
+    <div class="list table-scroll"><table class="preview-table"><thead><tr><th>${c.t('fName')}</th><th>${c.t('fPhone')}</th><th>${c.t('fSal')}</th><th>${c.t('fCount')}</th><th>${c.t('fTable')}</th></tr></thead><tbody>
+    ${[['Elçin Hüseynov', '050 123 45 67', 'müəllim', '4', '12'], ['Leyla Kərimova', '055 111 22 33', 'xanım', '1', '7'], ['Rəşad Babayev', '070 222 33 44', 'bəy', '2', '12'], ['Günel Məmmədova', '051 765 43 21', '', '3', ''], ['Tural Əliyev', '077 444 55 66', '', '2', '3']].map((r) => `<tr>${r.map((v) => `<td>${v || '—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+};
+
+const summary = (c) => `<div class="pad"><div class="card" style="padding:16px"><div class="row-flex"><span class="avatar" style="background:var(--color-feedback-success-bg);color:var(--color-feedback-success)">${c.icon('check')}</span><span class="t-headline">${c.t('summary')}</span></div>
+    <div class="split mt-2"><span style="flex:248;background:var(--color-status-coming-fg)"></span><span style="flex:6;background:var(--color-feedback-danger)"></span></div></div>
+    <div class="banner banner-warn mt-2">${c.icon('alert')}<span class="text">${c.t('dup')}</span></div></div>
+  <p class="section-title">${c.t('errors')}</p>
+  <div class="list"><ul class="err-list">${[[14, 'e14'], [37, 'e37'], [52, 'e52'], [88, 'e88'], [120, 'e120'], [201, 'e201']].map(([r, k]) => `<li><span class="rn">${c.lang === 'ru' ? 'Строка' : 'Sətir'} ${r}</span><span>${c.t(k)}</span></li>`).join('')}</ul></div>`;
+
+Proto.screen({
+  number: 7,
+  title: { az: 'Qonaq əlavə etmə', ru: 'Добавление гостей' },
+  strings: S,
+  states: [
+    { key: 'manual', label: { az: 'Əl ilə', ru: 'Вручную' }, render: (c) => manual(c),
+      note: { az: '"Yadda saxla və növbəti": forma təmizlənir, tərəf/masa saxlanılır. Telefon spec/test-vectors/phones.json qaydaları ilə yoxlanır.', ru: '«Сохранить и следующий»: форма очищается, сторона/стол сохраняются.' } },
+    { key: 'contacts', label: { az: 'Kontaktlar', ru: 'Контакты' }, render: (c) => `${head(c, 'contacts')}<div class="empty" style="padding-top:16px"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('contactsTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('contactsBody')}</p>
+        <button class="btn btn-primary btn-block mt-2" data-state="contacts-selected">${c.icon('contacts')}${c.t('pick')}</button><p class="t-footnote muted">${c.t('privacy')}</p></div>`,
+      note: { az: 'Android: contact picker (icazəsiz seçim); iOS: CNContactPickerViewController.', ru: 'Android: системный выбор контактов; iOS: CNContactPickerViewController.' } },
+    { key: 'contacts-selected', label: { az: 'Kontaktlar seçildi', ru: 'Контакты выбраны' }, render: (c) => ({ html: `${head(c, 'contacts')}<p class="pad t-headline" style="margin:0 0 10px">${c.t('selected23')}</p>${contactsList(c)}<div style="height:120px"></div>`, overlay: bottom(c, c.t('add23'), 'go:06-qonaqlar.html') }),
+      note: { az: 'Qərar §15.7: bir neçə mobil nömrəsi olan kontakt üçün seçim dialoqu.', ru: 'Решение §15.7: для контакта с несколькими номерами — диалог выбора.' } },
+    { key: 'excel', label: { az: 'Excel', ru: 'Excel' }, render: (c) => `${head(c, 'excel')}<div class="pad"><div class="upload-card"><span class="avatar">${c.icon('sheet')}</span><h2 class="t-headline" style="margin:0">${c.t('excelTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('excelBody')}</p>
+        <button class="btn btn-primary btn-block mt-1" data-state="excel-mapping">${c.icon('upload', 'icon-sm')}${c.t('choose')}</button><button class="btn btn-text" data-toast="qonaqlar_numune.xlsx">${c.icon('download', 'icon-sm')}${c.t('sample')}</button></div></div>` },
+    { key: 'excel-mapping', label: { az: 'Sütun uyğunlaşdırma', ru: 'Сопоставление' }, render: (c) => ({ html: `${head(c, 'excel')}<div class="pad"><h2 class="t-headline-serif" style="margin:0">${c.t('mapTitle')}</h2><p class="t-footnote muted" style="margin:4px 0 12px">${c.t('mapBody')}</p></div>${mapping(c)}<div style="height:120px"></div>`, overlay: bottom(c, c.t('next'), 'excel-summary') }),
+      note: { az: 'Başlıqlar avtomatik tanınır (spec/test-vectors/excel.json); istifadəçi dəyişə bilər.', ru: 'Заголовки распознаются автоматически; пользователь может изменить.' } },
+    { key: 'excel-summary', label: { az: 'Yoxlama xülasəsi', ru: 'Итог проверки' }, render: (c) => ({ html: `${head(c, 'excel')}${summary(c)}<div style="height:120px"></div>`, overlay: bottom(c, c.t('import248'), 'importing') }) },
+    { key: 'importing', label: { az: 'İdxal olunur', ru: 'Импорт' }, render: (c) => `${head(c, 'excel')}<div class="empty" style="padding-top:80px"><span class="btn" style="background:none;border:0"><span class="spinner"></span></span><p class="t-headline" style="margin:0">${c.t('importing')}</p><div class="progress" style="width:100%"><span style="width:56%"></span></div></div>`,
+      after: () => setTimeout(() => { if (window.__proto.state === 'importing') window.__proto.setState('limit'); }, 1400),
+      note: { az: '300 sətir < 5 san (T45). Bu nümunədə pulsuz limit aşıldığı üçün növbəti hal "Limit doldu"-dur.', ru: '300 строк < 5 с. Здесь превышен бесплатный лимит — далее «Лимит исчерпан».' } },
+    { key: 'limit', label: { az: 'Limit doldu', ru: 'Лимит исчерпан' }, render: (c) => ({ html: `${head(c, 'excel')}${summary(c)}`, overlay: `<div class="scrim"></div><div class="sheet" role="dialog"><div class="grabber"></div>
+        <h2 class="t-headline-serif" style="margin:0 0 8px">${c.t('limitTitle')}</h2><p class="t-callout muted" style="margin:0 0 18px">${c.t('limitBody')}</p>
+        <button class="btn btn-primary btn-block" data-go="04-sablonlar.html?state=premium">${c.icon('sparkle', 'icon-sm')}${c.t('toPremium')}</button>
+        <button class="btn btn-secondary btn-block mt-1" data-go="12-alis.html?state=addon">${c.t('addLimit')}</button>
+        <button class="btn btn-text btn-block" data-state="excel-summary">${c.t('cancel')}</button></div>` }),
+      note: { az: 'Server limitdən artıq idxalı tam rədd edir (T13); yarımçıq idxal olmur.', ru: 'Сервер полностью отклоняет импорт сверх лимита.' } },
+    { key: 'error', label: { az: 'Fayl xətası', ru: 'Ошибка файла' }, render: (c) => `${head(c, 'excel')}<div class="pad stack"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('fileError')}</strong><br>${c.t('fileErrorBody')}</span></div>
+        <button class="btn btn-primary btn-block" data-state="excel">${c.t('choose')}</button></div>` },
+  ],
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fərdiləşdirmə — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&family=Lora:wght@500&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .head-fixed { position: absolute; left: 0; right: 0; top: 54px; z-index: 6; background: var(--color-bg-sunken); }
+  .head-fixed .btn-text { font-weight: 600; }
+  .invite-mini { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px; gap: 4px; }
+  .invite-mini .k { font: 500 7px/1.4 var(--font-family-sans); letter-spacing: .2em; text-transform: uppercase; opacity: .8; }
+  .invite-mini .g { font: 500 9px/1.35 var(--font-family-sans); opacity: .9; margin-bottom: 4px; }
+  .invite-mini .n { font: 500 20px/1.1 var(--font-family-serif); }
+  .invite-mini .d { font: 400 8px/1.4 var(--font-family-sans); opacity: .8; margin-top: 6px; }
+  .invite-mini .rsvp { margin-top: 12px; padding: 5px 12px; border-radius: 999px; font: 600 8px var(--font-family-sans); background: currentColor; }
+  .invite-mini .rsvp span { color: #FBF7F0; }
+  .premium-strip { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 10px 12px; border-radius: var(--radius-control); background: var(--color-accent-gold-subtle); color: var(--color-accent-gold-text); box-shadow: inset 0 0 0 1px var(--color-accent-gold); font-size: calc(14px * var(--font-scale)); font-weight: 600; }
+  .premium-strip .btn { min-height: 36px; padding: 6px 14px; font-size: 14px; margin-left: auto; }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Fərdiləşdir', save: 'Yadda saxla', guestView: 'Qonaq kimi bax', color: 'Rəng', font: 'Şrift', text: 'Mətn', photos: 'Şəkil', music: 'Musiqi',
+    palettes: 'Hazır palitralar', custom: 'Öz rəngin', fClassic: 'Klassik', fGentle: 'Zərif', fModern: 'Müasir', fSimple: 'Sadə',
+    tTitle: 'Başlıq', tInvite: 'Dəvət cümləsi', tFooter: 'Son söz', inviteVal: 'Ömrümüzün ən xoşbəxt gününü sizinlə bölüşmək istəyirik.', footerVal: 'Hörmətlə, Məmmədovlar və Əliyevlər ailələri',
+    photosHelp: '6-ya qədər şəkil · sıranı dəyişmək üçün sürüşdürün', add: 'Əlavə et', uploading: 'Yüklənir', failed: 'Yüklənmədi — toxunun',
+    musicNote: 'Musiqi qonaq toxunanda başlayır', upload: 'Öz musiqini yüklə (mp3, ≤ 5 MB)', noMusic: 'Musiqi olmasın',
+    m1: 'Vals — fortepiano', m2: 'Muğam motivi — tar', m3: 'Sakit gecə — skripka',
+    premiumStrip: 'Premium şablon — göndərmək üçün alın', buy: 'Al', saved: 'Dəyişikliklər yadda saxlanıldı', uploadErr: '1 şəkil yüklənmədi. Bağlantını yoxlayıb yenidən toxunun.',
+    inviteK: 'Toyumuza dəvət edirik', nextGuests: 'Növbəti: qonaq əlavə et', guestGreeting: 'Hörmətli Elçin müəllim və ailəsi', rsvp: 'Cavab ver',
+  },
+  ru: {
+    title: 'Настройка', save: 'Сохранить', guestView: 'Как увидит гость', color: 'Цвет', font: 'Шрифт', text: 'Текст', photos: 'Фото', music: 'Музыка',
+    palettes: 'Готовые палитры', custom: 'Свой цвет', fClassic: 'Классика', fGentle: 'Изящный', fModern: 'Современный', fSimple: 'Простой',
+    tTitle: 'Заголовок', tInvite: 'Текст приглашения', tFooter: 'Подпись', inviteVal: 'Хотим разделить с вами самый счастливый день нашей жизни.', footerVal: 'С уважением, семьи Мамедовых и Алиевых',
+    photosHelp: 'До 6 фото · перетащите, чтобы изменить порядок', add: 'Добавить', uploading: 'Загрузка', failed: 'Не загрузилось — нажмите',
+    musicNote: 'Музыка включается, когда гость нажмёт', upload: 'Загрузить свою (mp3, ≤ 5 МБ)', noMusic: 'Без музыки',
+    m1: 'Вальс — фортепиано', m2: 'Мотив мугама — тар', m3: 'Тихая ночь — скрипка',
+    premiumStrip: 'Премиум-шаблон — купите, чтобы отправлять', buy: 'Купить', saved: 'Изменения сохранены', uploadErr: '1 фото не загрузилось. Проверьте связь и нажмите ещё раз.',
+    inviteK: 'Приглашаем на свадьбу', nextGuests: 'Далее: добавить гостей', guestGreeting: 'Уважаемые Elçin муаллим с семьёй', rsvp: 'Ответить',
+  },
+};
+const PALETTES = [['#4A2C4F', '#C9A66B'], ['#2E4A36', '#D8C8A8'], ['#7A2E3A', '#E9D5C3'], ['#1F2633', '#C9A66B'], ['#8A6A4F', '#F3E7D8'], ['#3E5A6B', '#E3D3B5']];
+
+const mini = (c, guest, premium) => `<div class="mini-phone"><div class="invite-mini ${premium ? 'tpl-art-3' : 'tpl-art-1'}" style="${premium ? '' : 'color:#4A2C4F'}">
+  ${guest ? `<div class="g">${c.t('guestGreeting')}</div>` : ''}<div class="k">${c.t('inviteK')}</div><div class="n">Aysel<br>&amp; Ramin</div><div class="d">12 · 07 · 2027 · 18:00<br>Ağ Saray şadlıq evi</div><div class="rsvp"><span>${c.t('rsvp')}</span></div></div></div>`;
+
+const view = (c, tab, body, { guest = false, premium = false, loading = false } = {}) => ({
+  html: '',
+  overlay: `<div class="head-fixed"><div class="topbar"><button class="icon-btn" data-go="04-sablonlar.html" aria-label="Geri">${c.icon('back')}</button><span class="title">${c.t('title')}</span><button class="btn btn-text" data-state="saved">${c.t('save')}</button></div></div>
+    <div class="live">${loading ? '<div class="mini-phone skeleton" style="border-radius:24px"></div>' : mini(c, guest, premium)}
+      <div class="controls"><button class="seg-mini" data-state="${guest ? 'color' : 'guest'}" style="border:0;cursor:pointer"><span style="display:flex;align-items:center;gap:6px;padding:0 10px;height:30px;font:600 12px var(--font-family-sans);color:${guest ? 'var(--color-brand-primary)' : 'var(--color-text-secondary)'}">${c.icon('eye', 'icon-sm')}${c.t('guestView')}</span></button>
+        <span class="seg-mini" role="group">${['AZ', 'RU', 'EN', 'TR'].map((l, i) => `<button aria-pressed="${(c.lang === 'ru' ? 1 : 0) === i}">${l}</button>`).join('')}</span></div></div>
+    <div class="custom-sheet"><div class="grabber"></div>
+      <div class="tabs" role="tablist" style="padding:0 12px">${[['color', 'palette'], ['font', 'type'], ['text', 'text'], ['photos', 'image'], ['music', 'music']].map(([k, ic]) => `<button role="tab" aria-selected="${k === tab}" data-state="${premium && k === 'color' ? 'premium' : k}">${c.t(k)}</button>`).join('')}</div>
+      <div class="content">${premium ? `<div class="premium-strip">${c.icon('sparkle', 'icon-sm')}<span>${c.t('premiumStrip')}</span><button class="btn btn-primary" data-go="12-alis.html">${c.t('buy')}</button></div>` : ''}${body}</div></div>`,
+});
+
+const colorTab = (c) => `<p class="t-footnote muted" style="margin:0 0 12px;font-weight:600">${c.t('palettes')}</p><div class="swatches">${PALETTES.map(([a, b], i) => `<button class="swatch ${i === 0 ? 'is-selected' : ''}" aria-label="Palitra ${i + 1}" aria-pressed="${i === 0}"><span style="background:${a}"></span><span style="background:${b}"></span></button>`).join('')}<button class="swatch custom" aria-label="${c.t('custom')}">${c.icon('plus')}</button></div>
+  <p class="t-footnote muted" style="margin:18px 0 0">${c.t('custom')}: <strong style="font-family:var(--font-family-mono);color:var(--color-text-primary)">#4A2C4F</strong></p>`;
+const fontTab = (c) => `<div class="stack" style="gap:10px">${[['fClassic', 'var(--font-family-serif)', 'Noto Serif Display + Inter'], ['fGentle', "'Lora', serif", 'Lora + Inter'], ['fModern', "'Playfair Display', serif", 'Playfair Display + Inter'], ['fSimple', 'var(--font-family-sans)', 'Inter']].map(([k, ff, sub], i) =>
+  `<button class="font-row ${i === 0 ? 'is-selected' : ''}" aria-pressed="${i === 0}"><span class="aa" style="font-family:${ff}">Aa</span><span style="flex:1;text-align:left"><span class="t-headline" style="display:block">${c.t(k)}</span><span class="t-footnote muted">${sub} · Əə Ğğ İı Жж</span></span>${i === 0 ? c.icon('check') : ''}</button>`).join('')}</div>`;
+const textTab = (c) => `<div class="stack">
+  <div class="field"><label>${c.t('tTitle')}</label><div class="input"><input value="Aysel və Ramin"></div><div class="counter-txt">14 / 40</div></div>
+  <div class="field"><label>${c.t('tInvite')}</label><div class="textarea">${c.t('inviteVal')}</div><div class="counter-txt">${c.t('inviteVal').length} / 200</div></div>
+  <div class="field"><label>${c.t('tFooter')}</label><div class="textarea" style="min-height:52px">${c.t('footerVal')}</div><div class="counter-txt">${c.t('footerVal').length} / 120</div></div></div>`;
+const photosTab = (c, error = false) => `<p class="t-footnote muted" style="margin:0 0 12px">${c.t('photosHelp')}</p>
+  ${error ? `<div class="banner banner-error" style="margin-bottom:12px" role="alert">${c.icon('alert')}<span class="text">${c.t('uploadErr')}</span></div>` : ''}
+  <div class="img-tiles">${['texture-a', 'texture-b', 'texture-c'].map((t, i) => `<div class="img-tile filled ${t}"><span class="n">${i + 1}</span><button class="x" aria-label="Sil">${c.icon('close', 'icon-sm')}</button></div>`).join('')}
+    ${error ? `<div class="img-tile error" data-state="photos">${c.icon('refresh')}<br>${c.t('failed')}</div>` : `<div class="img-tile filled texture-b uploading"><span class="bar"><span></span></span></div>`}
+    <button class="img-tile" style="cursor:pointer">${c.icon('plus')}<span>${c.t('add')}</span></button></div>`;
+const musicTab = (c) => `<div class="banner banner-warn" style="margin-bottom:12px">${c.icon('music')}<span class="text">${c.t('musicNote')}</span></div><div class="stack" style="gap:10px">
+  ${[['m1', true], ['m2', false], ['m3', false]].map(([k, sel]) => `<div class="audio-row ${sel ? 'is-selected' : ''}"><button class="play" aria-label="${sel ? 'Pause' : 'Play'}">${c.icon(sel ? 'pause' : 'play', 'icon-sm')}</button><span style="flex:1"><span class="t-headline" style="display:block;font-size:calc(15px * var(--font-scale))">${c.t(k)}</span>${sel ? `<span class="wave">${[6, 12, 9, 16, 7, 13, 10, 15, 8, 11, 6, 14].map((h) => `<i style="height:${h}px"></i>`).join('')}</span>` : '<span class="t-footnote muted">0:42</span>'}</span>${sel ? c.icon('check') : ''}</div>`).join('')}
+  <button class="audio-row" style="cursor:pointer;justify-content:flex-start"><span class="play" style="background:var(--color-bg-sunken);color:var(--color-brand-primary)">${c.icon('upload', 'icon-sm')}</span><span class="t-callout">${c.t('upload')}</span></button>
+  <button class="btn btn-text">${c.t('noMusic')}</button></div>`;
+
+Proto.screen({
+  number: 5,
+  title: { az: 'Fərdiləşdirmə', ru: 'Настройка' },
+  strings: S,
+  states: [
+    { key: 'color', label: { az: 'Rəng', ru: 'Цвет' }, render: (c) => view(c, 'color', colorTab(c)),
+      note: { az: 'Yuxarıda canlı önizləmə (WebView ?preview=1, dəyişiklik postMessage ilə dərhal). Sheet sürüşdürülür: 45% ↔ 85%. Android: ModalBottomSheet → BottomSheetScaffold.', ru: 'Сверху живой превью (WebView ?preview=1). Шторка перетаскивается: 45% ↔ 85%.' } },
+    { key: 'font', label: { az: 'Şrift', ru: 'Шрифт' }, render: (c) => view(c, 'font', fontTab(c)) },
+    { key: 'text', label: { az: 'Mətn', ru: 'Текст' }, render: (c) => view(c, 'text', textTab(c)) },
+    { key: 'photos', label: { az: 'Şəkil', ru: 'Фото' }, render: (c) => view(c, 'photos', photosTab(c)),
+      note: { az: 'Şəkil telefonda sıxılır (≤ 1600 px, ≤ 2 MB) və event-media-ya yüklənir. Real insanların şəkilləri prototipdə yoxdur — teksturalar.', ru: 'Фото сжимаются на телефоне (≤ 1600 px, ≤ 2 МБ).' } },
+    { key: 'music', label: { az: 'Musiqi', ru: 'Музыка' }, render: (c) => view(c, 'music', musicTab(c)) },
+    { key: 'guest', label: { az: 'Qonaq kimi bax', ru: 'Как увидит гость' }, render: (c) => view(c, 'color', colorTab(c), { guest: true }),
+      note: { az: 'Önizləmə ilk qonağın adı və hitabı ilə; dil seçicisi qonağın dilini dəyişir.', ru: 'Превью с именем и обращением первого гостя.' } },
+    { key: 'premium', label: { az: 'Premium alınmayıb', ru: 'Премиум не куплен' }, render: (c) => view(c, 'color', colorTab(c), { premium: true }),
+      note: { az: 'Fərdiləşdirmə və saxlama işləyir; göndərmə Ekran 8-də bağlıdır.', ru: 'Настройка и сохранение работают; отправка закрыта на экране 8.' } },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => view(c, 'color', `<div class="swatches">${'<div class="skeleton" style="width:56px;height:56px;border-radius:50%"></div>'.repeat(6)}</div><div class="skeleton mt-3" style="height:16px;width:50%"></div>`, { loading: true }),
+      note: { az: 'Önizləmə (WebView) yüklənənə qədər skeleton; şablon faylları keşlənir.', ru: 'Скелетон, пока грузится превью (WebView).' } },
+    { key: 'upload-error', label: { az: 'Yükləmə xətası', ru: 'Ошибка загрузки' }, render: (c) => view(c, 'photos', photosTab(c, true)) },
+    { key: 'saved', label: { az: 'Yadda saxlanıldı', ru: 'Сохранено' }, render: (c) => view(c, 'color', `<div class="banner banner-success" style="margin-bottom:14px">${c.icon('check')}<span class="text">${c.t('saved')}<br><button class="btn btn-text" style="padding:0;min-height:32px" data-go="07-qonaq-elave.html?state=excel">${c.t('nextGuests')} →</button></span></div>` + colorTab(c)) },
+  ],
+});
+</script>
+</body>
+</html>

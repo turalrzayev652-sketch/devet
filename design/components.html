@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komponentlər — Devet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="prototype/proto.css">
+<style>
+  body { background: #E9E4EC; }
+  .page { max-width: 1000px; margin: 0 auto; padding: 24px 16px 80px; }
+  .page > h1 { font: 500 32px var(--font-family-serif); margin: 0 0 4px; color: #1F1B24; }
+  .page > p { color: #6B6470; margin: 0 0 24px; font-size: 14px; }
+  .sec { margin-top: 32px; }
+  .sec > h2 { font: 600 13px var(--font-family-sans); letter-spacing: .08em; text-transform: uppercase; color: #6B6470; margin: 0 0 10px; }
+  .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; }
+  .theme-box { position: relative; padding: 20px; border-radius: 20px; background: var(--color-bg-canvas); color: var(--color-text-primary); overflow: hidden; }
+  .theme-box .tag { position: absolute; top: 8px; right: 12px; font: 600 10px var(--font-family-sans); letter-spacing: .1em; text-transform: uppercase; color: var(--color-text-secondary); }
+  .lbl { display: block; font: 600 11px var(--font-family-sans); color: var(--color-text-secondary); margin: 14px 0 6px; letter-spacing: .03em; }
+  .lbl:first-child { margin-top: 0; }
+  .wrap { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn.is-pressed { background: var(--color-brand-pressed); transform: scale(.98); }
+  .frame { position: relative; height: 330px; border-radius: 16px; overflow: hidden; background: var(--color-bg-canvas); border: 1px solid var(--color-border-hairline); }
+  .frame .toast { bottom: 16px; }
+  .toggle.is-disabled { opacity: .4; }
+  .event-card, .list { margin-left: 0; margin-right: 0; }
+  .tpl-grid { padding: 0; }
+</style>
+</head>
+<body>
+<script src="prototype/proto.js"></script>
+<div class="page">
+  <h1>Komponent kitabxanası</h1>
+  <p>Devet dizayn sistemi · hər komponent eyni koddan light və dark rejimdə, bütün halları ilə. Tokenlər: <code>spec/design.md</code>. Ekranlar: <a href="prototype/index.html">prototip</a>.</p>
+  <div id="sections"></div>
+</div>
+<script>
+const i = Proto.icon;
+const G = Proto.DATA.guests;
+const dn = (g) => Proto.displayName(g, 'az');
+const pill = (s, n) => `<span class="pill ${s}">${{ coming: `Gəlir ${n ?? ''}`.trim(), declined: 'Gəlmir', viewed: 'Baxdı', pending: 'Cavab yoxdur', unsent: 'Göndərilməyib' }[s]}</span>`;
+const ring = (u, l) => { const p = Math.min(u / l, 1); const c = 2 * Math.PI * 16; return `<span class="counter ${p >= 1 ? 'is-full' : p >= .95 ? 'is-near' : ''}"><svg viewBox="0 0 40 40"><circle class="track" cx="20" cy="20" r="16" fill="none" stroke-width="4"/><circle class="value" cx="20" cy="20" r="16" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="${(c * p).toFixed(1)} ${c.toFixed(1)}"/></svg><span class="num">${u}/${l}</span></span>`; };
+
+const SECTIONS = [
+  ['Düymələr', () => `
+    <span class="lbl">Primary — default · pressed · disabled · loading</span><div class="wrap"><button class="btn btn-primary">Daxil ol</button><button class="btn btn-primary is-pressed">Daxil ol</button><button class="btn btn-primary" disabled>Daxil ol</button><button class="btn btn-primary" aria-busy="true"><span class="spinner"></span></button></div>
+    <span class="lbl">Secondary · Text · Destructive</span><div class="wrap"><button class="btn btn-secondary">Kodla qoşul</button><button class="btn btn-secondary" disabled>Kodla qoşul</button><button class="btn btn-text">Şifrəni unutmusunuz?</button><button class="btn btn-danger">Bəli, sil</button></div>
+    <span class="lbl">İkonlu · WhatsApp göstəricisi · uzun mətn (RU, 2 sətir)</span><div class="wrap"><button class="btn btn-primary">${i('userPlus', 'icon-sm')}Qonaq əlavə et</button><button class="btn btn-primary btn-wa">${Proto.WA}WhatsApp-da göndər</button><button class="btn btn-secondary" style="max-width:210px">Попробовать — можно настроить до покупки</button></div>`],
+  ['Mətn sahələri', () => `
+    <span class="lbl">Default · Focused</span><div class="stack"><div class="input">${i('mail')}<input placeholder="E-poçt"></div><div class="input is-focused">${i('mail')}<input value="aysel.mammadova@example.com"></div></div>
+    <span class="lbl">Error · Disabled</span><div class="field"><div class="input is-error">${i('lock')}<input type="password" value="aysel2026"><button class="icon-btn" data-toggle-password aria-label="Göstər">${i('eye')}</button></div><p class="error">${i('alert', 'icon-sm')}E-poçt və ya şifrə yanlışdır</p></div>
+    <div class="input is-disabled mt-1"><input value="Ağ Saray şadlıq evi" disabled></div>
+    <span class="lbl">Şifrə (göstər/gizlət) · Axtarış</span><div class="stack"><div class="input">${i('lock')}<input type="text" value="aysel2027"><button class="icon-btn" aria-label="Gizlət">${i('eyeOff')}</button></div><div class="input search">${i('search')}<input placeholder="Qonaq axtar"></div></div>`],
+  ['Seçim: chip, seqment, tab', () => `
+    <span class="lbl">Filter chips — single</span><div class="wrap"><button class="chip is-selected">Hamısı <span class="count">84</span></button><button class="chip">Bəy tərəfi <span class="count">41</span></button><button class="chip">Gəlin tərəfi <span class="count">43</span></button></div>
+    <span class="lbl">Filter chips — multi</span><div class="wrap"><button class="chip is-selected">${i('check', 'icon-sm')}Gəlir</button><button class="chip is-selected">${i('check', 'icon-sm')}Masasız</button><button class="chip">Gəlmir</button></div>
+    <span class="lbl">Segmented control</span><div class="segmented"><button aria-pressed="true">Müəllim</button><button aria-pressed="false">Xanım</button><button aria-pressed="false">Bəy</button><button aria-pressed="false">Yox</button></div>
+    <span class="lbl">Tabs</span><div class="tabs"><button aria-selected="true">Rəng</button><button aria-selected="false">Şrift</button><button aria-selected="false">Mətn</button><button aria-selected="false">Şəkil</button><button aria-selected="false">Musiqi</button></div>`],
+  ['Kartlar', () => `
+    <span class="lbl">Event card</span><div class="card event-card"><div class="cover"><div class="art-invite" style="height:100%"><span class="line"></span><span class="mono">A &amp; R</span></div><span class="badge badge-role role">Ortaq</span></div>
+      <div class="body"><span class="badge badge-neutral">Toy</span><h3 class="t-title" style="margin:8px 0 4px;font-size:24px">Aysel və Ramin</h3><div class="t-footnote muted">12 iyul 2027, 18:00 · Ağ Saray şadlıq evi</div><div class="stats"><span><i class="dot" style="background:var(--color-status-coming-fg)"></i>121 gəlir</span><span><i class="dot" style="background:var(--color-status-pending-fg)"></i>59 cavab yoxdur</span></div></div></div>
+    <span class="lbl">Template card — Pulsuz (seçilib) · Premium</span><div class="tpl-grid">
+      <div class="tpl-card is-selected"><span class="phone"><div class="tpl-art tpl-art-1"><div><div class="t1">Toyumuza dəvət edirik</div><div class="t2">Aysel<br>&amp; Ramin</div></div></div><span class="badge badge-neutral">Pulsuz</span><span class="sel">${i('check', 'icon-sm')}</span></span><span class="name">Klassik</span><span class="sub">100 qonağa qədər</span></div>
+      <div class="tpl-card"><span class="phone"><div class="tpl-art tpl-art-3"><div><div class="t1">Toyumuza dəvət edirik</div><div class="t2">Aysel<br>&amp; Ramin</div></div></div><span class="badge badge-premium">${i('sparkle', 'icon-sm')} Premium</span></span><span class="name">Gecə</span><span class="sub">300 qonaq · <span class="price">19,99 ₼</span></span></div></div>`],
+  ['Qonaq sətri, status, sayğac, addım', () => `
+    <span class="lbl">Guest row (+ seçim rejimi)</span><div class="list"><div class="guest-row"><div class="main"><div class="name">${dn(G[0])}</div><div class="meta">4 nəfər · Masa 12 · Bəy tərəfi</div></div>${pill('coming', 4)}</div>
+      <div class="guest-row"><span class="select-box is-checked">${i('check', 'icon-sm')}</span><div class="main"><div class="name">${dn(G[1])}</div><div class="meta">1 nəfər · Masa 7 · Gəlin tərəfi</div></div>${pill('viewed')}</div></div>
+    <span class="lbl">Status pills (həmişə mətnlə)</span><div class="wrap">${pill('coming', 4)}${pill('declined')}${pill('viewed')}${pill('pending')}${pill('unsent')}</div>
+    <span class="lbl">Counter — normal · ≥95% · dolu</span><div class="wrap" style="gap:20px">${ring(84, 100)}${ring(96, 100)}${ring(100, 100)}${ring(212, 300)}</div>
+    <span class="lbl">Step indicator</span><div class="step-ind" style="padding:0"><span class="num">2/6</span><span class="bar"><span style="width:33%"></span></span></div>`],
+  ['Sheet, dialoq, toast', () => `
+    <span class="lbl">Bottom sheet</span><div class="frame"><div class="scrim"></div><div class="sheet" style="animation:none"><div class="grabber"></div><h3 class="t-headline-serif" style="margin:0 0 6px">Göndərildi?</h3><p class="t-callout muted" style="margin:0 0 14px">WhatsApp-da göndərdinizsə, təsdiqləyin.</p><button class="btn btn-primary btn-block">Bəli, növbəti</button></div></div>
+    <span class="lbl">Dialog · Toast</span><div class="frame"><div class="scrim"></div><div class="dialog" style="top:40%"><h3 class="t-headline" style="margin:0 0 8px">"Aysel və Ramin" silinsin?</h3><p class="t-callout muted" style="margin:0">Bu əməliyyat geri qaytarılmır.</p><div class="acts"><button class="btn btn-danger btn-block">Bəli, sil</button><button class="btn btn-text btn-block">Ləğv et</button></div></div><div class="toast" style="animation:none;z-index:25">Kod kopyalandı</div></div>`],
+  ['Boş hal, skeleton, zolaqlar', () => `
+    <span class="lbl">Empty state</span><div class="card"><div class="empty" style="padding:24px 16px"><div class="art" style="width:140px;height:110px">${Proto.ART.emptyGuests}</div><h3 class="t-headline-serif" style="margin:0">Hələ qonaq yoxdur</h3><p class="t-callout muted" style="margin:0">Qonaqları əl ilə, kontaktlardan və ya Excel-dən əlavə edin.</p><button class="btn btn-primary">Əl ilə</button></div></div>
+    <span class="lbl">Skeleton</span><div class="list"><div class="guest-row"><div class="main"><div class="skeleton" style="height:16px;width:62%"></div><div class="skeleton mt-1" style="height:12px;width:44%"></div></div><div class="skeleton" style="height:26px;width:76px;border-radius:999px"></div></div></div>
+    <span class="lbl">Error (retry) · Warning · Offline · Success</span><div class="stack" style="gap:8px">
+      <div class="banner banner-error">${i('alert')}<span class="text"><strong>Qonaq siyahısı yüklənmədi</strong><br>İnternet bağlantısını yoxlayın.</span><button class="btn btn-text">Yenidən cəhd et</button></div>
+      <div class="banner banner-warn">${i('alert')}<span class="text">Bu gün çox mesaj göndərdiniz. Qalanını sabah davam etdirin.</span></div>
+      <div class="banner banner-offline">${i('wifiOff')}<span class="text">İnternet bağlantısı yoxdur.</span></div>
+      <div class="banner banner-success">${i('check')}<span class="text">Koordinat tapıldı</span></div></div>`],
+  ['Açar, rəng, şrift, şəkil, musiqi', () => `
+    <span class="lbl">Toggle — on · off · disabled</span><div class="wrap"><span class="toggle is-on" role="switch" aria-checked="true"></span><span class="toggle" role="switch" aria-checked="false"></span><span class="toggle is-disabled"></span></div>
+    <span class="lbl">Color swatch picker</span><div class="swatches">${[['#4A2C4F', '#C9A66B'], ['#2E4A36', '#D8C8A8'], ['#7A2E3A', '#E9D5C3'], ['#1F2633', '#C9A66B']].map(([a, b], n) => `<button class="swatch ${n === 0 ? 'is-selected' : ''}"><span style="background:${a}"></span><span style="background:${b}"></span></button>`).join('')}<button class="swatch custom">${i('plus')}</button></div>
+    <span class="lbl">Font picker row — selected · default</span><div class="stack" style="gap:8px"><button class="font-row is-selected"><span class="aa" style="font-family:var(--font-family-serif)">Aa</span><span style="flex:1;text-align:left"><span class="t-headline" style="display:block">Klassik</span><span class="t-footnote muted">Noto Serif Display + Inter · Əə Ğğ İı Жж</span></span>${i('check')}</button><button class="font-row"><span class="aa" style="font-family:var(--font-family-sans)">Aa</span><span style="flex:1;text-align:left"><span class="t-headline" style="display:block">Sadə</span><span class="t-footnote muted">Inter</span></span></button></div>
+    <span class="lbl">Image picker tile — filled · uploading · error · empty</span><div class="img-tiles" style="grid-template-columns:repeat(4,1fr)"><div class="img-tile filled texture-a"><span class="n">1</span><button class="x">${i('close', 'icon-sm')}</button></div><div class="img-tile filled texture-b uploading"><span class="bar"><span></span></span></div><div class="img-tile error">${i('refresh')}</div><div class="img-tile">${i('plus')}</div></div>
+    <span class="lbl">Audio picker row — playing · idle</span><div class="stack" style="gap:8px"><div class="audio-row is-selected"><button class="play">${i('pause', 'icon-sm')}</button><span style="flex:1"><span class="t-headline" style="display:block;font-size:15px">Vals — fortepiano</span><span class="wave">${[6, 12, 9, 16, 7, 13, 10, 15].map((h) => `<i style="height:${h}px"></i>`).join('')}</span></span>${i('check')}</div><div class="audio-row"><button class="play">${i('play', 'icon-sm')}</button><span style="flex:1"><span class="t-headline" style="display:block;font-size:15px">Muğam motivi — tar</span><span class="t-footnote muted">0:42</span></span></div></div>`],
+];
+
+document.getElementById('sections').innerHTML = SECTIONS.map(([title, render]) => `<section class="sec"><h2>${title}</h2><div class="pair">
+  <div class="theme-box" data-theme="light"><span class="tag">Light</span>${render()}</div>
+  <div class="theme-box" data-theme="dark"><span class="tag">Dark</span>${render()}</div></div></section>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tədbir yaratma — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .cal { padding: 12px; }
+  .cal .head { display: flex; align-items: center; justify-content: space-between; padding: 4px 6px 10px; font-weight: 600; }
+  .cal .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: calc(15px * var(--font-scale)); }
+  .cal .dow { font-size: 11px; font-weight: 600; color: var(--color-text-secondary); padding: 6px 0; }
+  .cal .d { height: 40px; display: grid; place-items: center; border-radius: 50%; }
+  .cal .d.past { color: var(--color-text-secondary); opacity: .5; }
+  .cal .d.sel { background: var(--color-brand-primary); color: var(--color-text-on-brand); font-weight: 600; }
+  .mini-table { padding: 14px 16px; border-radius: 16px; background: linear-gradient(160deg, #FBF7F0, #EFE5D6); color: #4A2C4F; text-align: center; }
+  .mini-table .lbl { font: 500 10px/1.4 var(--font-family-sans); letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
+  .mini-table .no { font: 500 30px/1.1 var(--font-family-serif); margin: 2px 0 6px; }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    step: '{n}/6', next: 'İrəli', back: 'Geri', create: 'Tədbiri yarat',
+    q1: 'Hansı tədbirdir?', tWedding: 'Toy', tEngagement: 'Nişan', tHenna: 'Xınayaxdı', tBirthday: 'Ad günü', tJubilee: 'Yubiley',
+    q2: 'Kimin tədbiridir?', names: 'Adlar', namesPh: 'Aysel və Ramin', parents: 'Valideynlərin adları (könüllü)', parentsPh: 'Məmmədovlar və Əliyevlər ailələri', parentsHelp: 'Dəvət mətnində göstərilir', namesRequired: 'Adları yazın — dəvətnamənin başlığı olacaq',
+    q3: 'Nə vaxt?', date: 'Tarix', time: 'Saat', month: 'İyul 2027', dows: 'B.e,Ç.a,Ç,C.a,C,Ş,B', pastHint: 'Keçmiş tarix seçilə bilməz',
+    q4: 'Harada?', venue: 'Məkanın adı', address: 'Ünvan (könüllü)', addressPh: 'Bakı, Nərimanov r-nu', mapLink: 'Xəritə linki (könüllü)', mapHelp: 'Google Maps-də məkanı açın → Paylaş → Linki kopyala və buraya yapışdırın.', paste: 'Yapışdır',
+    coordsOk: 'Koordinat tapıldı — qonaqlar Google Maps və Waze ilə yol tapacaq', shortLink: 'Qısa linkdən koordinat çıxarmaq olmur — Waze düyməsi görünməyəcək. Tam linki yapışdıra bilərsiniz.',
+    q5: 'Dəvətnamənin dili', langHelp: 'Hər qonaq üçün sonradan ayrıca dil seçə bilərsiniz',
+    q6: 'Masadakılar göstərilsin?', tablemates: 'Masadakı digər qonaqları göstər', tablematesHelp: 'Qonaq öz dəvətnaməsində masa nömrəsini və eyni masadakı qonaqların adlarını görəcək.', previewLbl: 'Qonaq belə görəcək', yourTable: 'Masanız', mates: 'Masada: Rəşad bəy, Leyla xanım', matesOff: 'Yalnız masa nömrəsi göstərilir',
+    creating: 'Tədbir yaradılır…', successTitle: 'Tədbir yaradıldı', successBody: 'İndi dəvətnamənin dizaynını seçin.', chooseTpl: 'Şablon seç', createError: 'Tədbir yaradılmadı. Məlumatlarınız saxlanılıb — yenidən cəhd edin.',
+  },
+  ru: {
+    step: '{n}/6', next: 'Далее', back: 'Назад', create: 'Создать мероприятие',
+    q1: 'Какое мероприятие?', tWedding: 'Свадьба', tEngagement: 'Помолвка', tHenna: 'Вечер хны', tBirthday: 'День рождения', tJubilee: 'Юбилей',
+    q2: 'Чьё это мероприятие?', names: 'Имена', namesPh: 'Aysel və Ramin', parents: 'Имена родителей (необязательно)', parentsPh: 'Семьи Мамедовых и Алиевых', parentsHelp: 'Показываются в тексте приглашения', namesRequired: 'Укажите имена — это будет заголовок приглашения',
+    q3: 'Когда?', date: 'Дата', time: 'Время', month: 'Июль 2027', dows: 'Пн,Вт,Ср,Чт,Пт,Сб,Вс', pastHint: 'Нельзя выбрать прошедшую дату',
+    q4: 'Где?', venue: 'Название места', address: 'Адрес (необязательно)', addressPh: 'Баку, Наримановский р-н', mapLink: 'Ссылка на карту (необязательно)', mapHelp: 'Откройте место в Google Maps → Поделиться → Копировать ссылку и вставьте сюда.', paste: 'Вставить',
+    coordsOk: 'Координаты найдены — гости проложат маршрут в Google Maps и Waze', shortLink: 'Из короткой ссылки координаты не извлечь — кнопки Waze не будет. Можно вставить полную ссылку.',
+    q5: 'Язык приглашения', langHelp: 'Позже для каждого гостя можно выбрать свой язык',
+    q6: 'Показывать соседей по столу?', tablemates: 'Показывать других гостей за столом', tablematesHelp: 'Гость увидит в приглашении номер стола и имена гостей за тем же столом.', previewLbl: 'Так увидит гость', yourTable: 'Ваш стол', mates: 'За столом: Rəşad бей, Leyla ханум', matesOff: 'Показывается только номер стола',
+    creating: 'Создаём мероприятие…', successTitle: 'Мероприятие создано', successBody: 'Теперь выберите дизайн приглашения.', chooseTpl: 'Выбрать шаблон', createError: 'Не удалось создать мероприятие. Данные сохранены — попробуйте ещё раз.',
+  },
+};
+
+const shell = (c, n, body, { nextState, nextLabel, disabled = false, prev } = {}) => ({
+  html: `<div class="topbar"><button class="icon-btn" ${prev ? `data-state="${prev}"` : 'data-go="02-tedbirler.html"'} aria-label="${c.t('back')}">${c.icon('back')}</button><span class="title"></span><button class="icon-btn" data-go="02-tedbirler.html" aria-label="Bağla">${c.icon('close')}</button></div>
+    <div class="step-ind"><span class="num">${c.t('step', { n })}</span><span class="bar"><span style="width:${(n / 6) * 100}%"></span></span></div>
+    ${body}<div style="height:150px"></div>`,
+  overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" ${disabled ? 'disabled' : `data-state="${nextState}"`}>${nextLabel || c.t('next')}</button>${prev ? `<button class="btn btn-text btn-block" data-state="${prev}">${c.t('back')}</button>` : ''}</div>`,
+});
+const q = (text) => `<div class="wizard-q"><h1 class="t-headline-serif" style="margin:0 0 20px;font-size:calc(26px * var(--font-scale));line-height:1.25">${text}</h1></div>`;
+
+const types = (c, sel = 'tWedding') => `<div class="choice-grid">${[['tWedding', 'sparkle'], ['tEngagement', 'gem'], ['tHenna', 'leaf'], ['tBirthday', 'cake'], ['tJubilee', 'star']].map(([k, ic], i) =>
+  `<button class="choice ${k === sel ? 'is-selected' : ''} ${i === 4 ? 'wide' : ''}" aria-pressed="${k === sel}"><span class="ic">${c.icon(ic)}</span><span class="t-headline">${c.t(k)}</span>${k === sel ? `<span class="check">${c.icon('check')}</span>` : ''}</button>`).join('')}</div>`;
+
+const field = (label, inner, extra = '') => `<div class="field"><label>${label}</label>${inner}${extra}</div>`;
+
+const calendar = (c) => {
+  // July 2027 starts on Thursday; 12 selected; today = 30 Oct 2026 so nothing is past in July 2027 — show a past-looking example only in hint.
+  const dows = c.t('dows').split(',');
+  const cells = Array(3).fill('<span></span>').join('') + Array.from({ length: 31 }, (_, i) => `<span class="d ${i + 1 === 12 ? 'sel' : ''}">${i + 1}</span>`).join('');
+  return `<div class="card cal"><div class="head"><button class="icon-btn" aria-label="‹">${c.icon('back')}</button><span>${c.t('month')}</span><button class="icon-btn" aria-label="›">${c.icon('chevronRight')}</button></div>
+    <div class="grid">${dows.map((d) => `<span class="dow">${d}</span>`).join('')}${cells}</div></div>`;
+};
+
+const langs = (sel = 'az') => `<div class="choice-grid" style="grid-template-columns:1fr">${[['az', 'Azərbaycan'], ['ru', 'Русский'], ['en', 'English'], ['tr', 'Türkçe']].map(([k, n]) =>
+  `<button class="choice wide ${k === sel ? 'is-selected' : ''}" aria-pressed="${k === sel}"><span class="ic">${Proto.icon('globe')}</span><span class="t-headline">${n}</span>${k === sel ? `<span class="check">${Proto.icon('check')}</span>` : ''}</button>`).join('')}</div>`;
+
+const step4 = (c, mode) => shell(c, 4, `${q(c.t('q4'))}<div class="pad stack">
+    ${field(c.t('venue'), `<div class="input">${c.icon('pin')}<input value="${c.t('venue') && 'Ağ Saray şadlıq evi'}"></div>`)}
+    ${field(c.t('address'), `<div class="input"><input placeholder="${c.t('addressPh')}"></div>`)}
+    ${field(c.t('mapLink'), `<div class="input ${mode ? 'is-focused' : ''}">${c.icon('link')}<input value="${mode === 'ok' ? 'https://www.google.com/maps/place/Ag+Saray/@40.4093,49.8671,17z' : mode === 'short' ? 'https://maps.app.goo.gl/x7Qp2' : ''}" placeholder="https://maps.google.com/…"><button class="btn btn-text" style="min-height:40px;padding:4px 8px" data-state="step4-link">${c.t('paste')}</button></div>`,
+      mode === 'ok' ? `<div class="banner banner-success mt-1">${c.icon('check')}<span class="text">${c.t('coordsOk')}</span></div>`
+      : mode === 'short' ? `<div class="banner banner-warn mt-1">${c.icon('alert')}<span class="text">${c.t('shortLink')}</span></div>`
+      : `<p class="help">${c.t('mapHelp')}</p>`)}
+  </div>`, { nextState: 'step5', prev: 'step3' });
+
+const step6 = (c, on) => shell(c, 6, `${q(c.t('q6'))}<div class="pad">
+    <div class="card" style="padding:4px 16px"><div class="setting-row" style="border:0"><span class="label t-body">${c.t('tablemates')}</span><span class="toggle ${on ? 'is-on' : ''}" role="switch" aria-checked="${on}" data-state="${on ? 'step6' : 'step6-on'}"></span></div></div>
+    <p class="t-callout muted">${c.t('tablematesHelp')}</p>
+    <p class="t-footnote muted" style="margin:20px 0 8px;font-weight:600">${c.t('previewLbl')}</p>
+    <div class="mini-table"><div class="lbl">${c.t('yourTable')}</div><div class="no">12</div><div class="t-footnote">${on ? c.t('mates') : c.t('matesOff')}</div></div>
+  </div>`, { nextState: 'creating', nextLabel: c.t('create'), prev: 'step5' });
+
+Proto.screen({
+  number: 3,
+  title: { az: 'Tədbir yaratma', ru: 'Создание мероприятия' },
+  strings: S,
+  states: [
+    { key: 'step1', label: { az: '1 · Növ', ru: '1 · Тип' }, render: (c) => shell(c, 1, q(c.t('q1')) + types(c), { nextState: 'step2' }),
+      note: { az: '"İrəli" addım düzgün olana qədər bağlıdır. Android: sistem geri jesti əvvəlki addıma qaytarır.', ru: '«Далее» неактивна, пока шаг не заполнен. Android: системный «назад» — к предыдущему шагу.' } },
+    { key: 'step2', label: { az: '2 · Adlar', ru: '2 · Имена' }, render: (c) => shell(c, 2, `${q(c.t('q2'))}<div class="pad stack">
+        ${field(c.t('names'), `<div class="input is-focused"><input value="Aysel və Ramin"></div>`)}
+        ${field(c.t('parents'), `<div class="input"><input placeholder="${c.t('parentsPh')}"></div>`, `<p class="help">${c.t('parentsHelp')}</p>`)}</div>`, { nextState: 'step3', prev: 'step1' }) },
+    { key: 'step2-invalid', label: { az: '2 · Boş sahə', ru: '2 · Пустое поле' }, render: (c) => shell(c, 2, `${q(c.t('q2'))}<div class="pad stack">
+        ${field(c.t('names'), `<div class="input is-error"><input placeholder="${c.t('namesPh')}"></div>`, `<p class="error">${c.icon('alert', 'icon-sm')}${c.t('namesRequired')}</p>`)}
+        ${field(c.t('parents'), `<div class="input"><input placeholder="${c.t('parentsPh')}"></div>`, `<p class="help">${c.t('parentsHelp')}</p>`)}</div>`, { disabled: true, prev: 'step1' }) },
+    { key: 'step3', label: { az: '3 · Tarix', ru: '3 · Дата' }, render: (c) => shell(c, 3, `${q(c.t('q3'))}<div class="pad stack">${calendar(c)}
+        <div class="card" style="padding:4px 16px"><div class="setting-row"><span class="label t-body">${c.icon('calendar', 'icon-sm')} ${c.t('date')}</span><strong>12.07.2027</strong></div><div class="setting-row" style="border:0"><span class="label t-body">${c.icon('clock', 'icon-sm')} ${c.t('time')}</span><strong>18:00</strong></div></div>
+        <p class="t-footnote muted" style="margin:0">${c.t('pastHint')}</p></div>`, { nextState: 'step4', prev: 'step2' }),
+      note: { az: 'iOS: DatePicker (graphical) + saat təkəri; Android: M3 DatePickerDialog / TimePicker.', ru: 'iOS: DatePicker; Android: M3 DatePickerDialog / TimePicker.' } },
+    { key: 'step4', label: { az: '4 · Məkan', ru: '4 · Место' }, render: (c) => step4(c),
+      note: { az: 'Qərar §15.3: xəritə SDK yoxdur — link + ünvan. Koordinat linkdən çıxarılır (spec/test-vectors/maps.json).', ru: 'Решение §15.3: без SDK карт — ссылка + адрес.' } },
+    { key: 'step4-link', label: { az: '4 · Link tanındı', ru: '4 · Ссылка распознана' }, render: (c) => step4(c, 'ok') },
+    { key: 'step4-short', label: { az: '4 · Qısa link', ru: '4 · Короткая ссылка' }, render: (c) => step4(c, 'short') },
+    { key: 'step5', label: { az: '5 · Dil', ru: '5 · Язык' }, render: (c) => shell(c, 5, `${q(c.t('q5'))}${langs(c.lang === 'ru' ? 'ru' : 'az')}<p class="pad t-callout muted">${c.t('langHelp')}</p>`, { nextState: 'step6', prev: 'step4' }) },
+    { key: 'step6', label: { az: '6 · Masadakılar', ru: '6 · Соседи по столу' }, render: (c) => step6(c, false),
+      note: { az: 'Defolt: bağlı (PRODUCT.md). Açarı toxunaraq dəyişin — önizləmə dərhal yenilənir.', ru: 'По умолчанию выключено. Переключите — превью обновится.' } },
+    { key: 'step6-on', label: { az: '6 · Açıq', ru: '6 · Включено' }, render: (c) => step6(c, true) },
+    { key: 'creating', label: { az: 'Yaradılır', ru: 'Создание' }, render: (c) => `<div class="empty" style="padding-top:220px"><span class="btn btn-secondary" style="border:0;background:none"><span class="spinner"></span></span><p class="t-headline" style="margin:0">${c.t('creating')}</p></div>`,
+      after: () => setTimeout(() => { if (window.__proto.state === 'creating') window.__proto.setState('success'); }, 1200) },
+    { key: 'success', label: { az: 'Uğur', ru: 'Успех' }, render: (c) => ({ html: `<div class="empty" style="padding-top:150px"><div class="art sparkle-in">${c.ART.celebrate}</div><h1 class="t-title" style="margin:0">${c.t('successTitle')}</h1><p class="t-callout muted" style="margin:0">${c.t('successBody')}</p></div>`,
+        overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-go="04-sablonlar.html">${c.t('chooseTpl')}</button></div>` }),
+      note: { az: 'Uğur anı: bir dəfəlik parıltı (≤ 1.2 s), haptik. Azaldılmış hərəkətdə statik ikon.', ru: 'Момент успеха: однократная искра, хаптик.' } },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => shell(c, 6, `${q(c.t('q6'))}<div class="pad"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text">${c.t('createError')}</span></div></div>`, { nextState: 'creating', nextLabel: c.t('retry'), prev: 'step5' }) },
+  ],
+});
+</script>
+</body>
+</html>

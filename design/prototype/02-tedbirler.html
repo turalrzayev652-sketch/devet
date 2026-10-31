@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tədbirlərim — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Tədbirlərim', newEvent: 'Yeni tədbir', join: 'Kodla qoşul', cohost: 'Ortaq', owner: 'Sahib', archive: 'Arxiv (1)',
+    ev2: 'Nərminin ad günü', ev2Type: 'Ad günü', ev2Date: '3 avqust 2027, 17:00', ev2Venue: 'Mərcan restoranı',
+    statComing: '121 gəlir', statPending: '59 cavab yoxdur', ev2Coming: '22 gəlir', ev2Pending: '14 cavab yoxdur',
+    menuEdit: 'Redaktə et', menuArchive: 'Arxivlə', menuDelete: 'Sil',
+    delTitle: '"Aysel və Ramin" silinsin?', delBody: '212 qonaq, cavablar və statistika birdəfəlik silinəcək. Bu əməliyyat geri qaytarılmır.', delConfirm: 'Bəli, sil',
+    emptyTitle: 'İlk tədbirinizi yaradın', emptyBody: 'Dəvətnamə hazırlamaq 10 dəqiqə çəkir', create: 'Tədbir yarat', settings: 'Parametrlər',
+    loadError: 'Tədbirlər yüklənmədi', deleted: 'Tədbir silindi',
+  },
+  ru: {
+    title: 'Мои мероприятия', newEvent: 'Новое мероприятие', join: 'Присоединиться по коду', cohost: 'Совладелец', owner: 'Владелец', archive: 'Архив (1)',
+    ev2: 'Nərminin ad günü', ev2Type: 'День рождения', ev2Date: '3 августа 2027, 17:00', ev2Venue: 'Ресторан «Mərcan»',
+    statComing: '121 придут', statPending: '59 без ответа', ev2Coming: '22 придут', ev2Pending: '14 без ответа',
+    menuEdit: 'Изменить', menuArchive: 'В архив', menuDelete: 'Удалить',
+    delTitle: 'Удалить «Aysel və Ramin»?', delBody: '212 гостей, ответы и статистика будут удалены навсегда. Это действие нельзя отменить.', delConfirm: 'Да, удалить',
+    emptyTitle: 'Создайте первое мероприятие', emptyBody: 'Подготовка приглашения занимает 10 минут', create: 'Создать мероприятие', settings: 'Настройки',
+    loadError: 'Не удалось загрузить мероприятия', deleted: 'Мероприятие удалено',
+  },
+};
+
+const header = (c) => `<div class="topbar"><span style="width:44px"></span><span class="title"></span><button class="icon-btn" aria-label="${c.t('settings')}" data-toast="${c.t('settings')}">${c.icon('user')}</button></div>
+  <div class="pad" style="margin:0 0 16px"><h1 class="t-display" style="margin:0">${c.t('title')}</h1></div>`;
+
+const eventCard = (c, { title, type, date, venue, coming, pending, art, role, initials }) => `
+  <div class="card event-card" data-go="06-qonaqlar.html" role="link" tabindex="0">
+    <div class="cover"><div class="art-invite ${art}" style="height:100%"><span class="line"></span><span class="mono">${initials}</span></div>
+      <span class="badge badge-role role">${role}</span>
+      <button class="icon-btn menu" aria-label="Menyu" data-state="menu">${c.icon('more')}</button></div>
+    <div class="body">
+      <div class="row-flex" style="gap:8px"><span class="badge badge-neutral">${type}</span></div>
+      <h2 class="t-title" style="margin:8px 0 4px;font-size:calc(24px * var(--font-scale))">${title}</h2>
+      <div class="t-footnote muted">${date} · ${venue}</div>
+      <div class="stats"><span><i class="dot" style="background:var(--color-status-coming-fg)"></i>${coming}</span><span><i class="dot" style="background:var(--color-status-pending-fg)"></i>${pending}</span></div>
+    </div>
+  </div>`;
+
+const cards = (c) => `<div class="stack">${eventCard(c, { title: c.t('eventTitle'), type: c.t('eventType'), date: c.t('eventDate'), venue: c.t('venue'), coming: c.t('statComing'), pending: c.t('statPending'), art: '', role: c.t('owner'), initials: 'A & R' })}
+  ${eventCard(c, { title: c.t('ev2'), type: c.t('ev2Type'), date: c.t('ev2Date'), venue: c.t('ev2Venue'), coming: c.t('ev2Coming'), pending: c.t('ev2Pending'), art: 'art-alt', role: c.t('cohost'), initials: 'N' })}
+  <button class="btn btn-text" data-toast="${c.t('archive')}">${c.icon('archive', 'icon-sm')} ${c.t('archive')}</button></div>`;
+
+const actions = (c) => `<div class="bottom-actions" style="flex-direction:row;gap:10px"><button class="btn btn-secondary" style="flex:1" data-go="11-ortaq-aile.html?state=join">${c.icon('key', 'icon-sm')}${c.t('join')}</button><button class="btn btn-primary" style="flex:1.2" data-go="03-tedbir-yarat.html">${c.icon('plus', 'icon-sm')}${c.t('newEvent')}</button></div>`;
+const base = (c) => `${header(c)}${cards(c)}<div style="height:110px"></div>`;
+
+Proto.screen({
+  number: 2,
+  title: { az: 'Tədbirlərim', ru: 'Мои мероприятия' },
+  strings: S,
+  states: [
+    { key: 'list', label: { az: 'Siyahı', ru: 'Список' }, render: (c) => ({ html: base(c), overlay: actions(c) }),
+      note: { az: 'Karta toxun → Qonaqlar. "…" → Redaktə et / Arxivlə / Sil (yalnız sahib). Ortaq tədbirdə "Sil" yoxdur. Tədbirdən 7 gün sonra Arxivə düşür.', ru: 'Тап по карточке → Гости. «…» → Изменить / В архив / Удалить (только владелец).' } },
+    { key: 'menu', label: { az: 'Kart menyusu', ru: 'Меню карточки' }, render: (c) => ({ html: base(c), overlay: `${actions(c)}<div class="scrim" data-state="list"></div><div class="sheet" role="menu"><div class="grabber"></div>
+        <p class="t-footnote muted" style="margin:0 0 4px">${c.t('eventTitle')}</p>
+        <div class="list" style="margin:8px 0 0;box-shadow:none;border:1px solid var(--color-border-hairline)">
+          <a class="menu-row" data-go="03-tedbir-yarat.html?state=step2"><span class="ic">${c.icon('pencil')}</span><span class="k t-body">${c.t('menuEdit')}</span></a>
+          <a class="menu-row" data-toast="${c.t('menuArchive')}"><span class="ic">${c.icon('archive')}</span><span class="k t-body">${c.t('menuArchive')}</span></a>
+          <a class="menu-row danger" data-state="delete"><span class="ic">${c.icon('trash')}</span><span class="k t-body">${c.t('menuDelete')}</span></a></div>
+        <button class="btn btn-secondary btn-block mt-2" data-state="list">${c.t('cancel')}</button></div>` }) },
+    { key: 'delete', label: { az: 'Silmə təsdiqi', ru: 'Подтверждение удаления' }, render: (c) => ({ html: base(c), overlay: `${actions(c)}<div class="scrim"></div><div class="dialog" role="alertdialog">
+        <h2 class="t-headline" style="margin:0 0 8px">${c.t('delTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('delBody')}</p>
+        <div class="acts"><button class="btn btn-danger btn-block" data-toast="${c.t('deleted')}">${c.t('delConfirm')}</button><button class="btn btn-text btn-block" data-state="list">${c.t('cancel')}</button></div></div>` }),
+      note: { az: 'Dağıdıcı əməliyyat: tədbirin adı ilə dialoq. Android: AlertDialog.', ru: 'Деструктивное действие: диалог с названием мероприятия.' } },
+    { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => `${header(c)}<div class="empty" style="padding-top:24px"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p>
+        <div class="stack mt-2" style="width:100%"><button class="btn btn-primary btn-block" data-go="03-tedbir-yarat.html">${c.t('create')}</button><button class="btn btn-secondary btn-block" data-go="11-ortaq-aile.html?state=join">${c.t('join')}</button></div></div>` },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => `${header(c)}<div class="stack">${'<div class="card" style="margin:0 16px;overflow:hidden"><div class="skeleton" style="height:132px;border-radius:0"></div><div style="padding:16px"><div class="skeleton" style="height:20px;width:30%"></div><div class="skeleton mt-2" style="height:26px;width:70%"></div><div class="skeleton mt-1" style="height:14px;width:55%"></div></div></div>'.repeat(2)}</div>` },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => ({ html: `${header(c)}<div class="pad" style="margin-bottom:16px"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('loadError')}</strong><br>${c.t('networkError')}</span><button class="btn btn-text" data-state="loading">${c.t('retry')}</button></div></div>${cards(c)}<div style="height:110px"></div>`, overlay: actions(c) }) },
+  ],
+});
+</script>
+</body>
+</html>

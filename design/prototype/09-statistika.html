@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistika — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Statistika', sent: 'Göndərildi', viewed: 'Baxdı', comingS: 'Gəlir', declinedS: 'Gəlmir', pendingS: 'Cavab yoxdur', peopleBig: '{n} nəfər',
+    funnel: 'Dəvətlərin yolu', fSent: 'Göndərildi', fViewed: 'Baxdı', fAnswered: 'Cavab verdi', sides: 'Tərəflər üzrə gələnlər', tables: 'Masalar üzrə',
+    t12: 'Masa 12', t7: 'Masa 7', t3: 'Masa 3', confirmed: '{a}/{b} nəfər təsdiqləyib', updated: 'Son yenilənmə: 2 dəq əvvəl · aşağı çəkib yeniləyin', export: 'Excel / PDF ixrac et',
+    exportTitle: 'Siyahını ixrac et', exportBody: 'Ad, tərəf, masa, cavab və nəfər sütunları ilə. Paylaşma menyusu açılacaq.', xlsx: 'Excel (.xlsx)', pdf: 'PDF',
+    emptyTitle: 'Hələ heç kimə göndərilməyib', emptyBody: 'İlk dəvətləri göndərin — cavablar burada görünəcək.', startSending: 'Göndərməyə başla', loadError: 'Statistika yenilənmədi',
+    ofSent: '{p}% göndərilənlərdən',
+  },
+  ru: {
+    title: 'Статистика', sent: 'Отправлено', viewed: 'Просмотрено', comingS: 'Придут', declinedS: 'Не придут', pendingS: 'Нет ответа', peopleBig: '{n} чел.',
+    funnel: 'Путь приглашений', fSent: 'Отправлено', fViewed: 'Просмотрено', fAnswered: 'Ответили', sides: 'Придут по сторонам', tables: 'По столам',
+    t12: 'Стол 12', t7: 'Стол 7', t3: 'Стол 3', confirmed: 'подтвердили {a} из {b} чел.', updated: 'Обновлено 2 мин назад · потяните вниз, чтобы обновить', export: 'Экспорт в Excel / PDF',
+    exportTitle: 'Экспорт списка', exportBody: 'Столбцы: имя, сторона, стол, ответ и количество. Откроется меню «Поделиться».', xlsx: 'Excel (.xlsx)', pdf: 'PDF',
+    emptyTitle: 'Пока никому не отправлено', emptyBody: 'Отправьте первые приглашения — ответы появятся здесь.', startSending: 'Начать отправку', loadError: 'Статистика не обновилась',
+    ofSent: '{p}% от отправленных',
+  },
+};
+const D = Proto.DATA.stats;
+const head = (c) => `<div class="topbar"><button class="icon-btn" data-go="06-qonaqlar.html" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div>
+  <div class="pad" style="margin-bottom:14px"><h1 class="t-title" style="margin:0">${c.t('title')}</h1><p class="t-footnote muted" style="margin:4px 0 0">${c.t('eventTitle')} · ${c.t('eventDate')}</p></div>`;
+const statCard = (c, { key, value, accent, wide, sub, filter }) => `<button class="stat-card ${wide ? 'wide' : ''}" style="--accent:${accent}" data-go="06-qonaqlar.html?state=${filter}">
+  <span class="lbl"><span class="pill ${key}" style="padding:2px 8px">${c.t(key + 'S') !== key + 'S' ? c.t(key + 'S') : c.t(key)}</span></span>
+  <span class="t-title1">${value}</span>${sub ? `<span class="t-callout" style="font-weight:600;color:var(--color-status-coming-text)">${sub}</span>` : ''}</button>`;
+const body = (c) => `${head(c)}
+  <div class="stat-grid">
+    <button class="stat-card" style="--accent:var(--color-brand-primary)" data-go="06-qonaqlar.html"><span class="lbl">${c.icon('send', 'icon-sm')}${c.t('sent')}</span><span class="t-title1">${D.sent}</span></button>
+    <button class="stat-card" style="--accent:var(--color-status-viewed-fg)" data-go="06-qonaqlar.html"><span class="lbl"><span class="pill viewed" style="padding:2px 8px">${c.t('viewed')}</span></span><span class="t-title1">${D.viewed}</span></button>
+    ${statCard(c, { key: 'coming', value: D.coming, accent: 'var(--color-status-coming-fg)', wide: true, sub: c.t('peopleBig', { n: D.comingPeople }), filter: 'filter' })}
+    ${statCard(c, { key: 'declined', value: D.declined, accent: 'var(--color-status-declined-fg)', filter: 'list' })}
+    ${statCard(c, { key: 'pending', value: D.pending, accent: 'var(--color-status-pending-fg)', filter: 'list' })}
+  </div>
+  <p class="section-title">${c.t('funnel')}</p>
+  <div class="card" style="margin:0 16px;padding:16px">
+    ${[['fSent', D.sent, 'var(--color-brand-primary)'], ['fViewed', D.viewed, 'var(--color-status-viewed-fg)'], ['fAnswered', D.coming + D.declined, 'var(--color-status-coming-fg)']].map(([k, v, col]) => `
+      <div style="margin-bottom:12px"><div class="row-flex" style="justify-content:space-between"><span class="t-callout">${c.t(k)}</span><span class="t-callout" style="font-weight:600;font-variant-numeric:tabular-nums">${v} <span class="muted" style="font-weight:400">· ${c.t('ofSent', { p: Math.round((v / D.sent) * 100) })}</span></span></div>
+      <div class="funnel mt-1"><span style="width:${(v / D.sent) * 100}%;background:${col}"></span></div></div>`).join('')}
+  </div>
+  <p class="section-title">${c.t('sides')}</p>
+  <div class="card" style="margin:0 16px;padding:16px"><div class="split"><span style="flex:201;background:var(--color-brand-primary)"></span><span style="flex:186;background:var(--color-accent-gold-strong)"></span></div>
+    <div class="legend"><span><i style="background:var(--color-brand-primary)"></i>${c.t('groom')} · <strong style="color:var(--color-text-primary)">201</strong></span><span><i style="background:var(--color-accent-gold-strong)"></i>${c.t('bride')} · <strong style="color:var(--color-text-primary)">186</strong></span></div></div>
+  <p class="section-title">${c.t('tables')}</p>
+  <div class="list">${[['t12', 8, 10], ['t7', 6, 9], ['t3', 2, 6]].map(([k, a, b]) => `<div class="kv"><span class="k"><span class="t-headline" style="display:block">${c.t(k)}</span><span class="t-footnote muted">${c.t('confirmed', { a, b })}</span></span><span style="width:84px" class="progress"><span style="width:${(a / b) * 100}%;background:var(--color-status-coming-fg)"></span></span></div>`).join('')}</div>
+  <p class="pad t-footnote muted center" style="margin:16px 0">${c.icon('refresh', 'icon-sm')} ${c.t('updated')}</p>
+  <div class="pad"><button class="btn btn-secondary btn-block" data-state="export">${c.icon('download', 'icon-sm')}${c.t('export')}</button></div><div style="height:24px"></div>`;
+
+Proto.screen({
+  number: 9,
+  title: { az: 'Statistika', ru: 'Статистика' },
+  strings: S,
+  states: [
+    { key: 'main', label: { az: 'Əsas', ru: 'Основное' }, render: (c) => ({ html: body(c), tabbar: 'stats' }),
+      note: { az: 'Hər kart qonaq siyahısını həmin filtrlə açır. "Baxdı" — qonaq səhifəni açıb (WhatsApp önizləməsi sayılmır). Statuslar həm rəng, həm mətnlə.', ru: 'Каждая карточка открывает список гостей с фильтром. Статусы — цвет + текст.' } },
+    { key: 'export', label: { az: 'İxrac', ru: 'Экспорт' }, render: (c) => ({ html: body(c), tabbar: 'stats', overlay: `<div class="scrim" data-state="main"></div><div class="sheet" role="dialog"><div class="grabber"></div>
+        <h2 class="t-headline-serif" style="margin:0 0 6px">${c.t('exportTitle')}</h2><p class="t-callout muted" style="margin:0 0 16px">${c.t('exportBody')}</p>
+        <button class="btn btn-primary btn-block" data-toast="qonaqlar.xlsx">${c.icon('sheet', 'icon-sm')}${c.t('xlsx')}</button><button class="btn btn-secondary btn-block mt-1" data-toast="qonaqlar.pdf">${c.icon('receipt', 'icon-sm')}${c.t('pdf')}</button></div>` }) },
+    { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => ({ html: `${head(c)}<div class="empty"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p><button class="btn btn-primary btn-block mt-2" data-go="08-gonderme.html">${c.t('startSending')}</button></div>`, tabbar: 'stats' }) },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => ({ html: `${head(c)}<div class="stat-grid">${'<div class="skeleton" style="height:92px;border-radius:20px"></div>'.repeat(2)}<div class="skeleton" style="height:110px;border-radius:20px;grid-column:span 2"></div>${'<div class="skeleton" style="height:92px;border-radius:20px"></div>'.repeat(2)}</div><div class="pad mt-3"><div class="skeleton" style="height:160px;border-radius:20px"></div></div>`, tabbar: 'stats' }) },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => ({ html: `<div class="pad" style="padding-top:8px"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('loadError')}</strong><br>${c.t('networkError')}</span><button class="btn btn-text" data-state="loading">${c.t('retry')}</button></div></div>${body(c)}`, tabbar: 'stats' }),
+      note: { az: 'Son yüklənmiş rəqəmlər göstərilir, üstdə yenidən cəhd.', ru: 'Показываются последние загруженные цифры.' } },
+  ],
+});
+</script>
+</body>
+</html>
