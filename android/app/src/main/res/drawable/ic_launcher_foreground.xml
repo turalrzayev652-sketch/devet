@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder mark until the brand is chosen: a "D" with a thin gold ring (adaptive icon safe zone 66dp). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="@color/accent_gold"
+        android:strokeWidth="1.5"
+        android:pathData="M54,27a27,27 0,1 1,0 54a27,27 0,1 1,0 -54z" />
+    <path
+        android:fillColor="#FAF7F2"
+        android:pathData="M44,38h10c9.4,0 16,6.6 16,16s-6.6,16 -16,16H44Zm6,5.5v21h4c6,0 10,-4.3 10,-10.5S60,43.5 54,43.5Z" />
+</vector>

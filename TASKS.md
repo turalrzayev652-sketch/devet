@@ -203,6 +203,8 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Asılılıq: T32, T33
   - Android: Kotlin, Compose, minSdk 26, `supabase-kt`, naviqasiya, DI. iOS: SwiftUI, iOS 16+, `supabase-swift`. Dizayn tokenləri `/spec/design.md`-dən. i18n faylları generatordan.
   - Hazırdır, əgər: boş tətbiq 4 dildə açılır, dil sistem dilinə görə seçilir, CI-də build keçir.
+  - [x] T41A (Android) — `./gradlew test assembleDebug` lokal keçib (6 unit test), emulyatorda az/ru/en/tr yoxlanıb.
+  - ⚠️ Qeyd: `.github/workflows/android.yml` hələ GitHub-da işlədilməyib (push edilməyib). T41I (iOS) Mac + Xcode tələb edir; paritet qaydasına görə T42 T41I-dən sonra başlayır.
 
 - [ ] **T42A / T42I Giriş**
   - Asılılıq: T41

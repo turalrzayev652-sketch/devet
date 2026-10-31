@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from spec/i18n/app.json by tools/i18n/generate.mjs. Do not edit. -->
+<resources>
+    <string name="app_language">Dil: Azərbaycan</string>
+    <string name="app_tagline">Toy və ailə şənlikləri üçün fərdi dəvətnamələr</string>
+    <string name="app_welcome">Xoş gəlmisiniz</string>
+    <string name="auth_email">E-poçt</string>
+    <string name="auth_error_invalid_credentials">E-poçt və ya şifrə səhvdir.</string>
+    <string name="auth_login_title">Daxil ol</string>
+    <string name="auth_password">Şifrə</string>
+    <string name="common_cancel">Ləğv et</string>
+    <string name="common_error_network">İnternet bağlantısı yoxdur. Yenidən cəhd edin.</string>
+    <string name="common_ok">Oldu</string>
+    <string name="common_retry">Yenidən cəhd et</string>
+    <string name="common_save">Yadda saxla</string>
+    <plurals name="guests_count">
+        <item quantity="one">%1$d qonaq</item>
+        <item quantity="few">%1$d qonaq</item>
+        <item quantity="many">%1$d qonaq</item>
+        <item quantity="other">%1$d qonaq</item>
+    </plurals>
+    <string name="guests_limit_reached">Qonaq limiti doldu (%1$s). Limiti artırmaq üçün alış edin.</string>
+    <string name="template_text_closing">Son söz</string>
+    <string name="template_text_intro">Giriş mətni</string>
+    <string name="template_var_color_accent">Əsas rəng</string>
+    <string name="template_var_color_bg">Fon rəngi</string>
+    <string name="template_var_color_text">Mətn rəngi</string>
+    <string name="template_var_font_body">Mətn şrifti</string>
+    <string name="template_var_font_heading">Başlıq şrifti</string>
+    <string name="wa_message_birthday">Hörmətli %1$s! %2$s ad gününə dəvətlisiniz. Dəvətnamə: %3$s</string>
+    <string name="wa_message_engagement">Hörmətli %1$s! %2$s nişanına dəvətlisiniz. Dəvətnamə: %3$s</string>
+    <string name="wa_message_henna">Hörmətli %1$s! %2$s xınayaxdısına dəvətlisiniz. Dəvətnamə: %3$s</string>
+    <string name="wa_message_jubilee">Hörmətli %1$s! %2$s yubileyinə dəvətlisiniz. Dəvətnamə: %3$s</string>
+    <string name="wa_message_wedding">Hörmətli %1$s! %2$s toyuna dəvətlisiniz. Dəvətnamə: %3$s</string>
+</resources>

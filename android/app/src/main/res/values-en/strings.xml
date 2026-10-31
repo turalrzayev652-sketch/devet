@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from spec/i18n/app.json by tools/i18n/generate.mjs. Do not edit. -->
+<resources>
+    <string name="app_language">Language: English</string>
+    <string name="app_tagline">Personal invitations for weddings and family celebrations</string>
+    <string name="app_welcome">Welcome</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_error_invalid_credentials">Incorrect email or password.</string>
+    <string name="auth_login_title">Sign in</string>
+    <string name="auth_password">Password</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_error_network">No internet connection. Please try again.</string>
+    <string name="common_ok">OK</string>
+    <string name="common_retry">Try again</string>
+    <string name="common_save">Save</string>
+    <plurals name="guests_count">
+        <item quantity="one">%1$d guest</item>
+        <item quantity="few">%1$d guests</item>
+        <item quantity="many">%1$d guests</item>
+        <item quantity="other">%1$d guests</item>
+    </plurals>
+    <string name="guests_limit_reached">Guest limit reached (%1$s). Buy an add-on to raise it.</string>
+    <string name="template_text_closing">Closing words</string>
+    <string name="template_text_intro">Intro text</string>
+    <string name="template_var_color_accent">Accent colour</string>
+    <string name="template_var_color_bg">Background colour</string>
+    <string name="template_var_color_text">Text colour</string>
+    <string name="template_var_font_body">Body font</string>
+    <string name="template_var_font_heading">Heading font</string>
+    <string name="wa_message_birthday">Dear %1$s, you are invited to the birthday of %2$s. Invitation: %3$s</string>
+    <string name="wa_message_engagement">Dear %1$s, you are invited to the engagement of %2$s. Invitation: %3$s</string>
+    <string name="wa_message_henna">Dear %1$s, you are invited to the henna night of %2$s. Invitation: %3$s</string>
+    <string name="wa_message_jubilee">Dear %1$s, you are invited to the jubilee of %2$s. Invitation: %3$s</string>
+    <string name="wa_message_wedding">Dear %1$s, you are invited to the wedding of %2$s. Invitation: %3$s</string>
+</resources>

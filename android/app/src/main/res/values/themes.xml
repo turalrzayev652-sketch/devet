@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window theme only (before Compose draws): canvas colour from spec/design.md, no action bar. -->
+    <style name="Theme.Devet" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/canvas</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+    <color name="canvas">#FAF7F2</color>
+    <color name="brand_primary">#4A2C4F</color>
+    <color name="accent_gold">#C9A66B</color>
+</resources>
