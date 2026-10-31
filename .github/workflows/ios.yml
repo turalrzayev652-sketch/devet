@@ -1,0 +1,42 @@
+name: iOS
+
+on:
+  push:
+    paths: ['ios/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/ios.yml']
+  pull_request:
+    paths: ['ios/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/ios.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Generated string catalog must be committed and match spec/i18n/app.json.
+      - name: i18n generator is in sync
+        run: |
+          node tools/i18n/generate.mjs --android "$RUNNER_TEMP/res"
+          git diff --exit-code -- ios/Devet/Resources
+
+      - name: Pick a simulator
+        id: sim
+        run: |
+          udid=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for r,l in d.items() if "iOS" in r for x in l if x["name"].startswith("iPhone")))')
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+
+      - name: Unit tests
+        working-directory: ios
+        run: |
+          xcodebuild test \
+            -project Devet.xcodeproj -scheme Devet \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO

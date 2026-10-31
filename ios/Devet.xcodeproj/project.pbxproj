@@ -1,0 +1,408 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D1000000000000000000B001 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D1000000000000000000C001 /* Supabase */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D1000000000000000000A101 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1000000000000000000A001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1000000000000000000A201;
+			remoteInfo = Devet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D1000000000000000000F001 /* Devet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1000000000000000000F002 /* DevetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1000000000000000000F003 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		D1000000000000000000F004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1000000000000000000F005 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D1000000000000000000E001 /* Devet */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Devet;
+			sourceTree = "<group>";
+		};
+		D1000000000000000000E002 /* DevetTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DevetTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D1000000000000000000B101 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1000000000000000000B001 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1000000000000000000B102 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D1000000000000000000G001 = {
+			isa = PBXGroup;
+			children = (
+				D1000000000000000000E001 /* Devet */,
+				D1000000000000000000E002 /* DevetTests */,
+				D1000000000000000000G002 /* Config */,
+				D1000000000000000000G003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D1000000000000000000G002 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				D1000000000000000000F003 /* Base.xcconfig */,
+				D1000000000000000000F005 /* Secrets.example.xcconfig */,
+				D1000000000000000000F004 /* Info.plist */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		D1000000000000000000G003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1000000000000000000F001 /* Devet.app */,
+				D1000000000000000000F002 /* DevetTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D1000000000000000000A201 /* Devet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1000000000000000000L002 /* Build configuration list for PBXNativeTarget "Devet" */;
+			buildPhases = (
+				D1000000000000000000B201 /* Sources */,
+				D1000000000000000000B101 /* Frameworks */,
+				D1000000000000000000B301 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D1000000000000000000E001 /* Devet */,
+			);
+			name = Devet;
+			packageProductDependencies = (
+				D1000000000000000000C001 /* Supabase */,
+			);
+			productName = Devet;
+			productReference = D1000000000000000000F001 /* Devet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D1000000000000000000A202 /* DevetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1000000000000000000L003 /* Build configuration list for PBXNativeTarget "DevetTests" */;
+			buildPhases = (
+				D1000000000000000000B202 /* Sources */,
+				D1000000000000000000B102 /* Frameworks */,
+				D1000000000000000000B302 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D1000000000000000000A102 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D1000000000000000000E002 /* DevetTests */,
+			);
+			name = DevetTests;
+			productName = DevetTests;
+			productReference = D1000000000000000000F002 /* DevetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D1000000000000000000A001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					D1000000000000000000A201 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					D1000000000000000000A202 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = D1000000000000000000A201;
+					};
+				};
+			};
+			buildConfigurationList = D1000000000000000000L001 /* Build configuration list for PBXProject "Devet" */;
+			developmentRegion = az;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				az,
+				ru,
+				en,
+				tr,
+				Base,
+			);
+			mainGroup = D1000000000000000000G001;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D1000000000000000000C101 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D1000000000000000000G003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D1000000000000000000A201 /* Devet */,
+				D1000000000000000000A202 /* DevetTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D1000000000000000000B301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1000000000000000000B302 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D1000000000000000000B201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1000000000000000000B202 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D1000000000000000000A102 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1000000000000000000A201 /* Devet */;
+			targetProxy = D1000000000000000000A101 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D1000000000000000000H001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1000000000000000000F003 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D1000000000000000000H002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1000000000000000000F003 /* Base.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1000000000000000000H003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = brandPrimary;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_LANGUAGE = az;
+				INFOPLIST_FILE = Config/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = az.devet.app;
+				PRODUCT_NAME = Devet;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D1000000000000000000H004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = brandPrimary;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_LANGUAGE = az;
+				INFOPLIST_FILE = Config/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = az.devet.app;
+				PRODUCT_NAME = Devet;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D1000000000000000000H005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = az.devet.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Devet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Devet";
+			};
+			name = Debug;
+		};
+		D1000000000000000000H006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = az.devet.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Devet.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Devet";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D1000000000000000000L001 /* Build configuration list for PBXProject "Devet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1000000000000000000H001 /* Debug */,
+				D1000000000000000000H002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1000000000000000000L002 /* Build configuration list for PBXNativeTarget "Devet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1000000000000000000H003 /* Debug */,
+				D1000000000000000000H004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1000000000000000000L003 /* Build configuration list for PBXNativeTarget "DevetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1000000000000000000H005 /* Debug */,
+				D1000000000000000000H006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D1000000000000000000C101 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 2.55.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D1000000000000000000C001 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1000000000000000000C101 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D1000000000000000000A001 /* Project object */;
+}

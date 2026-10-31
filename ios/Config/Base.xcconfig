@@ -1,0 +1,11 @@
+// Build settings shared by Debug and Release. Secrets come from Secrets.xcconfig (gitignored),
+// copied from Secrets.example.xcconfig. Without it the app builds and starts with network features off.
+
+// {{BRAND_NAME}} (spec/PRODUCT.md) — the same in every language.
+BRAND_NAME = Devet
+
+SUPABASE_URL =
+SUPABASE_ANON_KEY =
+PUBLIC_BASE_URL =
+
+#include? "Secrets.xcconfig"

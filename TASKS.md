@@ -199,12 +199,13 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
 
 Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşırıq bitmədən növbəti modula keçmə.
 
-- [ ] **T41A / T41I Layihə quruluşu və dizayn sistemi**
+- [x] **T41A / T41I Layihə quruluşu və dizayn sistemi**
   - Asılılıq: T32, T33
   - Android: Kotlin, Compose, minSdk 26, `supabase-kt`, naviqasiya, DI. iOS: SwiftUI, iOS 16+, `supabase-swift`. Dizayn tokenləri `/spec/design.md`-dən. i18n faylları generatordan.
   - Hazırdır, əgər: boş tətbiq 4 dildə açılır, dil sistem dilinə görə seçilir, CI-də build keçir.
   - [x] T41A (Android) — `./gradlew test assembleDebug` lokal keçib (6 unit test), emulyatorda az/ru/en/tr yoxlanıb.
-  - ⚠️ Qeyd: `.github/workflows/android.yml` hələ GitHub-da işlədilməyib (push edilməyib). T41I (iOS) Mac + Xcode tələb edir; paritet qaydasına görə T42 T41I-dən sonra başlayır.
+  - [x] T41I (iOS) — `xcodebuild test` lokal keçib (13 unit test, iPhone 17 / iOS 27 simulyatoru), simulyatorda az/ru/en/tr (sistem dili və tətbiq üzrə dil), açıq/tünd yoxlanıb.
+  - ⚠️ Qeyd: `.github/workflows/android.yml` və `ios.yml` hələ GitHub-da işlədilməyib (repo push edilməyib).
 
 - [ ] **T42A / T42I Giriş**
   - Asılılıq: T41
