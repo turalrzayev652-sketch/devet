@@ -82,11 +82,13 @@ Tətbiq hər xətanı aşağıdakı kateqoriyalardan birinə salır və mesajı 
 | Giriş | Auth `signInWithPassword(email, password)` | sessiya → [2] | `invalid_credentials` → `auth.error.invalid_credentials`; `email_not_confirmed` → təsdiq ekranı |
 | Qeydiyyat | Auth `signUp(email, password, data: { display_name })`, sonra (təsdiqdən sonra) `profiles` update `display_name` | "E-poçtunuzu təsdiqləyin" | `user_already_exists` → "Bu e-poçtla hesab artıq var"; `weak_password` → ≥ 6 simvol |
 | Təsdiqi yenidən göndər | Auth `resend(type: signup, email)` | bildiriş | `over_email_send_rate_limit` → "Bir az gözləyin" |
-| Şifrə bərpası | Auth `resetPasswordForEmail(email, redirectTo: <deep link>)` | həmişə "E-poçtunuzu yoxlayın" (hesab varlığı açılmır) | — |
+| Şifrə bərpası | Auth `resetPasswordForEmail(email, redirectTo: az.devet.app://auth/reset-password)` | həmişə "E-poçtunuzu yoxlayın" (hesab varlığı açılmır) | — |
 | Yeni şifrə (deep link) | Auth `updateUser(password)` | → [2] | `weak_password` |
 | Sessiya | SDK özü saxlayır və yeniləyir | — | yenilənmə alınmasa → [1] |
 
 `profiles` sətri qeydiyyatda trigger ilə yaranır (`handle_new_user`), tətbiq insert etmir.
+
+**E-poçt linkləri (qərar 2026-10-31):** xüsusi sxem, PKCE axını. Qeydiyyat təsdiqi `signUp(..., redirectTo: az.devet.app://auth/callback)`, bərpa `az.devet.app://auth/reset-password`; link `?code=…` ilə gəlir → `exchangeCodeForSession(code)`. Bərpa linkindən sonra "Yeni şifrə" ekranı. Xəta (`error_code`, məs. `otp_expired`) → "Link etibarsızdır". Supabase panelində Redirect URLs: `az.devet.app://auth/**`.
 
 ### [2] Tədbirlərim
 ```http

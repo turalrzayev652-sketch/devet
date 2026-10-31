@@ -211,6 +211,8 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Asılılıq: T41
   - E-poçt + şifrə ilə qeydiyyat, giriş, çıxış, şifrə bərpası (Supabase Auth). Sessiya yadda qalır.
   - Hazırdır, əgər: ekran axını `/spec/screens.md`-yə uyğundur; səhv şifrə və şəbəkə xətası düzgün göstərilir.
+  - [x] T42A (Android) — giriş, qeydiyyat, təsdiq, bərpa, yeni şifrə (deep link), Parametrlər (12b: ad, dil, şərtlər, çıxış, hesabı sil); 35 unit test keçir, emulyatorda az/ru/en/tr yoxlanıb.
+  - ⚠️ Qeyd: real Supabase layihəsi olmadığı üçün giriş/qeydiyyat/e-poçt linkləri real serverlə sınanmayıb (Auth cavabları MockEngine ilə yoxlanıb); Parametrlər ekranı emulyatorda açılmayıb (sessiya tələb edir). Supabase panelində Redirect URLs-ə `az.devet.app://auth/**` əlavə edilməlidir.
 
 - [ ] **T43A / T43I Tədbirlər və tədbir yaratma**
   - Asılılıq: T42

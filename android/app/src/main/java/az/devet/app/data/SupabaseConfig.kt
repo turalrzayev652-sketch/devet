@@ -2,7 +2,9 @@ package az.devet.app.data
 
 import az.devet.app.BuildConfig
 import io.github.jan.supabase.SupabaseClient
+import az.devet.app.data.auth.AuthDeepLink
 import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.auth.FlowType
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.functions.Functions
 import io.github.jan.supabase.postgrest.Postgrest
@@ -20,10 +22,16 @@ data class SupabaseConfig(val url: String, val anonKey: String, val publicBaseUr
     }
 }
 
-fun createDevetSupabase(config: SupabaseConfig): SupabaseClient {
-    require(config.isConfigured) { "SUPABASE_URL is not set (android/local.properties or environment)" }
+/** Returns null without backend settings: the app still starts, network features report an error. */
+fun createDevetSupabase(config: SupabaseConfig): SupabaseClient? {
+    if (!config.isConfigured) return null
     return createSupabaseClient(supabaseUrl = config.url, supabaseKey = config.anonKey) {
-        install(Auth)
+        install(Auth) {
+            // E-mail links come back as az.devet.app://auth/… (AuthDeepLink); PKCE suits mobile apps.
+            flowType = FlowType.PKCE
+            scheme = AuthDeepLink.SCHEME
+            host = AuthDeepLink.HOST
+        }
         install(Postgrest)
         install(Storage)
         install(Functions)

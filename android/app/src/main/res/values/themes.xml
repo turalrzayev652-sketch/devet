@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Window theme only (before Compose draws): canvas colour from spec/design.md, no action bar. -->
-    <style name="Theme.Devet" parent="android:Theme.Material.Light.NoActionBar">
+    <!-- Window theme only (before Compose draws): canvas colour from spec/design.md, no action bar. AppCompat parent for per-app language. -->
+    <style name="Theme.Devet" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/canvas</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
