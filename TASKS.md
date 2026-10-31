@@ -207,12 +207,13 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - [x] T41I (iOS) — `xcodebuild test` lokal keçib (13 unit test, iPhone 17 / iOS 27 simulyatoru), simulyatorda az/ru/en/tr (sistem dili və tətbiq üzrə dil), açıq/tünd yoxlanıb.
   - ⚠️ Qeyd: `.github/workflows/android.yml` və `ios.yml` hələ GitHub-da işlədilməyib (repo push edilməyib).
 
-- [ ] **T42A / T42I Giriş**
+- [x] **T42A / T42I Giriş**
   - Asılılıq: T41
   - E-poçt + şifrə ilə qeydiyyat, giriş, çıxış, şifrə bərpası (Supabase Auth). Sessiya yadda qalır.
   - Hazırdır, əgər: ekran axını `/spec/screens.md`-yə uyğundur; səhv şifrə və şəbəkə xətası düzgün göstərilir.
   - [x] T42A (Android) — giriş, qeydiyyat, təsdiq, bərpa, yeni şifrə (deep link), Parametrlər (12b: ad, dil, şərtlər, çıxış, hesabı sil); 35 unit test keçir, emulyatorda az/ru/en/tr yoxlanıb.
-  - ⚠️ Qeyd: real Supabase layihəsi olmadığı üçün giriş/qeydiyyat/e-poçt linkləri real serverlə sınanmayıb (Auth cavabları MockEngine ilə yoxlanıb); Parametrlər ekranı emulyatorda açılmayıb (sessiya tələb edir). Supabase panelində Redirect URLs-ə `az.devet.app://auth/**` əlavə edilməlidir.
+  - [x] T42I (iOS) — eyni ekranlar və qaydalar; 42 unit test keçir (Android testlərinin eyni halları + supabase-swift stub HTTP ilə), simulyatorda az/ru/en/tr yoxlanıb. Tətbiqin dili iOS Ayarlarında seçilir (sahibin qərarı 2026-10-31).
+  - ⚠️ Qeyd: real Supabase layihəsi olmadığı üçün giriş/qeydiyyat/e-poçt linkləri hər iki platformada real serverlə sınanmayıb (Auth cavabları MockEngine / URLProtocol ilə yoxlanıb); Parametrlər ekranı cihazda açılmayıb (sessiya tələb edir). Supabase panelində Redirect URLs-ə `az.devet.app://auth/**` əlavə edilməlidir.
 
 - [ ] **T43A / T43I Tədbirlər və tədbir yaratma**
   - Asılılıq: T42

@@ -19,7 +19,12 @@ struct SupabaseConfig: Equatable {
 }
 
 /// Returns nil when the build has no Supabase settings: the app still starts, network features stay disabled.
-func makeDevetSupabase(_ config: SupabaseConfig) -> SupabaseClient? {
+/// E-mail links come back as az.devet.app://auth/… (AuthDeepLink); PKCE suits mobile apps.
+/// `session` and `storage` are replaced in tests (stubbed HTTP, in-memory session).
+func makeDevetSupabase(_ config: SupabaseConfig, session: URLSession = .shared, storage: (any AuthLocalStorage)? = nil) -> SupabaseClient? {
     guard config.isConfigured, let url = URL(string: config.url) else { return nil }
-    return SupabaseClient(supabaseURL: url, supabaseKey: config.anonKey)
+    let auth = storage.map {
+        SupabaseClientOptions.AuthOptions(storage: $0, redirectToURL: AuthDeepLink.confirmURL, flowType: .pkce, emitLocalSessionAsInitialSession: true)
+    } ?? SupabaseClientOptions.AuthOptions(redirectToURL: AuthDeepLink.confirmURL, flowType: .pkce, emitLocalSessionAsInitialSession: true)
+    return SupabaseClient(supabaseURL: url, supabaseKey: config.anonKey, options: SupabaseClientOptions(auth: auth, global: .init(session: session)))
 }
