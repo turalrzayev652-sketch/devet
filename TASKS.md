@@ -264,6 +264,7 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
 - [ ] **T50 Hüquqi səhifələr**
   - Asılılıq: T20
   - Agent 4 dildə məxfilik siyasəti və istifadə şərtləri qaralaması yazır, `/web/public/legal/`-da yerləşdirir. **[SİZ] hüquqşünasla yoxlayın.**
+  - Vəziyyət: istifadə şərtləri qaralaması 4 dildə hazırdır (`web/public/legal/terms/`). **Qalıb:** məxfilik siyasəti — sahib (ad, VÖEN) və əlaqə e-poçtu verilənə qədər saxlanılıb; region: AB (Frankfurt).
 
 - [ ] **T51 Mağaza mətnləri**
   - Asılılıq: T4DA, T4DI
