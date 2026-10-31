@@ -412,3 +412,11 @@ enabled = true
 # declarative_schema_path = "./database"
 # JSON string passed through to pg-delta SQL formatting.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+
+# T4C: called by the app with the user's access token.
+[functions.verify-purchase]
+verify_jwt = true
+
+# T4C: called by Google Pub/Sub and Apple (no Supabase JWT); each store is authenticated inside the function.
+[functions.store-notifications]
+verify_jwt = false
