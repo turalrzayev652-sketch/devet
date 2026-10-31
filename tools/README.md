@@ -24,3 +24,11 @@ Helper scripts.
   node --test tools/i18n/generate.test.mjs
   ```
   Defaults: `android/app/src/main/res`, `ios/Devet/Resources/Localizable.xcstrings`.
+
+- `test-vectors/reference.mjs` — JavaScript reference for the rules in `/spec/test-vectors/README.md`
+  (phone normalisation, Excel import). Its test runs every vector, so a contradictory vector fails before
+  Android/iOS implement it.
+
+  ```bash
+  node --test tools/test-vectors/reference.test.mjs
+  ```

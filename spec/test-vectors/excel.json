@@ -1,0 +1,101 @@
+{
+  "description": "Excel (.xlsx) guest import. Rules: spec/test-vectors/README.md#excel. Header and value matching uses normalize() from the README.",
+  "columns": {
+    "name": {
+      "required": true,
+      "aliases": ["ad", "adı", "ad soyad", "ad və soyad", "qonaq", "qonağın adı", "имя", "фио", "имя гостя", "гость", "name", "full name", "guest", "guest name", "isim", "ad soyadı", "misafir", "misafir adı"]
+    },
+    "phone": {
+      "required": false,
+      "aliases": ["telefon", "telefon nömrəsi", "nömrə", "mobil", "whatsapp", "телефон", "номер", "номер телефона", "мобильный", "phone", "phone number", "mobile", "number", "telefon numarası", "cep telefonu", "numara"]
+    },
+    "salutation": {
+      "required": false,
+      "aliases": ["hitab", "müraciət", "обращение", "salutation", "title", "hitap", "unvan"]
+    },
+    "invited_count": {
+      "required": false,
+      "aliases": ["nəfər", "nəfər sayı", "say", "qonaq sayı", "кол-во", "количество", "человек", "кол-во человек", "count", "guests", "people", "number of guests", "kişi", "kişi sayısı", "sayı"]
+    },
+    "with_family": {
+      "required": false,
+      "aliases": ["ailəliklə", "ailə ilə", "с семьёй", "семья", "with family", "family", "ailece", "ailesiyle", "aile"]
+    },
+    "side": {
+      "required": false,
+      "aliases": ["tərəf", "сторона", "side", "taraf"]
+    },
+    "table_no": {
+      "required": false,
+      "aliases": ["masa", "masa nömrəsi", "стол", "номер стола", "table", "table number", "table no", "masa no", "masa numarası"]
+    }
+  },
+
+  "values": {
+    "salutation": {
+      "muellim": ["müəllim", "muellim", "муаллим", "mr", "mr."],
+      "xanim": ["xanım", "xanim", "ханум", "ms", "ms.", "mrs", "mrs.", "hanım", "hanim"],
+      "bey": ["bəy", "bey", "бей"],
+      "none": ["", "-", "yox", "нет", "none", "no", "yok"]
+    },
+    "side": {
+      "groom": ["bəy", "bəy tərəfi", "oğlan evi", "жених", "сторона жениха", "groom", "groom's side", "damat", "damat tarafı", "erkek tarafı"],
+      "bride": ["gəlin", "gəlin tərəfi", "qız evi", "невеста", "сторона невесты", "bride", "bride's side", "gelin", "gelin tarafı", "kız tarafı"],
+      "none": ["", "-", "ümumi", "общий", "both", "none", "ortak"]
+    },
+    "boolean": {
+      "true": ["bəli", "hə", "var", "+", "1", "да", "yes", "y", "true", "x", "✓", "evet"],
+      "false": ["", "xeyr", "yox", "-", "0", "нет", "no", "n", "false", "hayır", "yok"]
+    }
+  },
+
+  "header_cases": [
+    { "headers": ["Ad", "Telefon"], "expected": { "name": 0, "phone": 1 } },
+    { "headers": ["Имя", "Телефон", "Стол"], "expected": { "name": 0, "phone": 1, "table_no": 2 } },
+    { "headers": ["Name", "Phone number", "Side", "Guests"], "expected": { "name": 0, "phone": 1, "side": 2, "invited_count": 3 } },
+    { "headers": ["İsim", "Telefon Numarası", "Kişi Sayısı"], "expected": { "name": 0, "phone": 1, "invited_count": 2 } },
+    { "headers": ["  AD SOYAD ", "TELEFON:"], "expected": { "name": 0, "phone": 1 }, "note": "case, spaces and punctuation ignored" },
+    { "headers": ["Adi", "Nomre"], "expected": { "name": 0, "phone": 1 }, "note": "ı/ə typed as i/e" },
+    { "headers": ["№", "ФИО", "Номер телефона", "Примечание"], "expected": { "name": 1, "phone": 2 }, "note": "unknown columns ignored" },
+    { "headers": ["Telefon", "Ad", "Hitab", "Ailəliklə", "Tərəf", "Masa", "Nəfər"], "expected": { "phone": 0, "name": 1, "salutation": 2, "with_family": 3, "side": 4, "table_no": 5, "invited_count": 6 } },
+    { "headers": ["Ad", "Name", "Telefon"], "expected": { "name": 0, "phone": 2 }, "note": "duplicate field: first column wins" },
+    { "headers": ["Telefon", "Masa"], "expected": null, "error": "name_column_missing" },
+    { "headers": [], "expected": null, "error": "name_column_missing" }
+  ],
+
+  "row_cases": [
+    { "row": { "name": "Elçin", "phone": "050 123 45 67" },
+      "expected": { "name": "Elçin", "phone_e164": "+994501234567", "salutation": "none", "invited_count": 1, "with_family": false, "side": "none", "table_no": null } },
+    { "row": { "name": "  Leyla  ", "phone": "+994551112233", "salutation": "Xanım", "side": "Gəlin tərəfi", "table_no": "12" },
+      "expected": { "name": "Leyla", "phone_e164": "+994551112233", "salutation": "xanim", "invited_count": 1, "with_family": false, "side": "bride", "table_no": "12" } },
+    { "row": { "name": "Rəşad", "phone": "", "salutation": "bəy", "invited_count": "3", "with_family": "bəli", "side": "bəy" },
+      "expected": { "name": "Rəşad", "phone_e164": null, "salutation": "bey", "invited_count": 3, "with_family": true, "side": "groom", "table_no": null }, "note": "phone may be empty; side 'bəy' = groom" },
+    { "row": { "name": "Эльчин", "phone": "+7 916 123-45-67", "invited_count": 2, "table_no": 5 },
+      "expected": { "name": "Эльчин", "phone_e164": "+79161234567", "salutation": "none", "invited_count": 2, "with_family": false, "side": "none", "table_no": "5" }, "note": "numeric cells arrive as numbers" },
+    { "row": { "name": "Ayşe", "phone": 501234567, "table_no": "VIP-1" },
+      "expected": { "name": "Ayşe", "phone_e164": "+994501234567", "salutation": "none", "invited_count": 1, "with_family": false, "side": "none", "table_no": "VIP-1" }, "note": "Excel drops the leading 0 of numeric phones" },
+    { "row": { "name": "Kamran", "phone": 994501234567, "invited_count": "2.0" },
+      "expected": { "name": "Kamran", "phone_e164": "+994501234567", "salutation": "none", "invited_count": 2, "with_family": false, "side": "none", "table_no": null } },
+    { "row": { "name": "", "phone": "050 123 45 67" }, "expected": null, "errors": ["name_missing"] },
+    { "row": { "name": "   ", "phone": "0551112233" }, "expected": null, "errors": ["name_missing"] },
+    { "row": { "name": "   ", "phone": "", "table_no": null }, "expected": null, "skipped": true, "note": "all cells empty: not a guest, not an error" },
+    { "row": { "name": "Vüqar", "phone": "12345" }, "expected": null, "errors": ["phone_invalid"] },
+    { "row": { "name": "Tural", "phone": "012 345 67 89" }, "expected": null, "errors": ["phone_not_mobile"] },
+    { "row": { "name": "Nərmin", "invited_count": "0" }, "expected": null, "errors": ["invited_count_invalid"] },
+    { "row": { "name": "Nərmin", "invited_count": "iki" }, "expected": null, "errors": ["invited_count_invalid"] },
+    { "row": { "name": "Nərmin", "invited_count": "2.5" }, "expected": null, "errors": ["invited_count_invalid"] },
+    { "row": { "name": "Nərmin", "invited_count": "51" }, "expected": null, "errors": ["invited_count_invalid"], "note": "1..50" },
+    { "row": { "name": "Günay", "side": "qonşu" }, "expected": null, "errors": ["side_invalid"] },
+    { "row": { "name": "Günay", "salutation": "doktor" }, "expected": null, "errors": ["salutation_invalid"] },
+    { "row": { "name": "Günay", "with_family": "bəlkə" }, "expected": null, "errors": ["with_family_invalid"] },
+    { "row": { "name": "Günay", "table_no": "1234567890123" }, "expected": null, "errors": ["table_no_invalid"], "note": "max 12 characters" },
+    { "row": { "name": "", "phone": "abc", "invited_count": "-1" }, "expected": null, "errors": ["name_missing", "phone_invalid", "invited_count_invalid"], "note": "all errors of a row, in the order of the columns list" }
+  ],
+
+  "file_cases": [
+    { "rows": [{ "name": "A", "phone": "0501234567" }, { "name": "B", "phone": "+994 50 123 45 67" }],
+      "expected_warnings": [{ "row": 2, "warning": "duplicate_phone", "first_row": 1 }], "note": "duplicates are a warning, not an error; row numbers are 1-based data rows" },
+    { "rows": [{ "name": "A", "phone": "" }, { "name": "B", "phone": "" }], "expected_warnings": [], "note": "empty phones are not duplicates" },
+    { "rows": [], "expected_warnings": [], "error": "no_rows" }
+  ]
+}
