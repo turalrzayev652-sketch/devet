@@ -228,12 +228,13 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Kataloq (pulsuz/pullu nişanı, limit). WebView-da `?preview=1` rejimi ilə canlı önizləmə. Rəng, şrift, mətnlər, cütlüyün şəkilləri (sıxılıb `event-media`-ya yüklənir), musiqi seçimi. Pullu şablon alınmayıbsa: önizləmə var, "Göndər" bağlıdır.
   - Hazırdır, əgər: dəyişikliklər önizləmədə dərhal görünür və saxlanılır.
 
-- [ ] **T45A / T45I Qonaq əlavə etmə**
+- [x] **T45A / T45I Qonaq əlavə etmə**
   - Asılılıq: T43, T33
   - Əl ilə; telefon kontaktlarından çoxlu seçim (Android contact picker, iOS `CNContactPickerViewController`); Excel `.xlsx` idxalı (sütun uyğunlaşdırma ekranı, səhv sətirlərin siyahısı). Nömrələr `phones.json` vektorlarına görə normallaşdırılır. Təkrar nömrə xəbərdarlığı. Limit dolanda alış təklifi.
   - Hazırdır, əgər: hər iki platformanın unit testləri eyni vektorlardan keçir; 300 sətirlik Excel 5 saniyədən tez idxal olunur.
   - [x] T45A (Android) — əl ilə (önizləmə ilə, təkrar nömrə xəbərdarlığı), kontaktlar (icazəsiz sistem seçicisi, ardıcıl seçim), Excel (öz .xlsx oxuyucusu, sütun uyğunlaşdırma, xətalı sətirlər, təkrarlar, bir sorğu ilə idxal), limit pəncərəsi; `phones.json` və `excel.json` bütün halları keçir; 300 sətir ~30 ms; 75 unit test; emulyatorda demo rejimində yoxlanıb.
-  - ⚠️ Qeyd: real Supabase ilə sınanmayıb (limit trigger-i MockEngine cavabı ilə yoxlanıb). Limit pəncərəsinin "Premium şablon" / "Limiti artır" düymələri hələlik T44/T4D ekranlarına (növbəti mərhələ) aparır. T45I üçün: iOS-da .xlsx (zip) oxumaq üçün kitabxana və ya öz zip oxuyucusu lazım olacaq.
+  - [x] T45I (iOS) — eyni üç tab və qaydalar; kontaktlar `CNContactPickerViewController` ilə (çoxlu seçim, bir neçə mobil nömrədə seçim dialoqu); .xlsx ZIPFoundation ilə; `phones.json`/`excel.json` bütün halları keçir; 84 unit test; simulyatorda demo rejimində kontakt seçimi və Excel idxalı yoxlanıb.
+  - ⚠️ Qeyd: real Supabase ilə hər iki platformada sınanmayıb (limit trigger-i stub cavabla yoxlanıb). Android kontakt seçicisi real telefonda yoxlanmalıdır. Limit pəncərəsinin "Premium şablon" / "Limiti artır" düymələri hələlik T44/T4D ekranlarına (növbəti mərhələ) aparır.
 
 - [ ] **T46A / T46I Qonaq siyahısı: masa, tərəf, dil, hitab**
   - Asılılıq: T45

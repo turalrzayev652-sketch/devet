@@ -71,4 +71,17 @@ final class DemoEvents: EventRepository, @unchecked Sendable {
         return .success(())
     }
 }
+/// In-memory guests with the free limit (100), so the limit sheet can be tried too.
+final class DemoGuests: GuestRepository, @unchecked Sendable {
+    private var byEvent: [String: [NewGuest]] = [:]
+    func phones(_ eventId: String) async -> Result<[GuestPhone], AuthFailure> {
+        .success((byEvent[eventId] ?? []).compactMap { g in g.phoneE164.map { GuestPhone(name: g.name, phoneE164: $0) } })
+    }
+    func count(_ eventId: String) async -> Result<Int, AuthFailure> { .success(byEvent[eventId]?.count ?? 0) }
+    func add(_ eventId: String, _ guests: [NewGuest]) async -> AddResult {
+        if (byEvent[eventId]?.count ?? 0) + guests.count > 100 { return .limitExceeded(100) }
+        byEvent[eventId, default: []] += guests
+        return .added(guests.count)
+    }
+}
 #endif

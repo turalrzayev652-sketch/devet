@@ -2,9 +2,9 @@ name: iOS
 
 on:
   push:
-    paths: ['ios/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/ios.yml']
+    paths: ['ios/**', 'spec/i18n/**', 'spec/design.md', 'spec/test-vectors/**', 'android/app/src/main/assets/sample/**', 'tools/i18n/**', '.github/workflows/ios.yml']
   pull_request:
-    paths: ['ios/**', 'spec/i18n/app.json', 'spec/design.md', 'tools/i18n/**', '.github/workflows/ios.yml']
+    paths: ['ios/**', 'spec/i18n/**', 'spec/design.md', 'spec/test-vectors/**', 'android/app/src/main/assets/sample/**', 'tools/i18n/**', '.github/workflows/ios.yml']
 
 permissions:
   contents: read

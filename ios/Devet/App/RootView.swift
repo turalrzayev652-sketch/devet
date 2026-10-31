@@ -13,6 +13,9 @@ enum AppRoute: Hashable {
     /// Inside an event: guests [6] (T45/T46).
     case eventHome(id: String, title: String)
     case templates(eventId: String)
+    case addGuests(eventId: String, tab: Int)
+    /// Purchase [12] (T4D).
+    case purchase
     case joinByCode
 }
 
@@ -95,6 +98,7 @@ private struct AppFlow: View {
     @State private var path: [AppRoute] = []
     /// Bumped by create/edit so the list reloads when it comes back.
     @State private var reload = 0
+    @State private var guestsReload = 0
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -125,8 +129,18 @@ private struct AppFlow: View {
                         reload += 1
                         path.removeLast()
                     })
-                case let .eventHome(_, title):
-                    ComingSoonView(title: Text(verbatim: title))
+                case let .eventHome(id, title):
+                    EventHomeView(eventId: id, title: title, reloadToken: guestsReload, guests: deps.guests) { tab in
+                        path.append(.addGuests(eventId: id, tab: tab))
+                    }
+                case let .addGuests(id, tab):
+                    AddGuestsScreen(eventId: id, tab: tab, deps: deps,
+                                    onClose: { path.removeLast() },
+                                    onPremium: { path.append(.templates(eventId: id)) },
+                                    onAddon: { path.append(.purchase) },
+                                    onChanged: { guestsReload += 1; reload += 1 })
+                case .purchase:
+                    ComingSoonView(title: Text("limit.addon"))
                 case .templates:
                     ComingSoonView(title: Text("create.success.choose_template"))
                 case .joinByCode:
@@ -134,5 +148,34 @@ private struct AppFlow: View {
                 }
             }
         }
+    }
+}
+
+/// Owns the three tab view models of screen [7] for the lifetime of the screen.
+private struct AddGuestsScreen: View {
+    @StateObject private var manual: ManualGuestViewModel
+    @StateObject private var contacts: ContactsViewModel
+    @StateObject private var excel: ExcelImportViewModel
+    let tab: Int
+    let onClose: () -> Void
+    let onPremium: () -> Void
+    let onAddon: () -> Void
+    let onChanged: () -> Void
+
+    init(eventId: String, tab: Int, deps: AppDependencies, onClose: @escaping () -> Void, onPremium: @escaping () -> Void,
+         onAddon: @escaping () -> Void, onChanged: @escaping () -> Void) {
+        let ctx = GuestContext(eventId: eventId, guests: deps.guests, events: deps.events)
+        _manual = StateObject(wrappedValue: ManualGuestViewModel(ctx: ctx, spec: deps.guestSpec))
+        _contacts = StateObject(wrappedValue: ContactsViewModel(ctx: ctx, spec: deps.guestSpec))
+        _excel = StateObject(wrappedValue: ExcelImportViewModel(ctx: ctx, spec: deps.guestSpec))
+        self.tab = tab
+        self.onClose = onClose
+        self.onPremium = onPremium
+        self.onAddon = onAddon
+        self.onChanged = onChanged
+    }
+
+    var body: some View {
+        AddGuestView(manual: manual, contacts: contacts, excel: excel, tab: tab, onClose: onClose, onPremium: onPremium, onAddon: onAddon, onChanged: onChanged)
     }
 }
