@@ -1,1 +1,32 @@
-{}
+{
+  "common.ok": { "az": "Oldu", "ru": "ОК", "en": "OK", "tr": "Tamam" },
+  "common.cancel": { "az": "Ləğv et", "ru": "Отмена", "en": "Cancel", "tr": "İptal" },
+  "common.save": { "az": "Yadda saxla", "ru": "Сохранить", "en": "Save", "tr": "Kaydet" },
+  "common.retry": { "az": "Yenidən cəhd et", "ru": "Повторить", "en": "Try again", "tr": "Tekrar dene" },
+  "common.error.network": { "az": "İnternet bağlantısı yoxdur. Yenidən cəhd edin.", "ru": "Нет подключения к интернету. Попробуйте ещё раз.", "en": "No internet connection. Please try again.", "tr": "İnternet bağlantısı yok. Lütfen tekrar deneyin." },
+
+  "auth.login.title": { "az": "Daxil ol", "ru": "Вход", "en": "Sign in", "tr": "Giriş yap" },
+  "auth.email": { "az": "E-poçt", "ru": "Эл. почта", "en": "Email", "tr": "E-posta" },
+  "auth.password": { "az": "Şifrə", "ru": "Пароль", "en": "Password", "tr": "Şifre" },
+  "auth.error.invalid_credentials": { "az": "E-poçt və ya şifrə səhvdir.", "ru": "Неверная эл. почта или пароль.", "en": "Incorrect email or password.", "tr": "E-posta veya şifre hatalı." },
+
+  "guests.count.one": { "az": "{count} qonaq", "ru": "{count} гость", "en": "{count} guest", "tr": "{count} misafir" },
+  "guests.count.few": { "az": "{count} qonaq", "ru": "{count} гостя", "en": "{count} guests", "tr": "{count} misafir" },
+  "guests.count.many": { "az": "{count} qonaq", "ru": "{count} гостей", "en": "{count} guests", "tr": "{count} misafir" },
+  "guests.count.other": { "az": "{count} qonaq", "ru": "{count} гостя", "en": "{count} guests", "tr": "{count} misafir" },
+  "guests.limit_reached": { "az": "Qonaq limiti doldu ({limit}). Limiti artırmaq üçün alış edin.", "ru": "Достигнут лимит гостей ({limit}). Купите расширение лимита.", "en": "Guest limit reached ({limit}). Buy an add-on to raise it.", "tr": "Misafir sınırına ulaşıldı ({limit}). Sınırı artırmak için satın alın." },
+
+  "template.var.color_bg": { "az": "Fon rəngi", "ru": "Цвет фона", "en": "Background colour", "tr": "Arka plan rengi" },
+  "template.var.color_text": { "az": "Mətn rəngi", "ru": "Цвет текста", "en": "Text colour", "tr": "Metin rengi" },
+  "template.var.color_accent": { "az": "Əsas rəng", "ru": "Акцентный цвет", "en": "Accent colour", "tr": "Vurgu rengi" },
+  "template.var.font_heading": { "az": "Başlıq şrifti", "ru": "Шрифт заголовков", "en": "Heading font", "tr": "Başlık yazı tipi" },
+  "template.var.font_body": { "az": "Mətn şrifti", "ru": "Шрифт текста", "en": "Body font", "tr": "Metin yazı tipi" },
+  "template.text.intro": { "az": "Giriş mətni", "ru": "Вступительный текст", "en": "Intro text", "tr": "Giriş metni" },
+  "template.text.closing": { "az": "Son söz", "ru": "Заключительные слова", "en": "Closing words", "tr": "Kapanış sözleri" },
+
+  "wa_message.wedding": { "az": "Hörmətli {display_name}! {title_names} toyuna dəvətlisiniz. Dəvətnamə: {link}", "ru": "Здравствуйте, {display_name}! Приглашаем вас на свадьбу: {title_names}. Приглашение: {link}", "en": "Dear {display_name}, you are invited to the wedding of {title_names}. Invitation: {link}", "tr": "Sayın {display_name}, düğüne davetlisiniz: {title_names}. Davetiye: {link}" },
+  "wa_message.engagement": { "az": "Hörmətli {display_name}! {title_names} nişanına dəvətlisiniz. Dəvətnamə: {link}", "ru": "Здравствуйте, {display_name}! Приглашаем вас на помолвку: {title_names}. Приглашение: {link}", "en": "Dear {display_name}, you are invited to the engagement of {title_names}. Invitation: {link}", "tr": "Sayın {display_name}, nişana davetlisiniz: {title_names}. Davetiye: {link}" },
+  "wa_message.henna": { "az": "Hörmətli {display_name}! {title_names} xınayaxdısına dəvətlisiniz. Dəvətnamə: {link}", "ru": "Здравствуйте, {display_name}! Приглашаем вас на вечер хны: {title_names}. Приглашение: {link}", "en": "Dear {display_name}, you are invited to the henna night of {title_names}. Invitation: {link}", "tr": "Sayın {display_name}, kına gecesine davetlisiniz: {title_names}. Davetiye: {link}" },
+  "wa_message.birthday": { "az": "Hörmətli {display_name}! {title_names} ad gününə dəvətlisiniz. Dəvətnamə: {link}", "ru": "Здравствуйте, {display_name}! Приглашаем вас на день рождения: {title_names}. Приглашение: {link}", "en": "Dear {display_name}, you are invited to the birthday of {title_names}. Invitation: {link}", "tr": "Sayın {display_name}, doğum gününe davetlisiniz: {title_names}. Davetiye: {link}" },
+  "wa_message.jubilee": { "az": "Hörmətli {display_name}! {title_names} yubileyinə dəvətlisiniz. Dəvətnamə: {link}", "ru": "Здравствуйте, {display_name}! Приглашаем вас на юбилей: {title_names}. Приглашение: {link}", "en": "Dear {display_name}, you are invited to the jubilee of {title_names}. Invitation: {link}", "tr": "Sayın {display_name}, jübileye davetlisiniz: {title_names}. Davetiye: {link}" }
+}
