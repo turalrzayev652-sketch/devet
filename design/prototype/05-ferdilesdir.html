@@ -53,10 +53,10 @@ const PALETTES = [['#4A2C4F', '#C9A66B'], ['#2E4A36', '#D8C8A8'], ['#7A2E3A', '#
 const mini = (c, guest, premium) => `<div class="mini-phone"><div class="invite-mini ${premium ? 'tpl-art-3' : 'tpl-art-1'}" style="${premium ? '' : 'color:#4A2C4F'}">
   ${guest ? `<div class="g">${c.t('guestGreeting')}</div>` : ''}<div class="k">${c.t('inviteK')}</div><div class="n">Aysel<br>&amp; Ramin</div><div class="d">12 · 07 · 2027 · 18:00<br>Ağ Saray şadlıq evi</div><div class="rsvp"><span>${c.t('rsvp')}</span></div></div></div>`;
 
-const view = (c, tab, body, { guest = false, premium = false } = {}) => ({
+const view = (c, tab, body, { guest = false, premium = false, loading = false } = {}) => ({
   html: '',
   overlay: `<div class="head-fixed"><div class="topbar"><button class="icon-btn" data-go="04-sablonlar.html" aria-label="Geri">${c.icon('back')}</button><span class="title">${c.t('title')}</span><button class="btn btn-text" data-state="saved">${c.t('save')}</button></div></div>
-    <div class="live">${mini(c, guest, premium)}
+    <div class="live">${loading ? '<div class="mini-phone skeleton" style="border-radius:24px"></div>' : mini(c, guest, premium)}
       <div class="controls"><button class="seg-mini" data-state="${guest ? 'color' : 'guest'}" style="border:0;cursor:pointer"><span style="display:flex;align-items:center;gap:6px;padding:0 10px;height:30px;font:600 12px var(--font-family-sans);color:${guest ? 'var(--color-brand-primary)' : 'var(--color-text-secondary)'}">${c.icon('eye', 'icon-sm')}${c.t('guestView')}</span></button>
         <span class="seg-mini" role="group">${['AZ', 'RU', 'EN', 'TR'].map((l, i) => `<button aria-pressed="${(c.lang === 'ru' ? 1 : 0) === i}">${l}</button>`).join('')}</span></div></div>
     <div class="custom-sheet"><div class="grabber"></div>
@@ -98,6 +98,8 @@ Proto.screen({
       note: { az: 'Önizləmə ilk qonağın adı və hitabı ilə; dil seçicisi qonağın dilini dəyişir.', ru: 'Превью с именем и обращением первого гостя.' } },
     { key: 'premium', label: { az: 'Premium alınmayıb', ru: 'Премиум не куплен' }, render: (c) => view(c, 'color', colorTab(c), { premium: true }),
       note: { az: 'Fərdiləşdirmə və saxlama işləyir; göndərmə Ekran 8-də bağlıdır.', ru: 'Настройка и сохранение работают; отправка закрыта на экране 8.' } },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => view(c, 'color', `<div class="swatches">${'<div class="skeleton" style="width:56px;height:56px;border-radius:50%"></div>'.repeat(6)}</div><div class="skeleton mt-3" style="height:16px;width:50%"></div>`, { loading: true }),
+      note: { az: 'Önizləmə (WebView) yüklənənə qədər skeleton; şablon faylları keşlənir.', ru: 'Скелетон, пока грузится превью (WebView).' } },
     { key: 'upload-error', label: { az: 'Yükləmə xətası', ru: 'Ошибка загрузки' }, render: (c) => view(c, 'photos', photosTab(c, true)) },
     { key: 'saved', label: { az: 'Yadda saxlanıldı', ru: 'Сохранено' }, render: (c) => view(c, 'color', `<div class="banner banner-success" style="margin-bottom:14px">${c.icon('check')}<span class="text">${c.t('saved')}<br><button class="btn btn-text" style="padding:0;min-height:32px" data-go="07-qonaq-elave.html?state=excel">${c.t('nextGuests')} →</button></span></div>` + colorTab(c)) },
   ],

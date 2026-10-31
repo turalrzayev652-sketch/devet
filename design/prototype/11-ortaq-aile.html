@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ortaq ailə — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    title: 'Ortaq ailə', explain: 'Digər tərəf qonaqlarını özü əlavə edə və göndərə bilər. Tədbiri yalnız siz silə bilərsiniz.', email: 'Digər tərəfin e-poçtu', side: 'Onların tərəfi', create: 'Dəvət yarat',
+    codeTitle: 'Dəvət kodu', copy: 'Kopyala', share: 'Paylaş', expiry: '14 gün etibarlıdır · ramin.aliyev@example.com üçün', copied: 'Kod kopyalandı', newInvite: 'Yeni dəvət (köhnə kod etibarsız olur)',
+    members: 'Üzvlər', ownerRole: 'Sahib', cohostRole: 'Ortaq', you: 'Siz', remove: 'Çıxar', removeTitle: 'Ramin Əliyev çıxarılsın?', removeBody: 'Tədbirə çıxışı bağlanacaq. Əlavə etdiyi qonaqlar qalacaq.',
+    joinTitle: 'Kodla qoşul', joinBody: 'Digər ailənin göndərdiyi 8 simvollu kodu yazın.', join: 'Qoşul', joinedTitle: 'Aysel və Ramin tədbirinə qoşuldunuz', joinedBody: 'İndi Gəlin tərəfinin qonaqlarını əlavə edib göndərə bilərsiniz.', open: 'Tədbiri aç',
+    errNotFound: 'Kod tapılmadı və ya artıq istifadə olunub', errExpired: 'Dəvətin müddəti bitib — sahibdən yenisini istəyin', errEmail: 'Dəvət başqa e-poçt üçündür. Siz leyla.k@example.com ilə daxil olmusunuz.',
+    cohostExists: 'Tədbirin artıq ortaq idarəçisi var',
+  },
+  ru: {
+    title: 'Вторая семья', explain: 'Другая сторона сможет сама добавлять и отправлять приглашения своим гостям. Удалить мероприятие можете только вы.', email: 'Эл. почта другой стороны', side: 'Их сторона', create: 'Создать приглашение',
+    codeTitle: 'Код приглашения', copy: 'Копировать', share: 'Поделиться', expiry: 'Действует 14 дней · для ramin.aliyev@example.com', copied: 'Код скопирован', newInvite: 'Новое приглашение (старый код перестанет работать)',
+    members: 'Участники', ownerRole: 'Владелец', cohostRole: 'Совладелец', you: 'Вы', remove: 'Исключить', removeTitle: 'Исключить Ramin Əliyev?', removeBody: 'Доступ к мероприятию будет закрыт. Добавленные им гости останутся.',
+    joinTitle: 'Присоединиться по коду', joinBody: 'Введите 8-символьный код, который прислала другая семья.', join: 'Присоединиться', joinedTitle: 'Вы присоединились к «Aysel və Ramin»', joinedBody: 'Теперь вы можете добавлять и отправлять приглашения гостям стороны невесты.', open: 'Открыть мероприятие',
+    errNotFound: 'Код не найден или уже использован', errExpired: 'Срок приглашения истёк — попросите новое у владельца', errEmail: 'Приглашение для другой почты. Вы вошли как leyla.k@example.com.',
+    cohostExists: 'У мероприятия уже есть совладелец',
+  },
+};
+const head = (c, title, back = '13-daha-cox.html') => `<div class="topbar"><button class="icon-btn" data-go="${back}" aria-label="Geri">${c.icon('back')}</button><span class="title"></span><span style="width:44px"></span></div><div class="pad" style="margin-bottom:8px"><h1 class="t-title" style="margin:0">${title}</h1></div>`;
+const members = (c, withCohost) => `<p class="section-title">${c.t('members')}</p><div class="list">
+  <div class="kv"><span class="avatar">AM</span><span class="k"><span class="t-headline" style="display:block">Aysel Məmmədova · ${c.t('you')}</span><span class="t-footnote muted">${c.t('ownerRole')} · ${c.t('groom')}</span></span></div>
+  ${withCohost ? `<div class="kv"><span class="avatar" style="background:var(--color-accent-gold-subtle);color:var(--color-accent-gold-text)">RƏ</span><span class="k"><span class="t-headline" style="display:block">Ramin Əliyev</span><span class="t-footnote muted">${c.t('cohostRole')} · ${c.t('bride')}</span></span><button class="btn btn-text" style="color:var(--color-feedback-danger)" data-state="remove">${c.t('remove')}</button></div>` : ''}</div>`;
+const form = (c, err) => `<div class="pad stack"><p class="t-callout muted" style="margin:0">${c.t('explain')}</p>
+  <div class="field"><label>${c.t('email')}</label><div class="input ${err ? 'is-error' : 'is-focused'}">${c.icon('mail')}<input value="ramin.aliyev@example.com" inputmode="email"></div>${err ? `<p class="error">${c.icon('alert', 'icon-sm')}${c.t('cohostExists')}</p>` : ''}</div>
+  <div class="field"><label>${c.t('side')}</label><div class="segmented">${['groom', 'bride'].map((k) => `<button aria-pressed="${k === 'bride'}">${c.t(k)}</button>`).join('')}</div></div>
+  <button class="btn btn-primary btn-block" data-state="code" ${err ? 'disabled' : ''}>${c.icon('userPlus', 'icon-sm')}${c.t('create')}</button></div>`;
+const codeBoxes = (c, chars, { error = false, active = -1 } = {}) => `<div class="code-boxes ${error ? 'is-error' : ''}">${chars.split('').map((ch, i) => `${i === 4 ? '<span class="gap"></span>' : ''}<span class="${i === active ? 'is-active' : ''}">${ch.trim()}</span>`).join('')}</div>`;
+const join = (c, chars, err) => ({
+  html: `${head(c, c.t('joinTitle'), '02-tedbirler.html')}<div class="pad stack"><p class="t-callout muted" style="margin:0 0 6px">${c.t('joinBody')}</p>${codeBoxes(c, chars, { error: !!err, active: err ? -1 : chars.trim().length })}
+    ${err ? `<div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text">${c.t(err)}</span></div>` : ''}</div>`,
+  overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" ${chars.trim().length === 8 && !err ? 'data-state="joined"' : 'disabled'}>${c.t('join')}</button></div>`,
+});
+
+Proto.screen({
+  number: 11,
+  title: { az: 'Ortaq ailə', ru: 'Вторая семья' },
+  strings: S,
+  states: [
+    { key: 'invite', label: { az: 'Sahib · dəvət', ru: 'Владелец · приглашение' }, render: (c) => head(c, c.t('title')) + form(c) + members(c, false),
+      note: { az: 'create_cohost_invite (yalnız sahib). Bir tədbirdə 1 sahib + 1 ortaq.', ru: 'create_cohost_invite (только владелец). 1 владелец + 1 совладелец.' } },
+    { key: 'code', label: { az: 'Sahib · kod', ru: 'Владелец · код' }, render: (c) => `${head(c, c.t('title'))}<div class="card" style="margin:8px 16px 0;padding:20px;text-align:center">
+        <p class="t-footnote muted" style="margin:0 0 10px;font-weight:600">${c.t('codeTitle')}</p><div class="code-display">K7D2 M9QX</div>
+        <p class="t-footnote muted" style="margin:10px 0 16px">${c.t('expiry')}</p>
+        <div class="row-flex" style="gap:10px;flex-wrap:wrap"><button class="btn btn-secondary" style="flex:1 1 140px" data-toast="${c.t('copied')}">${c.icon('copy', 'icon-sm')}${c.t('copy')}</button><button class="btn btn-primary" style="flex:1 1 140px" data-toast="${c.t('share')}">${c.icon('share', 'icon-sm')}${c.t('share')}</button></div></div>
+        <div class="pad"><button class="btn btn-text btn-block" data-state="invite">${c.t('newInvite')}</button></div>${members(c, false)}`,
+      note: { az: 'Kod monospace, 4+4 qruplu (oxunaqlılıq). Paylaş: sistem menyusu (kod + tətbiq linki).', ru: 'Код моноширинный, группы 4+4.' } },
+    { key: 'members', label: { az: 'Sahib · ortaq qoşulub', ru: 'Владелец · совладелец есть' }, render: (c) => head(c, c.t('title')) + `<div class="pad"><p class="t-callout muted" style="margin:0">${c.t('explain')}</p></div>` + members(c, true) },
+    { key: 'remove', label: { az: 'Çıxarma təsdiqi', ru: 'Подтверждение исключения' }, render: (c) => ({ html: head(c, c.t('title')) + members(c, true), overlay: `<div class="scrim"></div><div class="dialog" role="alertdialog"><h2 class="t-headline" style="margin:0 0 8px">${c.t('removeTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('removeBody')}</p>
+        <div class="acts"><button class="btn btn-danger btn-block" data-state="invite">${c.t('remove')}</button><button class="btn btn-text btn-block" data-state="members">${c.t('cancel')}</button></div></div>` }) },
+    { key: 'invite-error', label: { az: 'Sahib · ortaq artıq var', ru: 'Владелец · уже есть' }, render: (c) => head(c, c.t('title')) + form(c, true) },
+    { key: 'join', label: { az: 'Qoşulan · kod', ru: 'Присоединение · код' }, render: (c) => join(c, 'K7D2M9  '),
+      note: { az: 'Kiçik hərf avtomatik böyüyür, boşluqlar silinir; 8 simvol olanda "Qoşul" aktivləşir.', ru: 'Строчные буквы становятся заглавными; при 8 символах кнопка активна.' } },
+    { key: 'join-full', label: { az: 'Qoşulan · tam kod', ru: 'Присоединение · полный код' }, render: (c) => join(c, 'K7D2M9QX') },
+    { key: 'joined', label: { az: 'Qoşuldu', ru: 'Присоединились' }, render: (c) => ({ html: `<div class="empty" style="padding-top:150px"><div class="art">${c.ART.celebrate}</div><h1 class="t-title" style="margin:0">${c.t('joinedTitle')}</h1><p class="t-callout muted" style="margin:0">${c.t('joinedBody')}</p></div>`, overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-go="06-qonaqlar.html">${c.t('open')}</button></div>` }) },
+    { key: 'err-notfound', label: { az: 'Xəta · tapılmadı', ru: 'Ошибка · не найден' }, render: (c) => join(c, 'K7D2M9QZ', 'errNotFound') },
+    { key: 'err-expired', label: { az: 'Xəta · müddət bitib', ru: 'Ошибка · истёк' }, render: (c) => join(c, 'K7D2M9QX', 'errExpired') },
+    { key: 'err-email', label: { az: 'Xəta · başqa e-poçt', ru: 'Ошибка · другая почта' }, render: (c) => join(c, 'K7D2M9QX', 'errEmail') },
+  ],
+});
+</script>
+</body>
+</html>

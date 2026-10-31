@@ -71,7 +71,7 @@ const manual = (c) => ({
     ${field(c.t('name'), `<div class="input is-focused"><input value="Elçin"></div>`)}
     <div class="setting-row" style="border:0;padding:0"><span class="label t-body">${c.t('withFamily')}</span><span class="toggle is-on"></span></div>
     ${field(c.t('phone'), `<div class="input"><span class="prefix">+994</span><input value="50 123 45 67" inputmode="tel"></div>`)}
-    <div class="row-flex" style="gap:12px;align-items:flex-end">${field(c.t('count'), `<span class="stepper"><button>−</button><span class="val">4</span><button>+</button></span>`)}<div style="flex:1">${field(c.t('tableNo'), `<div class="input"><input value="12"></div>`)}</div></div>
+    <div class="row-flex" style="gap:12px;align-items:flex-end">${field(c.t('count'), `<span class="stepper"><button>−</button><span class="val">4</span><button>+</button></span>`)}<div style="flex:1;min-width:0">${field(c.t('tableNo'), `<div class="input"><input value="12"></div>`)}</div></div>
     ${field(c.t('side'), `<div class="segmented">${['groom', 'bride', 'none'].map((k, i) => `<button aria-pressed="${i === 0}">${c.t(k)}</button>`).join('')}</div>`)}
   </div><div style="height:160px"></div>`,
   overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-toast="${c.t('savedToast')}">${c.t('saveNext')}</button><button class="btn btn-text btn-block" data-go="06-qonaqlar.html">${c.t('save')}</button></div>`,

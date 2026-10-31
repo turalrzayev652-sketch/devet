@@ -175,3 +175,19 @@ Bir dəst, xətti (outline), 24×24, xətt 1.5, yuvarlaq birləşmə və uclar. 
 6. **Göndərmə axını bir qonaq = bir kart:** səhv qonağa göndərmə riskini azaldır; adlar əvvəlcə məcburi siyahıda yoxlanılır.
 7. **Ad + hitab hər yerdə tam yazılır** ("Elçin müəllim və ailəsi") — mədəni hörmət və səhvi erkən görmək üçün; uzun rus mətni (`Elçin муаллим с семьёй`) iki sətrə keçir.
 8. **Yumşaq kölgə və 20 pt künclər:** "kağız kart" hissi, ağır kölgə olmadan — orta səviyyəli Android telefonlarda da təmiz görünür.
+
+## 9. Keyfiyyət yoxlaması (DESIGN_PROMPT.md §8) — 2026-10-31
+
+| Bənd | Nəticə | Necə yoxlanılıb |
+| --- | --- | --- |
+| Azərbaycan hərfləri (ə, ğ, ş, ç, ö, ü, ı, İ) və kiril hər iki şriftdə | ✓ | `design/font-check.html`: hər hərf iki ehtiyat şriftlə ölçülür; test Manrope-da `Ə` yoxluğunu tutur (metod işləyir) |
+| AA kontrast, o cümlədən qızılı və status pill-ləri | ✓ | §2.3 cədvəli (hesablanıb); bütün 106 halda light rejimdə dekorativ qızılı (`#C9A66B`) rəngli mətn elementi tapılmadı |
+| Heç bir ekran yalnız rəngə güvənmir | ✓ | status pill-lərdə mətn; statistika kartları, huni və tərəf bölgüsündə etiket/legend |
+| Əsas hərəkət aydındır və baş barmaqla çatılır | ✓ | əsas düymə aşağıda (`bottom-actions`, FAB, göndərmə düyməsi tab barın üstündə) |
+| Hər data ekranında boş, yüklənmə, xəta halları | ✓ | 2, 4, 5, 6, 7, 8, 9, 10 — hər birində ayrıca hal; 3 və 12-də "yaradılır/yoxlanılır" + xəta; 11-də 3 xəta halı |
+| Real insan şəkli yoxdur; brend loqosu yalnız WhatsApp funksional ikonu | ✓ | abstrakt tekstura və botanik xətt rəsmləri; WhatsApp işarəsi yalnız göndərmə düyməsinin içində |
+| 130% şrift və rus mətni | ✓ | 13 ekranın 106 halı `dark + RU + 130%` rejimində avtomatik render; üfüqi daşma yoxdur (3 hal düzəldildi: ekran 7 forması, ekran 11 düymələri) |
+
+**Prototip:** 13 ekran (12 + "Daha çox" menyusu), 106 hal, light/dark, AZ/RU, 100%/130%. Rus variantı (3, 6, 8 daxil) hər ekranda dil keçidi ilə. Komponentlər: `design/components.html` (8 bölmə, light və dark yan-yana).
+
+**Qeydlər:** limit artırmanın qiyməti (9,99 ₼) prototipdə nümunədir — PRODUCT.md-də hələ seçilməyib. 4-cü addımda xəritə seçicisi yoxdur (qərar §15.3 screens.md).

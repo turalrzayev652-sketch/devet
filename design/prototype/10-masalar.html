@@ -28,13 +28,13 @@ const S = {
     title: 'Masalar', show: 'Masadakıları göstər', showHelp: 'Qonaq dəvətnaməsində eyni masadakı qonaqların adlarını görəcək.', yourTable: 'Masanız', mates: 'Masada: Rəşad bəy, Leyla xanım',
     table: 'Masa {n}', tSummary: '{g} qonaq · {p} nəfər', unassigned: 'Masasız qonaqlar', bulk: 'Toplu təyin et',
     selectTitle: 'Qonaqları seçin', selected: '{n} seçildi', next: 'Davam et', numberTitle: 'Masa nömrəsi', numberHelp: 'Rəqəm və ya ad: 12, VIP-1 (12 simvola qədər)', existing: 'Mövcud masalar', assign: '3 qonağı Masa 14-ə təyin et',
-    doneToast: '3 qonaq Masa 14-ə təyin olundu', emptyTitle: 'Qonaqlara masa təyin edin', emptyBody: 'Masa nömrəsi qonağın dəvətnaməsində görünəcək. Vizual zal planı bu versiyada yoxdur.',
+    doneToast: '3 qonaq Masa 14-ə təyin olundu', emptyTitle: 'Qonaqlara masa təyin edin', loadError: 'Masalar yüklənmədi', emptyBody: 'Masa nömrəsi qonağın dəvətnaməsində görünəcək. Vizual zal planı bu versiyada yoxdur.',
   },
   ru: {
     title: 'Столы', show: 'Показывать соседей по столу', showHelp: 'Гость увидит в приглашении имена гостей за тем же столом.', yourTable: 'Ваш стол', mates: 'За столом: Rəşad бей, Leyla ханум',
     table: 'Стол {n}', tSummary: '{g} гостей · {p} чел.', unassigned: 'Гости без стола', bulk: 'Назначить столы',
     selectTitle: 'Выберите гостей', selected: 'Выбрано: {n}', next: 'Продолжить', numberTitle: 'Номер стола', numberHelp: 'Число или название: 12, VIP-1 (до 12 символов)', existing: 'Существующие столы', assign: 'Назначить 3 гостей за стол 14',
-    doneToast: '3 гостя назначены за стол 14', emptyTitle: 'Назначьте гостям столы', emptyBody: 'Номер стола появится в приглашении гостя. Визуального плана зала в этой версии нет.',
+    doneToast: '3 гостя назначены за стол 14', emptyTitle: 'Назначьте гостям столы', loadError: 'Не удалось загрузить столы', emptyBody: 'Номер стола появится в приглашении гостя. Визуального плана зала в этой версии нет.',
   },
 };
 const G = Proto.DATA.guests;
@@ -72,6 +72,7 @@ Proto.screen({
         overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="list">${c.t('assign')}</button></div>`,
       }), after: () => {}, note: { az: 'Təsdiqdən sonra siyahıya qayıdır və bildiriş göstərir.', ru: 'После подтверждения — возврат к списку и уведомление.' } },
     { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => ({ html: `${head(c)}${toggleCard(c, false)}<div class="empty" style="padding-top:8px"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p></div>`, overlay: `<div class="bottom-actions"><button class="btn btn-primary btn-block" data-state="bulk-select">${c.t('bulk')}</button></div>` }) },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => { const v = list(c, false); return { ...v, html: v.html.replace('<div class="card" style="margin:0 16px 20px', `<div class="pad" style="margin-bottom:16px"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('loadError')}</strong><br>${c.t('networkError')}</span><button class="btn btn-text" data-state="loading">${c.t('retry')}</button></div></div><div class="card" style="margin:0 16px 20px`) }; } },
     { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => `${head(c)}<div class="pad stack">${'<div class="skeleton" style="height:72px;border-radius:20px"></div>'.repeat(4)}</div>` },
   ],
 });

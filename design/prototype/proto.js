@@ -87,7 +87,7 @@
   };
 
   // Screens that exist in this phase; links to others show a toast instead of a 404.
-  const BUILT = new Set(['01-giris.html', '02-tedbirler.html', '03-tedbir-yarat.html', '04-sablonlar.html', '05-ferdilesdir.html', '06-qonaqlar.html', '07-qonaq-elave.html', '08-gonderme.html', '09-statistika.html', '10-masalar.html']);
+  const BUILT = new Set(['01-giris.html', '02-tedbirler.html', '03-tedbir-yarat.html', '04-sablonlar.html', '05-ferdilesdir.html', '06-qonaqlar.html', '07-qonaq-elave.html', '08-gonderme.html', '09-statistika.html', '10-masalar.html', '11-ortaq-aile.html', '12-alis.html', '13-daha-cox.html']);
 
   // ------------------------------------------------------------------ shared copy
   const COMMON = {

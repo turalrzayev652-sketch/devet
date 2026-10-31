@@ -32,6 +32,7 @@
       ['10-masalar.html', 10, 'Masalar', 'Столы', ['Masalar, toplu təyin etmə']],
       ['11-ortaq-aile.html', 11, 'Ortaq ailə', 'Совместное управление', ['Dəvət kodu, kodla qoşul, xətalar']],
       ['12-alis.html', 12, 'Alış', 'Покупка', ['Premium, limit artırma, yoxlanılır/uğur/xəta/gözləmədə']],
+      ['13-daha-cox.html', 13, 'Daha çox (menyu)', 'Ещё (меню)', ['Alt naviqasiyanın 4-cü bölməsi: sahib / ortaq']],
     ];
     const tile = ([file, n, az1, ru1, items]) => {
       const built = Proto.BUILT.has(file);
@@ -45,7 +46,7 @@
       <p class="t-callout muted" style="max-width:640px">${az
         ? 'Hər ekranın yuxarısında: Light/Dark, AZ/RU, şrift 100%/130% və hallar (boş, yüklənmə, xəta…). Axın: Giriş → Tədbirlər → Tədbir yaratma → Şablonlar → Fərdiləşdirmə → Qonaq əlavə et → Qonaqlar → Göndərmə → Statistika.'
         : 'Сверху на каждом экране: Light/Dark, AZ/RU, шрифт 100%/130% и состояния. Поток: Вход → Мероприятия → Создание → Шаблоны → Настройка → Добавление гостей → Гости → Отправка → Статистика.'}</p>
-      <p class="t-callout"><a href="../font-check.html">${az ? 'Şrift yoxlaması' : 'Проверка шрифтов'}</a> · <a href="../../spec/design.md">spec/design.md</a></p>
+      <p class="t-callout"><a href="../components.html">${az ? 'Komponent kitabxanası' : 'Библиотека компонентов'}</a> · <a href="../font-check.html">${az ? 'Şrift yoxlaması' : 'Проверка шрифтов'}</a> · <a href="../../spec/design.md">spec/design.md</a></p>
       <div class="grid">${SCREENS.map(tile).join('')}</div>`;
   })();
 </script>
