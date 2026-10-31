@@ -1,8 +1,8 @@
 # screens.md — Tətbiq ekranları (QARALAMA)
 
-> **Vəziyyət:** qaralama. T02 eskizləri olmadan, `PRODUCT.md`, `TASKS.md` və artıq yazılmış backend müqavilələri (miqrasiyalar 001–009, Edge Functions, `test-vectors/`) əsasında yazılıb. Eskizlər gələndə görünüş və yerləşmə uyğunlaşdırılacaq; davranış qaydaları (validasiya, xəta kodları, keçidlər) burada müəyyən olunur. **[SİZ] redaktə edib təsdiqləyin** — təsdiqə qədər T30 açıq qalır.
+> **Vəziyyət:** qaralama; §15-dəki qərarlar sahib tərəfindən verilib (2026-10-30). T02 eskizləri olmadan, `PRODUCT.md`, `TASKS.md` və artıq yazılmış backend müqavilələri (miqrasiyalar 001–009, Edge Functions, `test-vectors/`) əsasında yazılıb. Eskizlər gələndə görünüş və yerləşmə uyğunlaşdırılacaq; davranış qaydaları (validasiya, xəta kodları, keçidlər) burada müəyyən olunur. **[SİZ] redaktə edib təsdiqləyin** — təsdiqə qədər T30 açıq qalır.
 >
-> Bütün mətnlər `/spec/i18n/app.json`-dan (az, ru, en, tr). Android və iOS-da axın, validasiya və xəta mesajları **eynidir** (CLAUDE.md paritet qaydası). Açıq suallar §15-dədir.
+> Bütün mətnlər `/spec/i18n/app.json`-dan (az, ru, en, tr). Android və iOS-da axın, validasiya və xəta mesajları **eynidir** (CLAUDE.md paritet qaydası). Qəbul edilmiş qərarlar §15-dədir.
 
 ---
 
@@ -39,13 +39,13 @@
 | Şifrə bərpası | e-poçt → `resetPasswordForEmail` → "Link göndərildi" (e-poçt mövcud olmasa da eyni mesaj — hesab varlığı açılmır). Linkdən gələndə yeni şifrə ekranı. |
 | Çıxış | Parametrlərdə; təsdiqsiz. |
 
-**Validasiya:** e-poçt formatı (`a@b.c`); şifrə ≥ 8 simvol (§15.1); təkrar eyni olmalıdır. Düymə validasiya keçənə qədər aktiv deyil.
+**Validasiya:** e-poçt formatı (`a@b.c`); şifrə ≥ 6 simvol (§15.1); təkrar eyni olmalıdır. Düymə validasiya keçənə qədər aktiv deyil.
 
 **Xətalar:** səhv e-poçt/şifrə → `auth.error.invalid_credentials`; təsdiqlənməmiş e-poçt → təsdiq ekranı + "Yenidən göndər"; şəbəkə → ümumi.
 
 ## 2. Tədbirlər siyahısı
 
-**Məzmun:** istifadəçinin üzvü olduğu tədbirlər (RLS), tarixə görə — gələcəklər yuxarıda, keçmişlər "Arxiv" bölməsində. Kart: növ ikonası, `title_names`, tarix, rol nişanı (owner / ortaq), qısa say ("12/80 göndərildi").
+**Məzmun:** istifadəçinin üzvü olduğu tədbirlər (RLS), tarixə görə — gələcəklər yuxarıda; tədbir tarixindən 7 gün keçənlər "Arxiv" bölməsində (§15.2). Kart: növ ikonası, `title_names`, tarix, rol nişanı (owner / ortaq), qısa say ("12/80 göndərildi").
 
 **Düymələr:** "+" → [3]; "Kodla qoşul" → [11b]; Parametrlər (dil, çıxış, hesabı sil — §15.9).
 
@@ -61,8 +61,8 @@ Addımlar, irəli/geri, hər addımda validasiya. Son addımda "Yarat" → `even
 | --- | --- | --- |
 | 1. Növ | toy / nişan / xınayaxdı / ad günü / yubiley | biri seçilməlidir |
 | 2. Adlar | `title_names` ("Aysel və Ramin"), `host_names` (məcburi deyil, "valideyn adları") | `title_names` 1–80 simvol; `host_names` ≤ 120 |
-| 3. Tarix və saat | tarix + saat seçici | gələcəkdə olmalıdır (redaktədə keçmiş tarixə dəyişmək olmaz) |
-| 4. Məkan | `venue_name`, `venue_address` (məcburi deyil), xəritə linki (`maps_url`) | ad 1–120; link varsa `http(s)` (qonaq səhifəsi başqa linkləri bloklayır); koordinat seçimi §15.3 |
+| 3. Tarix və saat | tarix + saat seçici | gələcəkdə olmalıdır; redaktədə də keçmiş tarix seçilə bilməz (§15.4) |
+| 4. Məkan | `venue_name`, `venue_address` (məcburi deyil), xəritə linki (`maps_url`) | ad 1–120; link varsa `http(s)`. Linkdən koordinat avtomatik çıxarılır (`test-vectors/maps.json`) və `venue_lat`/`venue_lng`-ə yazılır — Waze düyməsi bunlarla işləyir; qısa link (`maps.app.goo.gl`) koordinatsız qalır (§15.3) |
 | 5. Əsas dil | az / ru / en / tr (defolt: tətbiqin dili) | — |
 | 6. Masadakılar | "Masadakı digər qonaqları göstər" açar | defolt **bağlı** |
 
@@ -115,7 +115,7 @@ Ad/hitab/dil dəyişəndə adlı önizləmə şəkli yenidən yaradılır (T47).
 
 **7a. Əl ilə** — §6.1 forması; "Yadda saxla və növbəti" (forma təmizlənir, tərəf/masa/dil saxlanır).
 
-**7b. Kontaktlardan** — sistem seçicisi (Android contact picker, iOS `CNContactPickerViewController`), çoxlu seçim; hər kontaktdan ad + mobil nömrə. Bir neçə nömrə varsa birincisi mobil olan. Sonra yoxlama siyahısı: hər sətirdə hitab/nəfər/tərəf düzəlişi, xətalı nömrələr qırmızı.
+**7b. Kontaktlardan** — sistem seçicisi (Android contact picker, iOS `CNContactPickerViewController`), çoxlu seçim; hər kontaktdan ad + mobil nömrə. Bir neçə mobil nömrə varsa seçim dialoqu; tək mobil nömrə avtomatik götürülür; mobil nömrə yoxdursa telefonsuz əlavə olunur (§15.7). Sonra yoxlama siyahısı: hər sətirdə hitab/nəfər/tərəf düzəlişi, xətalı nömrələr qırmızı.
 
 **7c. Excel (.xlsx)** — fayl seçimi → başlıqların avtomatik uyğunlaşdırılması (`excel.json → columns`) → **sütun uyğunlaşdırma ekranı** (hər sütun üçün sahə seçimi, "nəzərə alma") → nəticə: "N qonaq əlavə olunacaq, M sətir xətalıdır" → xətalı sətirlərin siyahısı (sətir nömrəsi + xəta) → "İdxal et". 300 sətir < 5 san.
 
@@ -146,7 +146,7 @@ Ad/hitab/dil dəyişəndə adlı önizləmə şəkli yenidən yaradılır (T47).
 - Tətbiqə qayıdanda: "Göndərildi?" → **Bəli** (`sent_at = now`, növbəti qonaq) / **Xeyr** (göndərilməmiş qalır) / "Keç".
 - Üstdə irəliləmə: "14 / 60"; "Dayandır" istənilən vaxt; növbəti dəfə göndərilməmişlərdən davam edir.
 - **Gündəlik xəbərdarlıq:** bu gün göndərilənlərin sayı `app_config.daily_send_warning`-ə (120) çatanda dialoq: WhatsApp hesabı bloklana bilər, sabah davam etmək tövsiyə olunur — **bloklamır**, "Davam et" var.
-- Telefonsuz qonaqlar axında yoxdur; siyahının sonunda ayrıca qeyd (§15.5).
+- Telefonsuz qonaqlar `wa.me` axınında yoxdur; siyahının sonunda ayrıca bölmədə hər biri üçün **"Linki kopyala"** (qonağın adlı linki panoya; ailə onu istədiyi yolla özü göndərir, `sent_at` yalnız "Göndərildi?" təsdiqindən sonra yazılır) (§15.5).
 - Göndərilmişə yenidən göndərmək: qonaq redaktəsində "Yenidən göndər".
 
 **Filtr:** "Göndərilməyənlər" [6]-da da var.
@@ -251,14 +251,16 @@ Ad/hitab/dil dəyişəndə adlı önizləmə şəkli yenidən yaradılır (T47).
 | 11 | `create_cohost_invite`, `accept_cohost_invite`, `event_members` select/delete, `event_invites` select |
 | 12 | mağaza SDK + `verify-purchase` Edge Function |
 
-## 15. Açıq suallar (təsdiqiniz lazımdır)
+## 15. Qəbul edilmiş qərarlar (2026-10-30)
 
-1. **Şifrə uzunluğu:** ≥ 8 simvol təklif olunur (Supabase defoltu 6).
-2. **Tədbir statusu** (`draft` / `active` / `archived`): nə vaxt dəyişir? Təklif: yaradılanda `draft`, ilk dəvət göndəriləndə `active`, tədbirdən 7 gün sonra siyahıda "Arxiv" bölməsinə düşür (status sahəsi yalnız görünüş üçün).
-3. **Məkan koordinatı:** v1-də yalnız xəritə linki yapışdırmaq + ünvan? Yoxsa xəritədə nöqtə seçmək (yeni asılılıq: Maps SDK)? Waze düyməsi yalnız koordinat olanda işləyir.
-4. **Tədbir tarixi redaktəsi:** keçmiş tarixə dəyişmək qadağandır (təklif) — doğrudurmu?
-5. **Telefonsuz qonaqlar:** göndərmə axınında yalnız siyahıda göstərilsin, yoxsa "Linki kopyala" da olsun? (Spesifikasiya: göndərmə yalnız `wa.me`.)
-6. **Göndərmə üçün tətbiq dili vs qonaq dili:** mesaj həmişə qonağın dilində (təklif) — doğrudurmu?
-7. **Kontakt seçimi:** bir kontaktın bir neçə nömrəsi olanda birinci mobil nömrə avtomatik — yoxsa seçim dialoqu?
-8. **Eyni anda redaktə:** iki ailə eyni qonağı dəyişəndə son yazılan qalır (təklif, sadə) — kifayətdirmi?
-9. **Hesabı silmək** (App Store tələbidir, Google Play də tələb edir): Parametrlərdə "Hesabı sil" → owner olduğu tədbirlər silinir, cohost olduğu tədbirlərdən çıxarılır. Backend funksiyası hələ yoxdur — ayrıca tapşırıq lazımdır.
+| # | Mövzu | Qərar |
+| --- | --- | --- |
+| 1 | Şifrə | ≥ 6 simvol (Supabase defoltu). |
+| 2 | Tədbir statusu | Avtomatik: yaradılanda `draft`; ilk qonağa `sent_at` yazılanda server trigger-i `active` edir (miqrasiya 010); tədbirdən 7 gün sonra siyahıda "Arxiv" bölməsinə düşür (`archived` tətbiqdə hesablanır, sahə dəyişmir). |
+| 3 | Məkan | Google Maps linki + ünvan; koordinat linkdən çıxarılır (`maps.json` vektorları). Xəritə SDK yoxdur. |
+| 4 | Tarix redaktəsi | Keçmiş tarix seçilə bilməz (yaratmada da, redaktədə də). |
+| 5 | Telefonsuz qonaqlar | "Linki kopyala"; tətbiq özü heç nə göndərmir. |
+| 6 | Mesaj dili | Həmişə qonağın dili (`guests.lang`, boşdursa `events.default_lang`). |
+| 7 | Kontaktın bir neçə nömrəsi | Bir neçə mobil nömrə varsa seçim dialoqu; tək olanda avtomatik. |
+| 8 | Eyni anda redaktə | Son yazılan qalır. |
+| 9 | Hesabı silmək | Parametrlərdə "Hesabı sil": owner olduğu tədbirlər silinir, cohost olduğu tədbirlərdən çıxarılır. Backend ayrıca tapşırıq kimi yazılır (TASKS.md T17). |

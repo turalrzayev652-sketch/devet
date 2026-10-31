@@ -158,3 +158,44 @@ export function fileWarnings(rows, spec) {
   });
   return { ok: true, warnings };
 }
+
+// ---------------------------------------------------------------------------
+// maps
+// ---------------------------------------------------------------------------
+
+const NUM = String.raw`(-?\d{1,3}(?:\.\d+)?)`;
+const inRange = (lat, lng) => Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
+
+function isMapHost(url) {
+  const host = url.hostname.toLowerCase();
+  if (host === 'waze.com' || host === 'www.waze.com' || host === 'maps.apple.com') return true;
+  const google = /^(?:www\.|maps\.)?google\.(?:[a-z]{2,3}|com?\.[a-z]{2})$/.test(host);
+  return google && (host.startsWith('maps.') || url.pathname.startsWith('/maps'));
+}
+
+export function parseMapsLink(input) {
+  const text = String(input ?? '').trim();
+  if (!text) return { ok: false, error: 'empty' };
+  let url;
+  try { url = new URL(text); } catch { return { ok: false, error: 'invalid_url' }; }
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return { ok: false, error: 'invalid_url' };
+  if (!isMapHost(url)) return { ok: true, coords: null };
+
+  const full = decodeURIComponent(url.href);
+  const candidates = [];
+  const pin = new RegExp(`!3d${NUM}!4d${NUM}`).exec(full);
+  if (pin) candidates.push(pin);
+  const at = new RegExp(`@${NUM},${NUM}(?:,|$)`).exec(decodeURIComponent(url.pathname));
+  if (at) candidates.push(at);
+  for (const name of ['q', 'query', 'll']) {
+    const v = url.searchParams.get(name);
+    const m = v && new RegExp(String.raw`^${NUM},\s*${NUM}$`).exec(v.trim());
+    if (m) candidates.push(m);
+  }
+  for (const m of candidates) {
+    const lat = Number(m[1]);
+    const lng = Number(m[2]);
+    if (inRange(lat, lng)) return { ok: true, coords: { lat, lng } };
+  }
+  return { ok: true, coords: null };
+}

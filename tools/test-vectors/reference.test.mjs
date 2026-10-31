@@ -81,3 +81,13 @@ test('every error code in the README table has a row vector', () => {
   for (const code of ['name_missing', 'phone_invalid', 'phone_not_mobile', 'salutation_invalid', 'invited_count_invalid', 'with_family_invalid', 'side_invalid', 'table_no_invalid'])
     assert.ok(used.has(code), code);
 });
+
+const maps = load('maps.json');
+const { parseMapsLink } = await import('./reference.mjs');
+for (const c of maps.cases) {
+  test(`maps ${JSON.stringify(c.input).slice(0, 70)}`, () => {
+    const r = parseMapsLink(c.input);
+    if (c.error) assert.deepEqual(r, { ok: false, error: c.error });
+    else assert.deepEqual(r, { ok: true, coords: c.expected });
+  });
+}
