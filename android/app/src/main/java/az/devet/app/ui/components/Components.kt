@@ -55,6 +55,7 @@ fun AuthError.messageRes(): Int = when (this) {
     AuthError.RateLimited -> R.string.auth_error_rate_limited
     AuthError.LinkInvalid -> R.string.auth_error_link_invalid
     AuthError.Network -> R.string.common_error_network
+    AuthError.Forbidden -> R.string.common_error_forbidden
     AuthError.EmailNotConfirmed, AuthError.Unauthorized, AuthError.NotConfigured, AuthError.Unknown -> R.string.common_error_unknown
 }
 

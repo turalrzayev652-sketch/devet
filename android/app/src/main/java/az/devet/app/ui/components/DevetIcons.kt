@@ -32,6 +32,8 @@ object DevetIcons {
     val user = icon("user", circle(12f, 8f, 4f), "M4 20.5v-.5A5.5 5.5 0 0 1 9.5 14.5h5A5.5 5.5 0 0 1 20 20v.5")
     val settings = icon("settings", "M4 7h10M18 7h2M4 17h2M10 17h10", circle(16f, 7f, 2f), circle(8f, 17f, 2f))
     val globe = icon("globe", circle(12f, 12f, 9f), "M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18")
+    val close = icon("close", "M6 6l12 12M18 6L6 18")
+    val more = icon("more", circle(5f, 12f, 1f), circle(12f, 12f, 1f), circle(19f, 12f, 1f))
     val trash = icon("trash", "M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3")
 
     /** Botanical line drawing behind the sign-in brand (prototype ART.botanical, 393×210). */

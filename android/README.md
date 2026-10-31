@@ -21,10 +21,15 @@ PUBLIC_BASE_URL=https://<guest domain>
 
 Without them the app still builds and starts; network features stay disabled (`SupabaseConfig.isConfigured`).
 
+**Demo mode (debug builds only):** add `DEVET_DEMO=true` to `local.properties` to start signed in with in-memory events
+(`src/debug/.../di/DemoModule.kt`). Used to try screens on an emulator before a Supabase project exists; release builds
+have no demo code (`src/release` stub, `BuildConfig.DEMO = false`).
+
 ## Structure
 
 - `ui/theme/` — design tokens from `/spec/design.md` (colours, type, spacing, radius). `DesignTokensTest` fails if they drift from the spec.
 - `ui/navigation/` — type-safe Navigation Compose routes; the root screen follows the session (`rootFor`).
+- `data/events/` — screens [2] and [3]: `EventRepository` (list with roles and mini stats, create, PATCH with changed columns only, owner-only delete), `EventRules` (validation, Baku time, 7-day archive), `MapsLink` (map link → coordinates, `spec/test-vectors/maps.json`), local "Arxivlə" (`ArchiveStore`). `ui/events/` — list, 6-step wizard, edit page.
 - `data/auth/` — Supabase Auth (sign in/up, confirmation resend, password reset, PKCE code exchange), errors mapped to `AuthError` (spec/api.md §0.2). `ui/auth/` — screens of [1]; `ui/settings/` — [12b]; `ui/events/` — [2] shell until T43.
 - E-mail links: `az.devet.app://auth/callback` (sign-up confirmation) and `az.devet.app://auth/reset-password` (recovery), handled in `MainActivity` → `AppViewModel`. Both must be in Supabase → Authentication → URL Configuration → Redirect URLs (`az.devet.app://auth/**`).
 - `di/` — Koin module; `data/` — Supabase client.

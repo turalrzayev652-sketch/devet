@@ -36,7 +36,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Demo mode (debug only): in-memory backend for trying screens without Supabase — DEVET_DEMO=true in local.properties.
+            buildConfigField("boolean", "DEMO", (config("DEVET_DEMO") == "true").toString())
+        }
         release {
+            buildConfigField("boolean", "DEMO", "false")
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }

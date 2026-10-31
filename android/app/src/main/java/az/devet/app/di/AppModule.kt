@@ -10,7 +10,14 @@ import az.devet.app.data.auth.SupabaseAuthRepository
 import az.devet.app.data.createDevetSupabase
 import az.devet.app.data.network.AndroidConnectivity
 import az.devet.app.data.network.Connectivity
+import az.devet.app.data.events.ArchiveStore
+import az.devet.app.data.events.EventRepository
+import az.devet.app.data.events.PrefsArchiveStore
+import az.devet.app.data.events.SupabaseEventRepository
 import az.devet.app.ui.AppViewModel
+import az.devet.app.ui.events.CreateEventViewModel
+import az.devet.app.ui.events.EditEventViewModel
+import az.devet.app.ui.events.EventsViewModel
 import az.devet.app.ui.auth.ConfirmEmailViewModel
 import az.devet.app.ui.auth.NewPasswordViewModel
 import az.devet.app.ui.auth.RegisterViewModel
@@ -33,6 +40,8 @@ val appModule = module {
     single<AccountRepository> { SupabaseAccountRepository(get<SupabaseHolder>().client) }
     single<Connectivity> { AndroidConnectivity(androidContext(), get()) }
     single<AppLanguage> { AndroidAppLanguage() }
+    single<EventRepository> { SupabaseEventRepository(get<SupabaseHolder>().client) }
+    single<ArchiveStore> { PrefsArchiveStore(androidContext()) }
 
     viewModel { AppViewModel(get()) }
     viewModel { SignInViewModel(get(), get()) }
@@ -41,6 +50,9 @@ val appModule = module {
     viewModel { ConfirmEmailViewModel(get()) }
     viewModel { NewPasswordViewModel(get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
+    viewModel { EventsViewModel(get(), get()) }
+    viewModel { CreateEventViewModel(get(), get()) }
+    viewModel { (id: String) -> EditEventViewModel(get(), id) }
 }
 
 /** Koin cannot hold a nullable single directly. */
