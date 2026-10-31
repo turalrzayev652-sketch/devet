@@ -32,7 +32,7 @@ import az.devet.app.ui.auth.ResetSentScreen
 import az.devet.app.ui.auth.SignInScreen
 import az.devet.app.ui.events.ComingSoonScreen
 import az.devet.app.ui.guests.AddGuestScreen
-import az.devet.app.ui.guests.EventHomeScreen
+import az.devet.app.ui.guests.EventScreen
 import az.devet.app.ui.events.CreateEventScreen
 import az.devet.app.ui.events.EditEventScreen
 import az.devet.app.ui.events.EventsScreen
@@ -56,7 +56,7 @@ sealed interface Route {
     @Serializable data object CreateEvent : Route
     @Serializable data class EditEvent(val id: String) : Route
     /** Inside an event: guests [6] (T45/T46). */
-    @Serializable data class EventHome(val id: String, val title: String) : Route
+    @Serializable data class EventHome(val id: String, val title: String, val owner: Boolean) : Route
     @Serializable data class Templates(val eventId: String) : Route
     @Serializable data class AddGuests(val eventId: String, val tab: Int) : Route
     /** Purchase [12] (T4D). */
@@ -124,7 +124,7 @@ fun DevetNavHost(app: AppViewModel) {
                 val reload by entry.savedStateHandle.getStateFlow(RELOAD_KEY, 0).collectAsStateWithLifecycle()
                 EventsScreen(
                     onSettings = { nav.navigate(Route.Settings) },
-                    onOpen = { nav.navigate(Route.EventHome(it.id, it.titleNames)) },
+                    onOpen = { nav.navigate(Route.EventHome(it.id, it.titleNames, it.role == az.devet.app.data.events.MemberRole.Owner)) },
                     onCreate = { nav.navigate(Route.CreateEvent) },
                     onEdit = { nav.navigate(Route.EditEvent(it.id)) },
                     onJoin = { nav.navigate(Route.JoinByCode) },
@@ -147,7 +147,10 @@ fun DevetNavHost(app: AppViewModel) {
             composable<Route.EventHome> { entry ->
                 val r = entry.toRoute<Route.EventHome>()
                 val reload by entry.savedStateHandle.getStateFlow(GUESTS_KEY, 0).collectAsStateWithLifecycle()
-                EventHomeScreen(r.id, r.title, reload, onBack = { nav.popBackStack() }, onAdd = { tab -> nav.navigate(Route.AddGuests(r.id, tab)) })
+                EventScreen(
+                    r.id, r.title, r.owner, reload, onBack = { nav.popBackStack() },
+                    onAdd = { tab -> nav.navigate(Route.AddGuests(r.id, tab)) }, onLimit = { nav.navigate(Route.Purchase) },
+                )
             }
             composable<Route.AddGuests> {
                 val r = it.toRoute<Route.AddGuests>()

@@ -210,6 +210,7 @@
     <string name="guest_side_none">Ortak</string>
     <string name="guest_table">Masa</string>
     <string name="guest_with_family">Ailece</string>
+    <string name="guests_add">Davetli ekle</string>
     <string name="guests_add_contacts">Kişilerden</string>
     <string name="guests_add_excel">Excel\'den</string>
     <string name="guests_add_manual">Elle</string>
@@ -220,26 +221,72 @@
         <item quantity="many">%1$d davetli eklendi</item>
         <item quantity="other">%1$d davetli eklendi</item>
     </plurals>
+    <string name="guests_bulk_apply">Uygula</string>
+    <plurals name="guests_bulk_delete_title">
+        <item quantity="one">%1$d davetli silinsin mi?</item>
+        <item quantity="few">%1$d davetli silinsin mi?</item>
+        <item quantity="many">%1$d davetli silinsin mi?</item>
+        <item quantity="other">%1$d davetli silinsin mi?</item>
+    </plurals>
+    <string name="guests_bulk_table">Masa ata</string>
+    <string name="guests_bulk_table_hint">Masa numarası (boş = masasız)</string>
+    <string name="guests_chip">%1$s %2$s</string>
     <plurals name="guests_count">
         <item quantity="one">%1$d misafir</item>
         <item quantity="few">%1$d misafir</item>
         <item quantity="many">%1$d misafir</item>
         <item quantity="other">%1$d misafir</item>
     </plurals>
+    <string name="guests_delete">Davetliyi sil</string>
+    <string name="guests_delete_body">Davetli ve cevabı kalıcı olarak silinecek.</string>
+    <string name="guests_delete_title">%1$s silinsin mi?</string>
+    <string name="guests_deleted">Silindi</string>
+    <string name="guests_done">Bitti</string>
+    <string name="guests_edit_title">Davetliyi düzenle</string>
     <string name="guests_empty_body">Davetlileri tek tek, telefon kişilerinden veya bir Excel dosyasından ekleyin.</string>
     <string name="guests_empty_title">Henüz davetli yok</string>
+    <string name="guests_filter_all">Tümü</string>
+    <string name="guests_filter_coming">Geliyor</string>
+    <string name="guests_filter_declined">Gelmiyor</string>
+    <string name="guests_filter_no_table">Masasız</string>
+    <string name="guests_filter_pending">Cevap yok</string>
+    <string name="guests_filter_unsent">Gönderilmedi</string>
     <string name="guests_limit_reached">Misafir sınırına ulaşıldı (%1$s). Sınırı artırmak için satın alın.</string>
+    <string name="guests_load_error">Davetli listesi yüklenemedi</string>
+    <string name="guests_no_results">«%1$s» için davetli bulunamadı</string>
+    <string name="guests_no_results_body">Adı farklı yazmayı deneyin veya yeni davetli ekleyin.</string>
+    <plurals name="guests_people">
+        <item quantity="one">%1$d kişi</item>
+        <item quantity="few">%1$d kişi</item>
+        <item quantity="many">%1$d kişi</item>
+        <item quantity="other">%1$d kişi</item>
+    </plurals>
+    <string name="guests_search">Davetli ara</string>
+    <string name="guests_selected">%1$s seçildi</string>
     <string name="guests_tab_contacts">Kişiler</string>
     <string name="guests_tab_excel">Excel</string>
     <string name="guests_tab_manual">Elle</string>
+    <string name="guests_table_short">Masa %1$s</string>
+    <string name="guests_title">Davetliler</string>
     <string name="lang_az">Azərbaycan</string>
     <string name="lang_en">English</string>
     <string name="lang_ru">Русский</string>
     <string name="lang_tr">Türkçe</string>
     <string name="limit_addon">Sınırı artır</string>
     <string name="limit_body">Hiçbir davetli eklenmedi. Bilgiler saklandı — sınırı artırdıktan sonra tekrar deneyin.</string>
+    <string name="limit_full">Sınır doldu — artırın</string>
+    <plurals name="limit_near">
+        <item quantity="one">Sınıra %1$d davetli kaldı</item>
+        <item quantity="few">Sınıra %1$d davetli kaldı</item>
+        <item quantity="many">Sınıra %1$d davetli kaldı</item>
+        <item quantity="other">Sınıra %1$d davetli kaldı</item>
+    </plurals>
     <string name="limit_premium">Premium şablona geç</string>
     <string name="limit_title">Davetli sınırı doldu: %1$s</string>
+    <string name="nav_guests">Davetliler</string>
+    <string name="nav_more">Daha fazla</string>
+    <string name="nav_send">Gönder</string>
+    <string name="nav_stats">İstatistik</string>
     <string name="phone_error_invalid">Geçersiz telefon numarası</string>
     <string name="phone_error_not_mobile">WhatsApp için cep numarası gerekli</string>
     <string name="settings_about">Hakkında</string>
@@ -259,6 +306,11 @@
     <string name="settings_terms">Kullanım Koşulları</string>
     <string name="settings_title">Ayarlar</string>
     <string name="settings_version">Sürüm %1$s</string>
+    <string name="status_coming">Geliyor %1$s</string>
+    <string name="status_declined">Gelmiyor</string>
+    <string name="status_pending">Cevap yok</string>
+    <string name="status_unsent">Gönderilmedi</string>
+    <string name="status_viewed">Görüldü</string>
     <string name="template_text_closing">Kapanış sözleri</string>
     <string name="template_text_intro">Giriş metni</string>
     <string name="template_var_color_accent">Vurgu rengi</string>

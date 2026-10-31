@@ -210,6 +210,7 @@
     <string name="guest_side_none">Ümumi</string>
     <string name="guest_table">Masa</string>
     <string name="guest_with_family">Ailəliklə</string>
+    <string name="guests_add">Qonaq əlavə et</string>
     <string name="guests_add_contacts">Kontaktlardan</string>
     <string name="guests_add_excel">Excel-dən</string>
     <string name="guests_add_manual">Əl ilə</string>
@@ -220,26 +221,72 @@
         <item quantity="many">%1$d qonaq əlavə olundu</item>
         <item quantity="other">%1$d qonaq əlavə olundu</item>
     </plurals>
+    <string name="guests_bulk_apply">Təyin et</string>
+    <plurals name="guests_bulk_delete_title">
+        <item quantity="one">%1$d qonaq silinsin?</item>
+        <item quantity="few">%1$d qonaq silinsin?</item>
+        <item quantity="many">%1$d qonaq silinsin?</item>
+        <item quantity="other">%1$d qonaq silinsin?</item>
+    </plurals>
+    <string name="guests_bulk_table">Masa təyin et</string>
+    <string name="guests_bulk_table_hint">Masa nömrəsi (boş = masasız)</string>
+    <string name="guests_chip">%1$s %2$s</string>
     <plurals name="guests_count">
         <item quantity="one">%1$d qonaq</item>
         <item quantity="few">%1$d qonaq</item>
         <item quantity="many">%1$d qonaq</item>
         <item quantity="other">%1$d qonaq</item>
     </plurals>
+    <string name="guests_delete">Qonağı sil</string>
+    <string name="guests_delete_body">Qonaq və onun cavabı birdəfəlik silinəcək.</string>
+    <string name="guests_delete_title">%1$s silinsin?</string>
+    <string name="guests_deleted">Silindi</string>
+    <string name="guests_done">Hazır</string>
+    <string name="guests_edit_title">Qonağı redaktə et</string>
     <string name="guests_empty_body">Qonaqları bir-bir, telefon kontaktlarından və ya Excel faylından əlavə edin.</string>
     <string name="guests_empty_title">Hələ qonaq yoxdur</string>
+    <string name="guests_filter_all">Hamısı</string>
+    <string name="guests_filter_coming">Gəlir</string>
+    <string name="guests_filter_declined">Gəlmir</string>
+    <string name="guests_filter_no_table">Masasız</string>
+    <string name="guests_filter_pending">Cavab yoxdur</string>
+    <string name="guests_filter_unsent">Göndərilməyib</string>
     <string name="guests_limit_reached">Qonaq limiti doldu (%1$s). Limiti artırmaq üçün alış edin.</string>
+    <string name="guests_load_error">Qonaq siyahısı yüklənmədi</string>
+    <string name="guests_no_results">«%1$s» üzrə qonaq tapılmadı</string>
+    <string name="guests_no_results_body">Adı başqa cür yazmağa çalışın və ya yeni qonaq əlavə edin.</string>
+    <plurals name="guests_people">
+        <item quantity="one">%1$d nəfər</item>
+        <item quantity="few">%1$d nəfər</item>
+        <item quantity="many">%1$d nəfər</item>
+        <item quantity="other">%1$d nəfər</item>
+    </plurals>
+    <string name="guests_search">Qonaq axtar</string>
+    <string name="guests_selected">%1$s seçildi</string>
     <string name="guests_tab_contacts">Kontaktlar</string>
     <string name="guests_tab_excel">Excel</string>
     <string name="guests_tab_manual">Əl ilə</string>
+    <string name="guests_table_short">Masa %1$s</string>
+    <string name="guests_title">Qonaqlar</string>
     <string name="lang_az">Azərbaycan</string>
     <string name="lang_en">English</string>
     <string name="lang_ru">Русский</string>
     <string name="lang_tr">Türkçe</string>
     <string name="limit_addon">Limiti artır</string>
     <string name="limit_body">Heç bir qonaq əlavə olunmadı. Məlumatlar saxlanılıb — limiti artırandan sonra yenidən cəhd edin.</string>
+    <string name="limit_full">Limit doldu — artırın</string>
+    <plurals name="limit_near">
+        <item quantity="one">Limitə %1$d qonaq qalıb</item>
+        <item quantity="few">Limitə %1$d qonaq qalıb</item>
+        <item quantity="many">Limitə %1$d qonaq qalıb</item>
+        <item quantity="other">Limitə %1$d qonaq qalıb</item>
+    </plurals>
     <string name="limit_premium">Premium şablona keç</string>
     <string name="limit_title">Limit doldu: %1$s qonaq</string>
+    <string name="nav_guests">Qonaqlar</string>
+    <string name="nav_more">Daha çox</string>
+    <string name="nav_send">Göndər</string>
+    <string name="nav_stats">Statistika</string>
     <string name="phone_error_invalid">Telefon nömrəsi yanlışdır</string>
     <string name="phone_error_not_mobile">WhatsApp üçün mobil nömrə lazımdır</string>
     <string name="settings_about">Haqqında</string>
@@ -259,6 +306,11 @@
     <string name="settings_terms">İstifadə şərtləri</string>
     <string name="settings_title">Parametrlər</string>
     <string name="settings_version">Versiya %1$s</string>
+    <string name="status_coming">Gəlir %1$s</string>
+    <string name="status_declined">Gəlmir</string>
+    <string name="status_pending">Cavab yoxdur</string>
+    <string name="status_unsent">Göndərilməyib</string>
+    <string name="status_viewed">Baxdı</string>
     <string name="template_text_closing">Son söz</string>
     <string name="template_text_intro">Giriş mətni</string>
     <string name="template_var_color_accent">Əsas rəng</string>
