@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devet — ekranlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+</head>
+<body>
+<script src="proto.js"></script>
+<main class="index" id="index"></main>
+<script>
+  (function () {
+    const lang = Proto.prefs.lang;
+    document.documentElement.dataset.theme = Proto.prefs.theme;
+    const az = lang !== 'ru';
+    // Order = clickable flow from DESIGN_PROMPT.md §7.6, then the remaining screens.
+    const SCREENS = [
+      ['01-giris.html', 1, 'Giriş', 'Вход', ['Giriş, səhv şifrə, yüklənmə, oflayn', 'Qeydiyyat + xəta, e-poçt təsdiqi', 'Şifrə bərpası, link göndərildi']],
+      ['02-tedbirler.html', 2, 'Tədbirlərim', 'Мои мероприятия', ['Siyahı, boş hal, kart menyusu']],
+      ['03-tedbir-yarat.html', 3, 'Tədbir yaratma', 'Создание мероприятия', ['6 addım, uğur ekranı', 'Rus dilində variant']],
+      ['04-sablonlar.html', 4, 'Şablon kataloqu', 'Каталог шаблонов', ['Filtr, önizləmə sheet-i']],
+      ['05-ferdilesdir.html', 5, 'Fərdiləşdirmə', 'Настройка', ['Canlı önizləmə, Rəng/Şrift/Mətn/Şəkil/Musiqi']],
+      ['07-qonaq-elave.html', 7, 'Qonaq əlavə etmə', 'Добавление гостей', ['Əl ilə, Kontaktlar, Excel + sütun uyğunlaşdırma', 'Limit doldu']],
+      ['06-qonaqlar.html', 6, 'Qonaqlar siyahısı', 'Список гостей', ['84/100 və 212/300, limitə yaxın, limit doldu', 'Filtr, axtarış, sürüşdürmə, çoxlu seçim', 'Redaktə sheet-i, boş, yüklənmə, xəta']],
+      ['08-gonderme.html', 8, 'Göndərmə', 'Отправка', ['Adları yoxla, şəkillər hazırlanır', 'Göndərmə kartı, "Göndərildi?", 120 xəbərdarlığı', 'Telefonsuzlar, tamamlandı, premium bağlı, xəta, boş']],
+      ['09-statistika.html', 9, 'Statistika', 'Статистика', ['5 göstərici, huni, tərəf və masa bölgüsü']],
+      ['10-masalar.html', 10, 'Masalar', 'Столы', ['Masalar, toplu təyin etmə']],
+      ['11-ortaq-aile.html', 11, 'Ortaq ailə', 'Совместное управление', ['Dəvət kodu, kodla qoşul, xətalar']],
+      ['12-alis.html', 12, 'Alış', 'Покупка', ['Premium, limit artırma, yoxlanılır/uğur/xəta/gözləmədə']],
+    ];
+    const tile = ([file, n, az1, ru1, items]) => {
+      const built = Proto.BUILT.has(file);
+      return `<a class="tile ${built ? '' : 'is-todo'}" href="${built ? file : '#'}" ${built ? '' : 'aria-disabled="true"'}>
+        <span class="n">EKRAN ${n}${built ? '' : (az ? ' · növbəti mərhələ' : ' · следующий этап')}</span>
+        <h2>${az ? az1 : ru1}</h2><ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul></a>`;
+    };
+    document.getElementById('index').innerHTML = `
+      <p class="t-footnote muted" style="margin:0">Devet · ${az ? 'HTML prototip, 393×852' : 'HTML-прототип, 393×852'}</p>
+      <h1>${az ? 'Ekranlar' : 'Экраны'}</h1>
+      <p class="t-callout muted" style="max-width:640px">${az
+        ? 'Hər ekranın yuxarısında: Light/Dark, AZ/RU, şrift 100%/130% və hallar (boş, yüklənmə, xəta…). Axın: Giriş → Tədbirlər → Tədbir yaratma → Şablonlar → Fərdiləşdirmə → Qonaq əlavə et → Qonaqlar → Göndərmə → Statistika.'
+        : 'Сверху на каждом экране: Light/Dark, AZ/RU, шрифт 100%/130% и состояния. Поток: Вход → Мероприятия → Создание → Шаблоны → Настройка → Добавление гостей → Гости → Отправка → Статистика.'}</p>
+      <p class="t-callout"><a href="../font-check.html">${az ? 'Şrift yoxlaması' : 'Проверка шрифтов'}</a> · <a href="../../spec/design.md">spec/design.md</a></p>
+      <div class="grid">${SCREENS.map(tile).join('')}</div>`;
+  })();
+</script>
+</body>
+</html>

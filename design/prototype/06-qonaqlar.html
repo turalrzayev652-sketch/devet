@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qonaqlar — Devet prototip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="proto.css">
+<style>
+  .event-head { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 0; }
+  .event-head .t-headline { font-family: var(--font-family-serif); font-weight: 600; }
+  .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 4px var(--layout-gutter) 12px; }
+  .limit-link { font-size: calc(13px * var(--font-scale)); font-weight: 600; color: var(--color-feedback-danger); text-decoration: underline; cursor: pointer; }
+  .sheet .field + .field, .sheet .field + .setting-row, .sheet .setting-row + .field { margin-top: 14px; }
+  .preview-name { padding: 12px 14px; border-radius: var(--radius-control); background: var(--color-brand-subtle); color: var(--color-brand-primary); font-weight: 600; }
+  .multi-head { display: flex; align-items: center; gap: 8px; padding: 0 12px; min-height: 52px; }
+</style>
+</head>
+<body>
+<script src="proto.js"></script>
+<script>
+const S = {
+  az: {
+    guests: 'Qonaqlar', search: 'Qonaq axtar', add: 'Qonaq əlavə et', all: 'Hamısı', comingF: 'Gəlir', declinedF: 'Gəlmir', pendingF: 'Cavab yoxdur', unsentF: 'Göndərilməyib',
+    limitFull: 'Limit doldu — artırın', limitNear: 'Limitə 4 qonaq qalıb', guestsCount: 'qonaq',
+    edit: 'Redaktə', del: 'Sil', selected: '{n} seçildi', assignTable: 'Masa təyin et', side: 'Tərəf', done: 'Hazır',
+    editTitle: 'Qonağı redaktə et', salutation: 'Hitab', sMuellim: 'Müəllim', sXanim: 'Xanım', sBey: 'Bəy', sNone: 'Yox', name: 'Ad', withFamily: 'Ailəliklə',
+    invited: 'Dəvət olunan nəfər', phone: 'Telefon', tableNo: 'Masa', lang: 'Dəvətnamənin dili', langValue: 'Tədbirin dili (Azərbaycan)', shownAs: 'Dəvətnamədə belə görünəcək',
+    deleteGuest: 'Qonağı sil', none: 'Ümumi',
+    emptyTitle: 'Hələ qonaq yoxdur', emptyBody: 'Qonaqları bir-bir, telefon kontaktlarından və ya Excel faylından əlavə edin.', manual: 'Əl ilə', contacts: 'Kontaktlardan', excel: 'Excel-dən',
+    noResults: '"Fərid" üzrə qonaq tapılmadı', noResultsBody: 'Adı başqa cür yazmağa çalışın və ya yeni qonaq əlavə edin.',
+    loadError: 'Qonaq siyahısı yüklənmədi',
+  },
+  ru: {
+    guests: 'Гости', search: 'Поиск гостя', add: 'Добавить гостя', all: 'Все', comingF: 'Придут', declinedF: 'Не придут', pendingF: 'Нет ответа', unsentF: 'Не отправлено',
+    limitFull: 'Лимит исчерпан — увеличить', limitNear: 'До лимита осталось 4 гостя', guestsCount: 'гостей',
+    edit: 'Изменить', del: 'Удалить', selected: 'Выбрано: {n}', assignTable: 'Назначить стол', side: 'Сторона', done: 'Готово',
+    editTitle: 'Редактировать гостя', salutation: 'Обращение', sMuellim: 'Муаллим', sXanim: 'Ханум', sBey: 'Бей', sNone: 'Нет', name: 'Имя', withFamily: 'С семьёй',
+    invited: 'Приглашено человек', phone: 'Телефон', tableNo: 'Стол', lang: 'Язык приглашения', langValue: 'Язык мероприятия (азербайджанский)', shownAs: 'В приглашении будет так',
+    deleteGuest: 'Удалить гостя', none: 'Общая',
+    emptyTitle: 'Гостей пока нет', emptyBody: 'Добавьте гостей по одному, из контактов телефона или из файла Excel.', manual: 'Вручную', contacts: 'Из контактов', excel: 'Из Excel',
+    noResults: 'По запросу «Fərid» никого не найдено', noResultsBody: 'Попробуйте написать имя иначе или добавьте нового гостя.',
+    loadError: 'Не удалось загрузить список гостей',
+  },
+};
+
+const ring = (used, limit) => {
+  const pct = Math.min(used / limit, 1);
+  const cls = pct >= 1 ? 'is-full' : pct >= 0.95 ? 'is-near' : '';
+  const c = 2 * Math.PI * 16;
+  return `<span class="counter ${cls}" aria-label="${used} / ${limit}"><svg viewBox="0 0 40 40"><circle class="track" cx="20" cy="20" r="16" fill="none" stroke-width="4"/><circle class="value" cx="20" cy="20" r="16" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="${(c * pct).toFixed(1)} ${c.toFixed(1)}"/></svg><span class="num">${used}/${limit}</span></span>`;
+};
+
+const topbar = (c) => `<div class="topbar">
+  <button class="icon-btn" data-go="02-tedbirler.html" aria-label="Geri">${c.icon('back')}</button>
+  <div class="event-head"><span class="t-headline">${c.t('eventTitle')}</span><span class="t-footnote muted">${c.t('eventDate')}</span></div>
+  <button class="icon-btn" aria-label="Daha çox" data-toast="Redaktə et · Masalar · Ortaq ailə">${c.icon('more')}</button></div>`;
+
+const chips = (c, active = 'all') => {
+  const list = [['all', 'all', 84], ['groom', 'groom', 41], ['bride', 'bride', 43], ['coming', 'comingF', 31], ['declined', 'declinedF', 6], ['pending', 'pendingF', 28], ['unsent', 'unsentF', 19], ['notable', 'noTable', 12]];
+  return `<div class="chips" role="tablist">${list.map(([k, label, n]) => `<button class="chip ${k === active ? 'is-selected' : ''}" role="tab" aria-selected="${k === active}" data-state="${k === 'coming' ? 'filter' : 'list'}">${c.t(label)} <span class="count">${n}</span></button>`).join('')}</div>`;
+};
+
+const row = (c, g, { selectable = false, selected = false } = {}) => `
+  <div class="guest-row">
+    ${selectable ? `<span class="select-box ${selected ? 'is-checked' : ''}">${selected ? c.icon('check', 'icon-sm') : ''}</span>` : ''}
+    <div class="main"><div class="name">${c.displayName(g)}</div><div class="meta">${c.meta(g)}</div></div>
+    ${c.statusPill(g)}
+  </div>`;
+
+const header = (c, used = 84, limit = 100, extra = '') => `
+  ${topbar(c)}
+  <div class="head-row"><h1 class="t-title" style="margin:0">${c.t('guests')}</h1>${ring(used, limit)}</div>
+  ${extra}
+  <div class="pad" style="margin-bottom:10px"><div class="input search">${c.icon('search')}<input placeholder="${c.t('search')}" aria-label="${c.t('search')}"></div></div>`;
+
+const list = (c, guests, opts = {}) => `<div class="list" style="margin-top:12px">${guests.map((g) => opts.swipeId === g.id
+  ? `<div class="swipe-wrap is-open"><div class="actions"><button class="edit" data-state="edit">${c.icon('pencil')}${c.t('edit')}</button><button class="del" data-toast="${c.t('del')}">${c.icon('trash')}${c.t('del')}</button></div>${row(c, g)}</div>`
+  : row(c, g, { selectable: opts.select, selected: (opts.selected || []).includes(g.id) })).join('')}</div>`;
+
+const fab = (c) => `<button class="btn btn-primary fab" data-go="07-qonaq-elave.html">${c.icon('userPlus')}${c.t('add')}</button>`;
+const main = (c, html, { fabOn = true } = {}) => ({ html, tabbar: 'guests', overlay: fabOn ? fab(c) : '' });
+
+const editSheet = (c, g) => `<div class="scrim" data-state="list"></div><div class="sheet" role="dialog" aria-label="${c.t('editTitle')}">
+  <div class="grabber"></div>
+  <div class="row-flex" style="margin-bottom:12px"><h2 class="t-headline-serif" style="margin:0;flex:1">${c.t('editTitle')}</h2><button class="icon-btn" data-state="list" aria-label="Bağla">${c.icon('close')}</button></div>
+  <div class="field"><label>${c.t('salutation')}</label><div class="segmented" role="group">${['sMuellim', 'sXanim', 'sBey', 'sNone'].map((k, i) => `<button aria-pressed="${i === 0}">${c.t(k)}</button>`).join('')}</div></div>
+  <div class="field"><label>${c.t('name')}</label><div class="input is-focused"><input value="${g.name}" aria-label="${c.t('name')}"></div></div>
+  <div class="setting-row"><span class="label t-body">${c.t('withFamily')}</span><span class="toggle is-on" role="switch" aria-checked="true"></span></div>
+  <div class="setting-row"><span class="label t-body">${c.t('invited')}</span><span class="stepper"><button aria-label="−">−</button><span class="val">${g.count}</span><button aria-label="+">+</button></span></div>
+  <div class="field"><label>${c.t('phone')}</label><div class="input">${c.icon('phone')}<input value="${g.phone}" inputmode="tel" aria-label="${c.t('phone')}"></div></div>
+  <div class="field"><label>${c.t('side')}</label><div class="segmented">${['groom', 'bride', 'none'].map((k, i) => `<button aria-pressed="${i === 0}">${c.t(k)}</button>`).join('')}</div></div>
+  <div class="field"><label>${c.t('tableNo')}</label><div class="input">${c.icon('table')}<input value="${g.table}" aria-label="${c.t('tableNo')}"></div></div>
+  <div class="setting-row"><span class="label"><span class="t-body">${c.t('lang')}</span><br><span class="t-footnote muted">${c.t('langValue')}</span></span>${c.icon('chevronRight')}</div>
+  <div class="field mt-2"><label>${c.t('shownAs')}</label><div class="preview-name">${c.greeting(g)}</div></div>
+  <button class="btn btn-primary btn-block mt-3" data-state="list">${c.t('save')}</button>
+  <button class="btn btn-text btn-block" style="color:var(--color-feedback-danger)" data-toast="${c.t('deleteGuest')}">${c.t('deleteGuest')}</button>
+</div>`;
+
+const skeletonRows = () => `<div class="list" style="margin-top:12px">${Array.from({ length: 6 }, () => `<div class="guest-row"><div class="main"><div class="skeleton" style="height:16px;width:62%"></div><div class="skeleton mt-1" style="height:12px;width:44%"></div></div><div class="skeleton" style="height:26px;width:76px;border-radius:999px"></div></div>`).join('')}</div>`;
+
+Proto.screen({
+  number: 6,
+  title: { az: 'Qonaqlar siyahısı', ru: 'Список гостей' },
+  strings: S,
+  states: [
+    { key: 'list', label: { az: 'Siyahı · 84/100', ru: 'Список · 84/100' }, render: (c) => main(c, header(c) + chips(c) + list(c, c.DATA.guests)),
+      note: { az: 'Sətrə toxun → redaktə; sola sürüşdür → Redaktə/Sil; uzun bas → çoxlu seçim. Android: FAB = ExtendedFloatingActionButton, alt panel = NavigationBar.', ru: 'Тап по строке → редактирование; свайп влево → Изменить/Удалить; долгое нажатие → множественный выбор.' } },
+    { key: 'premium', label: { az: 'Premium · 212/300', ru: 'Премиум · 212/300' }, render: (c) => main(c, header(c, 212, 300) + chips(c) + list(c, c.DATA.guests)) },
+    { key: 'limit-near', label: { az: 'Limitə yaxın', ru: 'Почти лимит' }, render: (c) => main(c, header(c, 96, 100, `<div class="pad" style="margin:-4px 0 10px"><span class="badge badge-warn">${c.icon('alert', 'icon-sm')} ${c.t('limitNear')}</span></div>`) + chips(c) + list(c, c.DATA.guests)),
+      note: { az: '≥ 95% olanda halqa qızılı olur (goldStrong, 3:1 kontrast) və mətnli nişan görünür.', ru: 'При ≥ 95% кольцо становится золотым и появляется текстовый бейдж.' } },
+    { key: 'limit-full', label: { az: 'Limit doldu', ru: 'Лимит исчерпан' }, render: (c) => main(c, header(c, 100, 100, `<div class="pad" style="margin:-4px 0 10px"><a class="limit-link" data-go="12-alis.html">${c.t('limitFull')}</a></div>`) + chips(c) + list(c, c.DATA.guests)),
+      note: { az: '100%-də "Qonaq əlavə et" Ekran 12 (Alış) təklif edəcək — server limitdən artıq qonağı rədd edir.', ru: 'При 100% «Добавить гостя» предложит экран 12 (покупка).' } },
+    { key: 'filter', label: { az: 'Filtr: Gəlir', ru: 'Фильтр: Придут' }, render: (c) => main(c, header(c) + chips(c, 'coming') + list(c, c.DATA.guests.filter((g) => g.status === 'coming'))) },
+    { key: 'search-empty', label: { az: 'Axtarış — nəticə yoxdur', ru: 'Поиск — пусто' }, render: (c) => main(c, header(c).replace(`placeholder="${c.t('search')}"`, `value="Fərid" placeholder="${c.t('search')}"`).replace('input search', 'input search is-focused') + chips(c) + `<div class="empty"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('noResults')}</h2><p class="t-callout muted" style="margin:0">${c.t('noResultsBody')}</p></div>`) },
+    { key: 'swipe', label: { az: 'Sürüşdürmə', ru: 'Свайп' }, render: (c) => main(c, header(c) + chips(c) + list(c, c.DATA.guests, { swipeId: 2 })) },
+    { key: 'multi', label: { az: 'Çoxlu seçim', ru: 'Множественный выбор' }, render: (c) => ({
+        html: `<div class="multi-head"><button class="icon-btn" data-state="list" aria-label="Bağla">${c.icon('close')}</button><span class="t-headline" style="flex:1">${c.t('selected', { n: 2 })}</span><button class="btn btn-text" data-state="list">${c.t('done')}</button></div>${chips(c)}${list(c, c.DATA.guests, { select: true, selected: [2, 6] })}`,
+        overlay: `<div class="actionbar"><button>${c.icon('table')}${c.t('assignTable')}</button><button>${c.icon('side')}${c.t('side')}</button><button class="del">${c.icon('trash')}${c.t('del')}</button></div>`,
+      }), note: { az: '"Sil" yalnız tədbirin sahibinə görünür (cohost silə bilmir).', ru: '«Удалить» видит только владелец мероприятия.' } },
+    { key: 'edit', label: { az: 'Redaktə sheet', ru: 'Редактирование' }, render: (c) => ({ html: header(c) + chips(c) + list(c, c.DATA.guests), tabbar: 'guests', overlay: editSheet(c, c.DATA.guests[0]) }),
+      note: { az: 'Ad/hitab/dil dəyişəndə adlı önizləmə şəkli yenidən yaradılır. Android: ModalBottomSheet.', ru: 'При смене имени/обращения/языка превью-картинка создаётся заново.' } },
+    { key: 'empty', label: { az: 'Boş', ru: 'Пусто' }, render: (c) => main(c, `${topbar(c)}<div class="head-row"><h1 class="t-title" style="margin:0">${c.t('guests')}</h1>${ring(0, 100)}</div>
+        <div class="empty"><div class="art">${c.ART.emptyGuests}</div><h2 class="t-headline-serif" style="margin:0">${c.t('emptyTitle')}</h2><p class="t-callout muted" style="margin:0">${c.t('emptyBody')}</p>
+        <div class="stack mt-2" style="width:100%"><button class="btn btn-primary btn-block" data-go="07-qonaq-elave.html">${c.icon('userPlus')}${c.t('manual')}</button>
+        <button class="btn btn-secondary btn-block" data-go="07-qonaq-elave.html?state=contacts">${c.icon('contacts')}${c.t('contacts')}</button>
+        <button class="btn btn-secondary btn-block" data-go="07-qonaq-elave.html?state=excel">${c.icon('sheet')}${c.t('excel')}</button></div></div>`, { fabOn: false }) },
+    { key: 'loading', label: { az: 'Yüklənir', ru: 'Загрузка' }, render: (c) => main(c, `${topbar(c)}<div class="head-row"><h1 class="t-title" style="margin:0">${c.t('guests')}</h1><div class="skeleton" style="width:92px;height:40px;border-radius:20px"></div></div><div class="pad"><div class="skeleton" style="height:44px;border-radius:14px"></div></div><div class="chips mt-1">${'<div class="skeleton" style="flex:none;width:84px;height:36px;border-radius:999px"></div>'.repeat(4)}</div>${skeletonRows()}`, { fabOn: false }) },
+    { key: 'error', label: { az: 'Xəta', ru: 'Ошибка' }, render: (c) => main(c, `${header(c)}<div class="pad"><div class="banner banner-error" role="alert">${c.icon('alert')}<span class="text"><strong>${c.t('loadError')}</strong><br>${c.t('networkError')}</span><button class="btn btn-text" data-state="loading">${c.t('retry')}</button></div></div>${chips(c)}${list(c, c.DATA.guests.slice(0, 3))}`),
+      note: { az: 'Keşdəki son siyahı göstərilir, yuxarıda yenidən cəhd zolağı.', ru: 'Показываем последний кэшированный список и баннер с повтором.' } },
+  ],
+});
+</script>
+</body>
+</html>
