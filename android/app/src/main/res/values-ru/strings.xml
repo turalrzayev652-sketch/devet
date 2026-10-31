@@ -210,6 +210,7 @@
     <string name="guest_side_none">Общая</string>
     <string name="guest_table">Стол</string>
     <string name="guest_with_family">С семьёй</string>
+    <string name="guests_add">Добавить гостя</string>
     <string name="guests_add_contacts">Из контактов</string>
     <string name="guests_add_excel">Из Excel</string>
     <string name="guests_add_manual">Вручную</string>
@@ -220,26 +221,72 @@
         <item quantity="many">Добавлено %1$d гостей</item>
         <item quantity="other">Добавлено %1$d гостя</item>
     </plurals>
+    <string name="guests_bulk_apply">Назначить</string>
+    <plurals name="guests_bulk_delete_title">
+        <item quantity="one">Удалить %1$d гостя?</item>
+        <item quantity="few">Удалить %1$d гостей?</item>
+        <item quantity="many">Удалить %1$d гостей?</item>
+        <item quantity="other">Удалить %1$d гостя?</item>
+    </plurals>
+    <string name="guests_bulk_table">Назначить стол</string>
+    <string name="guests_bulk_table_hint">Номер стола (пусто = без стола)</string>
+    <string name="guests_chip">%1$s %2$s</string>
     <plurals name="guests_count">
         <item quantity="one">%1$d гость</item>
         <item quantity="few">%1$d гостя</item>
         <item quantity="many">%1$d гостей</item>
         <item quantity="other">%1$d гостя</item>
     </plurals>
+    <string name="guests_delete">Удалить гостя</string>
+    <string name="guests_delete_body">Гость и его ответ будут удалены навсегда.</string>
+    <string name="guests_delete_title">Удалить: %1$s?</string>
+    <string name="guests_deleted">Удалено</string>
+    <string name="guests_done">Готово</string>
+    <string name="guests_edit_title">Редактировать гостя</string>
     <string name="guests_empty_body">Добавьте гостей по одному, из контактов телефона или из файла Excel.</string>
     <string name="guests_empty_title">Гостей пока нет</string>
+    <string name="guests_filter_all">Все</string>
+    <string name="guests_filter_coming">Придут</string>
+    <string name="guests_filter_declined">Не придут</string>
+    <string name="guests_filter_no_table">Без стола</string>
+    <string name="guests_filter_pending">Нет ответа</string>
+    <string name="guests_filter_unsent">Не отправлено</string>
     <string name="guests_limit_reached">Достигнут лимит гостей (%1$s). Купите расширение лимита.</string>
+    <string name="guests_load_error">Не удалось загрузить список гостей</string>
+    <string name="guests_no_results">По запросу «%1$s» никого не найдено</string>
+    <string name="guests_no_results_body">Попробуйте написать имя иначе или добавьте нового гостя.</string>
+    <plurals name="guests_people">
+        <item quantity="one">%1$d человек</item>
+        <item quantity="few">%1$d человека</item>
+        <item quantity="many">%1$d человек</item>
+        <item quantity="other">%1$d человека</item>
+    </plurals>
+    <string name="guests_search">Поиск гостя</string>
+    <string name="guests_selected">Выбрано: %1$s</string>
     <string name="guests_tab_contacts">Контакты</string>
     <string name="guests_tab_excel">Excel</string>
     <string name="guests_tab_manual">Вручную</string>
+    <string name="guests_table_short">Стол %1$s</string>
+    <string name="guests_title">Гости</string>
     <string name="lang_az">Azərbaycan</string>
     <string name="lang_en">English</string>
     <string name="lang_ru">Русский</string>
     <string name="lang_tr">Türkçe</string>
     <string name="limit_addon">Увеличить лимит</string>
     <string name="limit_body">Никто не добавлен. Данные сохранены — попробуйте снова после увеличения лимита.</string>
+    <string name="limit_full">Лимит исчерпан — увеличить</string>
+    <plurals name="limit_near">
+        <item quantity="one">До лимита остался %1$d гость</item>
+        <item quantity="few">До лимита осталось %1$d гостя</item>
+        <item quantity="many">До лимита осталось %1$d гостей</item>
+        <item quantity="other">До лимита осталось %1$d гостя</item>
+    </plurals>
     <string name="limit_premium">Перейти на премиум-шаблон</string>
     <string name="limit_title">Лимит исчерпан: %1$s гостей</string>
+    <string name="nav_guests">Гости</string>
+    <string name="nav_more">Ещё</string>
+    <string name="nav_send">Отправка</string>
+    <string name="nav_stats">Статистика</string>
     <string name="phone_error_invalid">Неверный номер телефона</string>
     <string name="phone_error_not_mobile">Для WhatsApp нужен мобильный номер</string>
     <string name="settings_about">О приложении</string>
@@ -259,6 +306,11 @@
     <string name="settings_terms">Условия использования</string>
     <string name="settings_title">Настройки</string>
     <string name="settings_version">Версия %1$s</string>
+    <string name="status_coming">Придёт: %1$s</string>
+    <string name="status_declined">Не придёт</string>
+    <string name="status_pending">Нет ответа</string>
+    <string name="status_unsent">Не отправлено</string>
+    <string name="status_viewed">Просмотрено</string>
     <string name="template_text_closing">Заключительные слова</string>
     <string name="template_text_intro">Вступительный текст</string>
     <string name="template_var_color_accent">Акцентный цвет</string>

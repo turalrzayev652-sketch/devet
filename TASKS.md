@@ -240,6 +240,8 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Asılılıq: T45
   - Hər qonaq: hitab, ad, "ailəliklə" / nəfər, tərəf, masa nömrəsi, dil (boş = tədbirin dili). Filtr (tərəf, masa, cavab statusu) və axtarış. Toplu masa təyini.
   - Hazırdır, əgər: dəyişikliklər bazaya yazılır və filtr düzgün işləyir.
+  - [x] T46A (Android) — siyahı (statuslar, "N/limit" halqası, filtrlər saylarla, axtarış ad/telefon üzrə), redaktə pəncərəsi (yalnız dəyişən sahələr), sola sürüşdürmə, uzun basma ilə çoxlu seçim (masa · tərəf · sil — sil yalnız owner), alt naviqasiya (Göndər/Statistika/Daha çox — növbəti mərhələ); 87 unit test; emulyatorda demo rejimində yoxlanıb.
+  - ⚠️ Qeyd: real Supabase ilə sınanmayıb. Ad/hitab/dil dəyişəndə adlı önizləmə şəklinin yenidən yaradılması T47-dədir.
 
 - [ ] **T47A / T47I Adlı önizləmə şəkilləri**
   - Asılılıq: T46, T15
