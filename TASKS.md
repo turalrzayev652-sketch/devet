@@ -172,7 +172,7 @@ Agent bir tapşırığı bitirir, hesabat verir və dayanır. Siz yoxlayırsın�
   - Asılılıq: T30, T18
   - `/spec/api.md`: hər ekranın hansı cədvəl/RPC/Storage çağırışını etdiyi, sorğu və cavab formaları, xəta kodları.
 
-- [ ] **T32 i18n generatoru**
+- [x] **T32 i18n generatoru**
   - Asılılıq: T01
   - `/spec/i18n/app.json` (açar → az/ru/en/tr) və `/tools/i18n` skripti: Android `values*/strings.xml` və iOS `Localizable.xcstrings` yaradır. Çatışmayan tərcümədə skript xəta verir.
   - Hazırdır, əgər: nümunə açarlarla hər iki platforma faylı yaranır.

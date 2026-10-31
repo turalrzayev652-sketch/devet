@@ -11,4 +11,16 @@ Helper scripts.
   node --test tools/i18n/check-invite.test.mjs
   ```
 
-- `i18n/` generator for Android `strings.xml` and iOS `Localizable.xcstrings` from `/spec/i18n/app.json` — T32.
+- `i18n/generate.mjs` — generates app strings from `/spec/i18n/app.json` (same format as invite.json):
+  Android `values/strings.xml` (az = default), `values-ru|en|tr/strings.xml`, and iOS `Localizable.xcstrings`.
+  Keys `a.b.c` become Android `a_b_c`; keys ending in `.one/.few/.many/.other` become one plural string;
+  `{name}` becomes positional `%1$s` / `%1$@` (`{count}` in plurals: `%1$d` / `%1$lld`).
+  Missing translations, placeholder mismatches or name clashes stop it with exit 1 and nothing is written.
+  Generated files are never edited by hand.
+
+  ```bash
+  node tools/i18n/generate.mjs                       # default outputs (used from T41)
+  node tools/i18n/generate.mjs --android <resDir> --ios <file.xcstrings>
+  node --test tools/i18n/generate.test.mjs
+  ```
+  Defaults: `android/app/src/main/res`, `ios/Devet/Resources/Localizable.xcstrings`.
