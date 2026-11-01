@@ -93,6 +93,8 @@ protocol GuestListRepository: Sendable {
     func bulkUpdate(_ ids: [String], column: String, value: String?) async -> Result<Void, AuthFailure>
     /// Owner only; a co-host gets 0 rows → `.forbidden`.
     func delete(_ ids: [String]) async -> Result<Void, AuthFailure>
+    /// Mark guest as sent (T48: set sent_at to now).
+    func markSent(_ id: String) async -> Result<Void, AuthFailure>
 }
 
 final class SupabaseGuestListRepository: GuestListRepository {
@@ -134,6 +136,14 @@ final class SupabaseGuestListRepository: GuestListRepository {
         if ids.isEmpty { return .success(()) }
         return await call { client in
             let rows: [IdRow] = try await client.from("guests").delete().in("id", values: ids).select("id").execute().value
+            if rows.isEmpty { throw AuthFailure.forbidden }
+        }
+    }
+
+    func markSent(_ id: String) async -> Result<Void, AuthFailure> {
+        return await call { client in
+            let now = ISO8601DateFormatter().string(from: Date())
+            let rows: [IdRow] = try await client.from("guests").update(["sent_at": now]).eq("id", value: id).select("id").execute().value
             if rows.isEmpty { throw AuthFailure.forbidden }
         }
     }
