@@ -77,6 +77,7 @@ import az.devet.app.ui.components.messageRes
 import az.devet.app.ui.send.PreviewListScreen
 import az.devet.app.ui.send.PreviewListViewModel
 import az.devet.app.ui.send.SendFlowScreen
+import az.devet.app.ui.stats.StatsScreen
 import az.devet.app.ui.theme.DevetTheme
 import az.devet.app.ui.theme.Shapes
 import az.devet.app.ui.theme.Spacing
@@ -124,7 +125,10 @@ fun EventScreen(
         Box(Modifier.padding(padding)) {
             if (tab == 0) GuestListContent(eventId, title, isOwner, reloadKey, onBack, onAdd, onLimit)
             else if (tab == 1 && event != null) {
-                SendFlowScreen(eventId, event, onComplete = { /* TODO: go to tab 2 stats */ })
+                SendFlowScreen(eventId, event, onComplete = { tab = 2 })
+            }
+            else if (tab == 2) {
+                StatsScreen(eventId)
             }
             else Column(Modifier.fillMaxSize()) {
                 Box(Modifier.padding(start = Spacing.s1, top = Spacing.s0_5)) { BackButton(onBack) }

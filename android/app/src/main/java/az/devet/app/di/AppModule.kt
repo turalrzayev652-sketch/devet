@@ -29,6 +29,7 @@ import az.devet.app.ui.guests.GuestListViewModel
 import az.devet.app.ui.guests.ManualGuestViewModel
 import az.devet.app.ui.send.PreviewListViewModel
 import az.devet.app.ui.send.SendViewModel
+import az.devet.app.ui.stats.StatsViewModel
 import az.devet.app.ui.events.CreateEventViewModel
 import az.devet.app.ui.events.EditEventViewModel
 import az.devet.app.ui.events.EventsViewModel
@@ -77,6 +78,7 @@ val appModule = module {
     viewModel { (id: String, owner: Boolean) -> GuestListViewModel(id, owner, get(), get(), get()) }
     viewModel { (id: String) -> PreviewListViewModel(id, get(), get(), get(), get()) }
     viewModel { (id: String) -> SendViewModel(id, get(), get(), get()) }
+    viewModel { (id: String) -> StatsViewModel(id, get()) }
 }
 
 /** Koin cannot hold a nullable single directly. */
