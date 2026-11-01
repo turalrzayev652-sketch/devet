@@ -289,6 +289,12 @@
     <string name="nav_stats">Statistika</string>
     <string name="phone_error_invalid">Telefon nömrəsi yanlışdır</string>
     <string name="phone_error_not_mobile">WhatsApp üçün mobil nömrə lazımdır</string>
+    <string name="send_preview_generating">Adlı önizləmə şəkilləri hazırlanır</string>
+    <string name="send_preview_title">Adları yoxlayın</string>
+    <string name="send_ready_button">Hamısı düzgündür — başla</string>
+    <string name="send_retry_upload">Yenidən cəhd et</string>
+    <string name="send_warning_empty_name">Boş ad: %1$s</string>
+    <string name="send_warning_no_phone">Telefon yoxdur: %1$s</string>
     <string name="settings_about">Haqqında</string>
     <string name="settings_delete_body">Sahibi olduğunuz tədbirlər bütün qonaqları ilə silinəcək, ortaq olduğunuz tədbirlərdən çıxarılacaqsınız. Bunu geri qaytarmaq olmur.</string>
     <string name="settings_delete_button">Hesabı sil</string>

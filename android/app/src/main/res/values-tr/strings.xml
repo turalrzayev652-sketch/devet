@@ -289,6 +289,12 @@
     <string name="nav_stats">İstatistik</string>
     <string name="phone_error_invalid">Geçersiz telefon numarası</string>
     <string name="phone_error_not_mobile">WhatsApp için cep numarası gerekli</string>
+    <string name="send_preview_generating">Adlandırılmış önizleme görselleri hazırlanıyor</string>
+    <string name="send_preview_title">İsimleri kontrol edin</string>
+    <string name="send_ready_button">Tamam — başla</string>
+    <string name="send_retry_upload">Tekrar dene</string>
+    <string name="send_warning_empty_name">Boş ad: %1$s</string>
+    <string name="send_warning_no_phone">Telefon yok: %1$s</string>
     <string name="settings_about">Hakkında</string>
     <string name="settings_delete_body">Sahibi olduğunuz etkinlikler tüm davetlileriyle silinecek, ortak olduğunuz etkinliklerden çıkarılacaksınız. Bu geri alınamaz.</string>
     <string name="settings_delete_button">Hesabı sil</string>

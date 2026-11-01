@@ -7863,6 +7863,180 @@
         }
       }
     },
+    "send.preview_generating": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adlı önizləmə şəkilləri hazırlanır"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовятся адресные превью-изображения"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing named preview images"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adlandırılmış önizleme görselleri hazırlanıyor"
+          }
+        }
+      }
+    },
+    "send.preview_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adları yoxlayın"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверьте имена"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check names"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İsimleri kontrol edin"
+          }
+        }
+      }
+    },
+    "send.ready_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hamısı düzgündür — başla"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё готово — начать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All set — let's go"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamam — başla"
+          }
+        }
+      }
+    },
+    "send.retry_upload": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenidən cəhd et"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekrar dene"
+          }
+        }
+      }
+    },
+    "send.warning_empty_name": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boş ad: %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пустое имя: %1$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empty name: %1$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boş ad: %1$@"
+          }
+        }
+      }
+    },
+    "send.warning_no_phone": {
+      "extractionState": "manual",
+      "localizations": {
+        "az": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefon yoxdur: %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет номера: %1$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No phone: %1$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefon yok: %1$@"
+          }
+        }
+      }
+    },
     "settings.about": {
       "extractionState": "manual",
       "localizations": {

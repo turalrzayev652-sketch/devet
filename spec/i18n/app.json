@@ -300,5 +300,11 @@
   "guests.bulk.delete_title.one": { "az": "{count} qonaq silinsin?", "ru": "Удалить {count} гостя?", "en": "Delete {count} guest?", "tr": "{count} davetli silinsin mi?" },
   "guests.bulk.delete_title.few": { "az": "{count} qonaq silinsin?", "ru": "Удалить {count} гостей?", "en": "Delete {count} guests?", "tr": "{count} davetli silinsin mi?" },
   "guests.bulk.delete_title.many": { "az": "{count} qonaq silinsin?", "ru": "Удалить {count} гостей?", "en": "Delete {count} guests?", "tr": "{count} davetli silinsin mi?" },
-  "guests.bulk.delete_title.other": { "az": "{count} qonaq silinsin?", "ru": "Удалить {count} гостя?", "en": "Delete {count} guests?", "tr": "{count} davetli silinsin mi?" }
+  "guests.bulk.delete_title.other": { "az": "{count} qonaq silinsin?", "ru": "Удалить {count} гостя?", "en": "Delete {count} guests?", "tr": "{count} davetli silinsin mi?" },
+  "send.preview_title": { "az": "Adları yoxlayın", "ru": "Проверьте имена", "en": "Check names", "tr": "İsimleri kontrol edin" },
+  "send.preview_generating": { "az": "Adlı önizləmə şəkilləri hazırlanır", "ru": "Готовятся адресные превью-изображения", "en": "Preparing named preview images", "tr": "Adlandırılmış önizleme görselleri hazırlanıyor" },
+  "send.warning_no_phone": { "az": "Telefon yoxdur: {count}", "ru": "Нет номера: {count}", "en": "No phone: {count}", "tr": "Telefon yok: {count}" },
+  "send.warning_empty_name": { "az": "Boş ad: {count}", "ru": "Пустое имя: {count}", "en": "Empty name: {count}", "tr": "Boş ad: {count}" },
+  "send.ready_button": { "az": "Hamısı düzgündür — başla", "ru": "Всё готово — начать", "en": "All set — let's go", "tr": "Tamam — başla" },
+  "send.retry_upload": { "az": "Yenidən cəhd et", "ru": "Повторить", "en": "Try again", "tr": "Tekrar dene" }
 }

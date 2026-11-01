@@ -19,6 +19,7 @@ import az.devet.app.data.guests.GuestRepository
 import az.devet.app.data.guests.Salutation
 import az.devet.app.data.guests.Side
 import az.devet.app.data.guests.NewGuest
+import az.devet.app.data.guests.StorageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -37,6 +38,7 @@ fun demoModule(): Module = module {
     single { DemoGuests() }
     single<GuestRepository> { get<DemoGuests>() }
     single<GuestListRepository> { get<DemoGuests>() }
+    single<StorageRepository> { DemoStorage() }
 }
 
 /** In-memory guests with the free limit (100), so the limit sheet can be tried too; one demo event has guests. */
@@ -148,5 +150,12 @@ private class DemoEvents : EventRepository {
         if (items[id]?.role == MemberRole.Cohost) return AuthResult.Failure(az.devet.app.data.auth.AuthError.Forbidden)
         items.remove(id)
         return AuthResult.Ok(Unit)
+    }
+}
+
+private class DemoStorage : StorageRepository {
+    override suspend fun uploadPreviewImage(bytes: ByteArray, code: String, eventId: String): AuthResult<String> {
+        // In-memory demo: pretend the upload succeeded, return the path
+        return AuthResult.Ok("previews/$code.jpg")
     }
 }
