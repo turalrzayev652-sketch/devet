@@ -79,6 +79,9 @@ interface GuestListRepository {
     /** PATCH with the changed columns only; 0 rows → [AuthError.Forbidden]. */
     suspend fun update(id: String, before: NewGuest, after: NewGuest): AuthResult<Unit>
 
+    /** Mark guest as sent (T48: set sent_at to now). */
+    suspend fun markSent(id: String): AuthResult<Unit>
+
     /** Several guests at once: `table_no` or `side` (screens.md §6 bulk panel). */
     suspend fun bulkUpdate(ids: List<String>, column: String, value: String?): AuthResult<Unit>
 
@@ -143,6 +146,14 @@ class SupabaseGuestListRepository(private val client: SupabaseClient?) : GuestLi
             val rows = from("guests").delete { filter { isIn("id", ids) }; select(Columns.list("id")) }.decodeList<IdRow>()
             if (rows.isEmpty()) throw ForbiddenException()
         }
+    }
+
+    override suspend fun markSent(id: String) = call {
+        val now = java.time.Instant.now().toString()
+        from("guests").update(JsonObject(mapOf("sent_at" to JsonPrimitive(now)))) {
+            filter { eq("id", id) }
+            select(Columns.list("id"))
+        }.decodeList<IdRow>().let { if (it.isEmpty()) throw ForbiddenException() }
     }
 
     private suspend fun <T> call(block: suspend SupabaseClient.() -> T): AuthResult<T> {
