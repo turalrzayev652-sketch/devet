@@ -249,6 +249,7 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Hər qonaq üçün 1200×630 JPEG (≤ 80 KB): şablonun fon şəkli/rəngi + "<Hitablı ad>, sizi … dəvət edirik" (qonağın dilində). Android `Canvas`, iOS `UIGraphicsImageRenderer`. `previews/<kod>.jpg`-ə yüklənir; ad və ya dil dəyişəndə yenidən yaradılır.
   - **Göndərmədən əvvəl məcburi önizləmə ekranı:** bütün adları yoxlamaq üçün siyahı.
   - Hazırdır, əgər: 300 şəkil 30 saniyədən tez yaradılır və yüklənir; real WhatsApp-da önizləmə adla görünür.
+  - ⚠️ **Qeyd (T47A):** Canvas generatoru, Storage API, preview screen UI yazılıb (branch t47a-android). Qalıb: navigation integration, FakeStorageRepository tests, demo mode sınaması, emulator-da real çalışma. T47I ilə paralel tamamlanacaq.
 
 - [ ] **T48A / T48I Göndərmə axını**
   - Asılılıq: T47
