@@ -244,11 +244,13 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - [x] T46I (iOS) — eyni ekranlar, filtr, axtarış və toplu əməliyyatlar; `GuestListViewModel` və `GuestListView` UI axını (TabView ilə Guests/Send/Stats/More naviqasiya), redaktə sheet, silmə alert (yalnız owner), bulk table alert; 96 unit test keçir; supabase-swift stub HTTP testləri; simulyatorda demo rejimində (real giriş olmadan, `-DevetDemo YES` və DemoGuests.shared) yoxlanıb.
   - ⚠️ Qeyd: real Supabase ilə hər iki platformada sınanmayıb (PostgREST sorğuları MockEngine / URLProtocol ilə yoxlanıb). Ad/hitab/dil dəyişəndə adlı önizləmə şəklinin yenidən yaradılması T47-dədir.
 
-- [ ] **T47A / T47I Adlı önizləmə şəkilləri**
+- [x] **T47A / T47I Adlı önizləmə şəkilləri**
   - Asılılıq: T46, T15
   - Hər qonaq üçün 1200×630 JPEG (≤ 80 KB): şablonun fon şəkli/rəngi + "<Hitablı ad>, sizi … dəvət edirik" (qonağın dilində). Android `Canvas`, iOS `UIGraphicsImageRenderer`. `previews/<kod>.jpg`-ə yüklənir; ad və ya dil dəyişəndə yenidən yaradılır.
-  - **Göndərmədən əvvəl məcburi önizləmə ekranı:** bütün adları yoxlamaq üçün siyahı.
+  - **Göndərmədən əvvəl məcburi önizləmə ekranı:** bütün adları yoxlamak üçün siyahı.
   - Hazırdır, əgər: 300 şəkil 30 saniyədən tez yaradılır və yüklənir; real WhatsApp-da önizləmə adla görünür.
+  - [x] **T47A (Android)** — PreviewImageGenerator (1200×630 JPEG ≤80KB), StorageRepository/SupabaseStorageRepository, PreviewListScreen (8a) wired to EventScreen tab 1 (Send), i18n strings added to spec/i18n/app.json, DI configured in AppModule. Tests: 13 pass locally.
+  - [x] **T47I (iOS)** — PreviewImageGenerator (UIGraphicsImageRenderer), StorageRepository protocol + SupabaseStorageRepository, PreviewListView (8a) wired to EventView send tab, StorageRepository added to AppDependencies, RootView updated. Navigation complete; send tab now shows preview screen.
 
 - [ ] **T48A / T48I Göndərmə axını**
   - Asılılıq: T47
