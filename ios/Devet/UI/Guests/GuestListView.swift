@@ -5,6 +5,7 @@ struct EventView: View {
     @StateObject var vm: GuestListViewModel
     let title: String
     let reloadToken: Int
+    let storage: any StorageRepository
     let onAdd: (Int) -> Void
     let onLimit: () -> Void
 
@@ -12,7 +13,8 @@ struct EventView: View {
         TabView {
             GuestListView(vm: vm, title: title, reloadToken: reloadToken, onAdd: onAdd, onLimit: onLimit)
                 .tabItem { Label("nav.guests", systemImage: "person.2") }
-            ComingSoonView(title: nil).tabItem { Label("nav.send", systemImage: "paperplane") }
+            PreviewListView(eventId: vm.eventId, repo: vm.repo, events: vm.events, storage: storage, displayNames: vm.spec.displayNames, onReady: { /* TODO: T48I send flow */ })
+                .tabItem { Label("nav.send", systemImage: "paperplane") }
             ComingSoonView(title: nil).tabItem { Label("nav.stats", systemImage: "chart.bar") }
             ComingSoonView(title: nil).tabItem { Label("nav.more", systemImage: "ellipsis") }
         }
