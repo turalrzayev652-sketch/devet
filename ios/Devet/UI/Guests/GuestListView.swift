@@ -13,7 +13,8 @@ struct EventView: View {
         TabView {
             GuestListView(vm: vm, title: title, reloadToken: reloadToken, onAdd: onAdd, onLimit: onLimit)
                 .tabItem { Label("nav.guests", systemImage: "person.2") }
-            PreviewListView(eventId: vm.eventId, repo: vm.repo, events: vm.events, storage: storage, displayNames: vm.spec.displayNames, onReady: { /* TODO: T48I send flow */ })
+            SendView(eventId: vm.eventId, repo: vm.repo, events: vm.events, displayNames: vm.spec.displayNames,
+                     eventTitle: title, eventType: "wedding", baseUrl: "https://devet.az", onComplete: { /* TODO: go to stats */ })
                 .tabItem { Label("nav.send", systemImage: "paperplane") }
             ComingSoonView(title: nil).tabItem { Label("nav.stats", systemImage: "chart.bar") }
             ComingSoonView(title: nil).tabItem { Label("nav.more", systemImage: "ellipsis") }
