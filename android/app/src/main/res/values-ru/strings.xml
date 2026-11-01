@@ -289,6 +289,12 @@
     <string name="nav_stats">Статистика</string>
     <string name="phone_error_invalid">Неверный номер телефона</string>
     <string name="phone_error_not_mobile">Для WhatsApp нужен мобильный номер</string>
+    <string name="send_preview_generating">Готовятся адресные превью-изображения</string>
+    <string name="send_preview_title">Проверьте имена</string>
+    <string name="send_ready_button">Всё готово — начать</string>
+    <string name="send_retry_upload">Повторить</string>
+    <string name="send_warning_empty_name">Пустое имя: %1$s</string>
+    <string name="send_warning_no_phone">Нет номера: %1$s</string>
     <string name="settings_about">О приложении</string>
     <string name="settings_delete_body">Мероприятия, владельцем которых вы являетесь, будут удалены вместе со всеми гостями, а из совместных мероприятий вы будете исключены. Это нельзя отменить.</string>
     <string name="settings_delete_button">Удалить аккаунт</string>

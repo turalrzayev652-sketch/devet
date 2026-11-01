@@ -289,6 +289,12 @@
     <string name="nav_stats">Statistics</string>
     <string name="phone_error_invalid">Invalid phone number</string>
     <string name="phone_error_not_mobile">WhatsApp needs a mobile number</string>
+    <string name="send_preview_generating">Preparing named preview images</string>
+    <string name="send_preview_title">Check names</string>
+    <string name="send_ready_button">All set — let\'s go</string>
+    <string name="send_retry_upload">Try again</string>
+    <string name="send_warning_empty_name">Empty name: %1$s</string>
+    <string name="send_warning_no_phone">No phone: %1$s</string>
     <string name="settings_about">About</string>
     <string name="settings_delete_body">Events you own will be deleted with all their guests, and you will be removed from events you co-host. This cannot be undone.</string>
     <string name="settings_delete_button">Delete account</string>
