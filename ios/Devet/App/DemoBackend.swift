@@ -71,17 +71,73 @@ final class DemoEvents: EventRepository, @unchecked Sendable {
         return .success(())
     }
 }
-/// In-memory guests with the free limit (100), so the limit sheet can be tried too.
-final class DemoGuests: GuestRepository, @unchecked Sendable {
-    private var byEvent: [String: [NewGuest]] = [:]
+/// In-memory guests with the free limit (100), so the limit sheet can be tried too; one demo event has guests.
+final class DemoGuests: GuestRepository, GuestListRepository, @unchecked Sendable {
+    static let shared = DemoGuests()
+    private var byEvent: [String: [Guest]] = [:]
+    private var nextId = 0
+
+    init() {
+        let sample: [(NewGuest, String, Int, Bool, Bool)] = [
+            (NewGuest(name: "Elçin", salutation: .muellim, withFamily: true, invitedCount: 4, phoneE164: "+994501234567", side: .groom, tableNo: "12"), "yes", 4, true, false),
+            (NewGuest(name: "Leyla", salutation: .xanim, phoneE164: "+994551112233", side: .bride, tableNo: "7"), "pending", 0, true, false),
+            (NewGuest(name: "Rəşad", salutation: .bey, invitedCount: 2, phoneE164: "+994701234567", side: .groom), "no", 0, true, false),
+            (NewGuest(name: "Nərmin", salutation: .xanim, withFamily: true, invitedCount: 3, side: .bride, tableNo: "7"), "pending", 0, true, true),
+            (NewGuest(name: "Kamran", phoneE164: "+994771234567", tableNo: "3", lang: "ru"), "pending", 0, false, false),
+        ]
+        byEvent["demo-1"] = sample.map { g, rsvp, count, sent, opened in
+            var guest = make(g)
+            guest.rsvpStatus = rsvp; guest.rsvpCount = count
+            guest.sentAt = sent ? "2027-06-01T10:00:00Z" : nil
+            guest.openedAt = opened ? "2027-06-02T10:00:00Z" : nil
+            return guest
+        }
+    }
+
+    private func make(_ g: NewGuest) -> Guest {
+        nextId += 1
+        return Guest(id: "g\(nextId)", code: "CODE\(nextId)", salutation: g.salutation, name: g.name, withFamily: g.withFamily, invitedCount: g.invitedCount,
+                     phoneE164: g.phoneE164, side: g.side, tableNo: g.tableNo, lang: g.lang, sentAt: nil, openedAt: nil, rsvpStatus: "pending", rsvpCount: 0)
+    }
+
     func phones(_ eventId: String) async -> Result<[GuestPhone], AuthFailure> {
         .success((byEvent[eventId] ?? []).compactMap { g in g.phoneE164.map { GuestPhone(name: g.name, phoneE164: $0) } })
     }
     func count(_ eventId: String) async -> Result<Int, AuthFailure> { .success(byEvent[eventId]?.count ?? 0) }
     func add(_ eventId: String, _ guests: [NewGuest]) async -> AddResult {
         if (byEvent[eventId]?.count ?? 0) + guests.count > 100 { return .limitExceeded(100) }
-        byEvent[eventId, default: []] += guests
+        byEvent[eventId, default: []] += guests.map(make)
         return .added(guests.count)
+    }
+
+    func list(_ eventId: String) async -> Result<[Guest], AuthFailure> { .success((byEvent[eventId] ?? []).sorted { $0.name < $1.name }) }
+    func limit(_ eventId: String) async -> Result<Int?, AuthFailure> { .success(100) }
+    func update(_ id: String, before: NewGuest, after: NewGuest) async -> Result<Void, AuthFailure> {
+        for (event, list) in byEvent {
+            byEvent[event] = list.map { g in
+                guard g.id == id else { return g }
+                var n = g
+                n.salutation = after.salutation; n.name = after.name; n.withFamily = after.withFamily; n.invitedCount = after.invitedCount
+                n.phoneE164 = after.phoneE164; n.side = after.side; n.tableNo = after.tableNo; n.lang = after.lang
+                return n
+            }
+        }
+        return .success(())
+    }
+    func bulkUpdate(_ ids: [String], column: String, value: String?) async -> Result<Void, AuthFailure> {
+        for (event, list) in byEvent {
+            byEvent[event] = list.map { g in
+                guard ids.contains(g.id) else { return g }
+                var n = g
+                if column == "side" { n.side = Side(rawValue: value ?? "none") ?? .none } else { n.tableNo = value }
+                return n
+            }
+        }
+        return .success(())
+    }
+    func delete(_ ids: [String]) async -> Result<Void, AuthFailure> {
+        for (event, list) in byEvent { byEvent[event] = list.filter { !ids.contains($0.id) } }
+        return .success(())
     }
 }
 #endif

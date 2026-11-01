@@ -11,7 +11,7 @@ enum AppRoute: Hashable {
     case createEvent
     case editEvent(String)
     /// Inside an event: guests [6] (T45/T46).
-    case eventHome(id: String, title: String)
+    case eventHome(id: String, title: String, owner: Bool)
     case templates(eventId: String)
     case addGuests(eventId: String, tab: Int)
     /// Purchase [12] (T4D).
@@ -105,7 +105,7 @@ private struct AppFlow: View {
             EventsView(
                 vm: EventsViewModel(repo: deps.events, archive: deps.archive), reloadToken: reload,
                 onSettings: { path.append(.settings) },
-                onOpen: { path.append(.eventHome(id: $0.id, title: $0.titleNames)) },
+                onOpen: { path.append(.eventHome(id: $0.id, title: $0.titleNames, owner: $0.role == .owner)) },
                 onCreate: { path.append(.createEvent) },
                 onEdit: { path.append(.editEvent($0.id)) },
                 onJoin: { path.append(.joinByCode) }
@@ -129,10 +129,13 @@ private struct AppFlow: View {
                         reload += 1
                         path.removeLast()
                     })
-                case let .eventHome(id, title):
-                    EventHomeView(eventId: id, title: title, reloadToken: guestsReload, guests: deps.guests) { tab in
-                        path.append(.addGuests(eventId: id, tab: tab))
-                    }
+                case let .eventHome(id, title, owner):
+                    EventView(
+                        vm: GuestListViewModel(eventId: id, isOwner: owner, repo: deps.guestList, events: deps.events, spec: deps.guestSpec),
+                        title: title, reloadToken: guestsReload,
+                        onAdd: { tab in path.append(.addGuests(eventId: id, tab: tab)) },
+                        onLimit: { path.append(.purchase) }
+                    )
                 case let .addGuests(id, tab):
                     AddGuestsScreen(eventId: id, tab: tab, deps: deps,
                                     onClose: { path.removeLast() },

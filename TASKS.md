@@ -236,12 +236,13 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - [x] T45I (iOS) — eyni üç tab və qaydalar; kontaktlar `CNContactPickerViewController` ilə (çoxlu seçim, bir neçə mobil nömrədə seçim dialoqu); .xlsx ZIPFoundation ilə; `phones.json`/`excel.json` bütün halları keçir; 84 unit test; simulyatorda demo rejimində kontakt seçimi və Excel idxalı yoxlanıb.
   - ⚠️ Qeyd: real Supabase ilə hər iki platformada sınanmayıb (limit trigger-i stub cavabla yoxlanıb). Android kontakt seçicisi real telefonda yoxlanmalıdır. Limit pəncərəsinin "Premium şablon" / "Limiti artır" düymələri hələlik T44/T4D ekranlarına (növbəti mərhələ) aparır.
 
-- [ ] **T46A / T46I Qonaq siyahısı: masa, tərəf, dil, hitab**
+- [x] **T46A / T46I Qonaq siyahısı: masa, tərəf, dil, hitab**
   - Asılılıq: T45
   - Hər qonaq: hitab, ad, "ailəliklə" / nəfər, tərəf, masa nömrəsi, dil (boş = tədbirin dili). Filtr (tərəf, masa, cavab statusu) və axtarış. Toplu masa təyini.
   - Hazırdır, əgər: dəyişikliklər bazaya yazılır və filtr düzgün işləyir.
   - [x] T46A (Android) — siyahı (statuslar, "N/limit" halqası, filtrlər saylarla, axtarış ad/telefon üzrə), redaktə pəncərəsi (yalnız dəyişən sahələr), sola sürüşdürmə, uzun basma ilə çoxlu seçim (masa · tərəf · sil — sil yalnız owner), alt naviqasiya (Göndər/Statistika/Daha çox — növbəti mərhələ); 87 unit test; emulyatorda demo rejimində yoxlanıb.
-  - ⚠️ Qeyd: real Supabase ilə sınanmayıb. Ad/hitab/dil dəyişəndə adlı önizləmə şəklinin yenidən yaradılması T47-dədir.
+  - [x] T46I (iOS) — eyni ekranlar, filtr, axtarış və toplu əməliyyatlar; `GuestListViewModel` və `GuestListView` UI axını (TabView ilə Guests/Send/Stats/More naviqasiya), redaktə sheet, silmə alert (yalnız owner), bulk table alert; 96 unit test keçir; supabase-swift stub HTTP testləri; simulyatorda demo rejimində (real giriş olmadan, `-DevetDemo YES` və DemoGuests.shared) yoxlanıb.
+  - ⚠️ Qeyd: real Supabase ilə hər iki platformada sınanmayıb (PostgREST sorğuları MockEngine / URLProtocol ilə yoxlanıb). Ad/hitab/dil dəyişəndə adlı önizləmə şəklinin yenidən yaradılması T47-dədir.
 
 - [ ] **T47A / T47I Adlı önizləmə şəkilləri**
   - Asılılıq: T46, T15
