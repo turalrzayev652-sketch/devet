@@ -1,5 +1,8 @@
 import SwiftUI
 
+// MARK: - View imports (T49I)
+import Foundation
+
 /// Inside an event: tab bar Guests · Send · Statistics · More (screens.md §0). Send/Stats/More come later.
 struct EventView: View {
     @StateObject var vm: GuestListViewModel
@@ -16,7 +19,8 @@ struct EventView: View {
             SendView(eventId: vm.eventId, repo: vm.repo, events: vm.events, displayNames: vm.spec.displayNames,
                      eventTitle: title, eventType: "wedding", baseUrl: "https://devet.az", onComplete: { /* TODO: go to stats */ })
                 .tabItem { Label("nav.send", systemImage: "paperplane") }
-            ComingSoonView(title: nil).tabItem { Label("nav.stats", systemImage: "chart.bar") }
+            StatsView(eventId: vm.eventId, repo: vm.repo)
+                .tabItem { Label("nav.stats", systemImage: "chart.bar") }
             ComingSoonView(title: nil).tabItem { Label("nav.more", systemImage: "ellipsis") }
         }
         .tint(Color.DS.brandPrimary)
