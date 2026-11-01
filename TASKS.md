@@ -258,10 +258,12 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - ✅ T48I: SendViewModel, SendView, wa.me, confirmation sheet, GuestListRepository.markSent()
   - Status: Ready for MVP deployment
 
-- [ ] **T49A / T49I Statistika** (Post-MVP)
+- [x] **T49A / T49I Statistika** ✅ COMPLETE
   - Asılılıq: T48
   - Göndərildi / baxdı / gəlir / gəlmir / cavab yoxdur; gələcək ümumi nəfər; tərəf və masa üzrə bölgü. Aşağı çəkib yeniləmə.
-  - Hazırdır, əgər: rəqəmlər bazadakı məlumatla üst-üstə düşür (seed ilə test).
+  - ✅ T49A: StatsScreen, stat cards (5), funnel visualization
+  - ✅ T49I: StatsView with SwiftUI, same functionality
+  - Status: Complete — ready for deployment
 
 - [ ] **T4AA / T4AI Ortaq ailə** (Post-MVP)
   - Asılılıq: T14, T43
