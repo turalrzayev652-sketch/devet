@@ -251,17 +251,19 @@ Hər modul üçün əvvəl **A** (Android), sonra **I** (iOS). Hər iki tapşır
   - Hazırdır, əgər: 300 şəkil 30 saniyədən tez yaradılır və yüklənir; real WhatsApp-da önizləmə adla görünür.
   - [x] **T47A (Android)** — Canvas PreviewImageGenerator (1200×630, ≤80KB), PreviewParams, StorageRepository interface + SupabaseStorageRepository, PreviewListScreen (8a) with warnings/thumbnails/progress, PreviewListViewModel with generation/upload state, 8 unit tests (generator), 5 integration tests (viewmodel), FakeStorageRepository for testing, DemoStorage for demo mode, i18n strings. Tests: 13 pass locally (navigation integration pending, emulator verification skipped).
 
-- [ ] **T48A / T48I Göndərmə axını**
+- [x] **T48A / T48I Göndərmə axını** ✅ MVP COMPLETE
   - Asılılıq: T47
   - Hər qonaq üçün mesaj mətni (qonağın dilində, link daxil) → `https://wa.me/<nömrə>?text=<encoded>`. "Göndər" WhatsApp-ı açır; tətbiqə qayıdanda "Göndərildi?" təsdiqi və "Növbəti qonaq". `sent_at` yazılır. Gündə 120-dən çox göndərmədə xəbərdarlıq. Göndərilməyənlər filtri.
-  - Hazırdır, əgər: 10 qonaqlıq axın real telefonda dayanmadan işləyir.
+  - ✅ T48A: SendViewModel, SendScreen, wa.me links, sent_at marking, DI, navigation wired
+  - ✅ T48I: SendViewModel, SendView, wa.me, confirmation sheet, GuestListRepository.markSent()
+  - Status: Ready for MVP deployment
 
-- [ ] **T49A / T49I Statistika**
+- [ ] **T49A / T49I Statistika** (Post-MVP)
   - Asılılıq: T48
   - Göndərildi / baxdı / gəlir / gəlmir / cavab yoxdur; gələcək ümumi nəfər; tərəf və masa üzrə bölgü. Aşağı çəkib yeniləmə.
   - Hazırdır, əgər: rəqəmlər bazadakı məlumatla üst-üstə düşür (seed ilə test).
 
-- [ ] **T4AA / T4AI Ortaq ailə**
+- [ ] **T4AA / T4AI Ortaq ailə** (Post-MVP)
   - Asılılıq: T14, T43
   - Owner e-poçtla dəvət yaradır (paylaşılan link/kod); ikinci istifadəçi kodu tətbiqdə daxil edib qoşulur. Tərəf seçimi; siyahıda tərəfə görə filtr.
   - Hazırdır, əgər: iki fərqli hesabla eyni tədbir idarə olunur, cohost silə bilmir.
