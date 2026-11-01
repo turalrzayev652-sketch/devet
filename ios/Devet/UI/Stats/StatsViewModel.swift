@@ -25,7 +25,9 @@ final class StatsViewModel: ObservableObject {
         let result = await repo.list(eventId)
 
         guard case let .success(guests) = result else {
-            error = (result as? AuthResult<[Guest]>)?.failure
+            if case let .failure(err) = result {
+                error = err
+            }
             loading = false
             return
         }

@@ -26,6 +26,7 @@ final class FakeGuestList: GuestListRepository, @unchecked Sendable {
     func update(_ id: String, before: NewGuest, after: NewGuest) async -> Result<Void, AuthFailure> { calls.append("update:\(id)"); lastUpdate = (before, after); return result }
     func bulkUpdate(_ ids: [String], column: String, value: String?) async -> Result<Void, AuthFailure> { calls.append("bulk:\(column)=\(value ?? "null"):\(ids.sorted())"); return result }
     func delete(_ ids: [String]) async -> Result<Void, AuthFailure> { calls.append("delete:\(ids.sorted())"); return result }
+    func markSent(_ id: String) async -> Result<Void, AuthFailure> { calls.append("markSent:\(id)"); return result }
 }
 
 /// Same cases as Android `GuestListTest`.

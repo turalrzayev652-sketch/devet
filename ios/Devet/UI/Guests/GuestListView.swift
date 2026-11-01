@@ -9,6 +9,7 @@ struct EventView: View {
     let title: String
     let reloadToken: Int
     let storage: any StorageRepository
+    let baseUrl: String
     let onAdd: (Int) -> Void
     let onLimit: () -> Void
 
@@ -17,7 +18,7 @@ struct EventView: View {
             GuestListView(vm: vm, title: title, reloadToken: reloadToken, onAdd: onAdd, onLimit: onLimit)
                 .tabItem { Label("nav.guests", systemImage: "person.2") }
             SendView(eventId: vm.eventId, repo: vm.repo, events: vm.events, displayNames: vm.spec.displayNames,
-                     eventTitle: title, eventType: "wedding", baseUrl: "https://devet.az", onComplete: { /* TODO: go to stats */ })
+                     eventTitle: title, eventType: "wedding", baseUrl: baseUrl.hasSuffix("/") ? String(baseUrl.dropLast()) : baseUrl, onComplete: { /* TODO: go to stats */ })
                 .tabItem { Label("nav.send", systemImage: "paperplane") }
             StatsView(eventId: vm.eventId, repo: vm.repo)
                 .tabItem { Label("nav.stats", systemImage: "chart.bar") }

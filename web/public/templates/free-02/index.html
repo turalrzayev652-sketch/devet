@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fbf1ec">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="dv-page" data-state="loading">
+    <div class="petals" aria-hidden="true"></div>
+
+    <section data-block="hero" class="hero">
+      <div class="hero__arch">
+        <svg class="hero__branch hero__branch--l" viewBox="0 0 120 420" aria-hidden="true">
+          <path class="stem" d="M60 420C58 330 70 250 52 170 40 112 52 60 60 6"/>
+          <g class="leaves">
+            <path d="M58 330C34 322 18 304 12 280 36 284 52 300 58 330Z"/>
+            <path d="M60 290C84 282 100 264 106 240 82 244 66 260 60 290Z"/>
+            <path d="M54 236C30 228 14 210 8 186 32 190 48 206 54 236Z"/>
+            <path d="M52 176C76 168 92 150 98 126 74 130 58 146 52 176Z"/>
+            <path d="M54 118C34 110 22 94 18 74 38 78 50 92 54 118Z"/>
+            <path d="M60 66C76 58 86 44 88 26 72 32 62 46 60 66Z"/>
+          </g>
+        </svg>
+        <svg class="hero__branch hero__branch--r" viewBox="0 0 120 420" aria-hidden="true">
+          <path class="stem" d="M60 420C58 330 70 250 52 170 40 112 52 60 60 6"/>
+          <g class="leaves">
+            <path d="M58 330C34 322 18 304 12 280 36 284 52 300 58 330Z"/>
+            <path d="M60 290C84 282 100 264 106 240 82 244 66 260 60 290Z"/>
+            <path d="M54 236C30 228 14 210 8 186 32 190 48 206 54 236Z"/>
+            <path d="M52 176C76 168 92 150 98 126 74 130 58 146 52 176Z"/>
+            <path d="M54 118C34 110 22 94 18 74 38 78 50 92 54 118Z"/>
+            <path d="M60 66C76 58 86 44 88 26 72 32 62 46 60 66Z"/>
+          </g>
+        </svg>
+
+        <div class="hero__inner">
+          <p class="hero__type reveal" data-bind="event.type_label"></p>
+          <p class="hero__greeting reveal" data-bind="guest.greeting"></p>
+          <h1 class="hero__names reveal" data-bind="event.title_names"></h1>
+          <svg class="hero__heart reveal" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21C5 15 1 11.5 1 7 1 3.5 3.8 1 7 1c2.1 0 3.9 1.1 5 2.9C13.1 2.1 14.9 1 17 1c3.2 0 6 2.5 6 6 0 4.5-4 8-11 14Z"/></svg>
+          <p class="hero__invite reveal" data-bind="event.invite_sentence"></p>
+          <div class="hero__when reveal">
+            <span class="hero__weekday" data-bind="event.weekday"></span>
+            <span class="hero__date" data-bind="event.date"></span>
+            <span class="hero__time" data-bind="event.time"></span>
+          </div>
+          <p class="hero__venue reveal" data-bind="event.venue_name"></p>
+        </div>
+      </div>
+      <p class="hero__intro reveal" data-bind="text.intro"></p>
+    </section>
+
+    <section data-block="countdown" class="card reveal"></section>
+    <section data-block="gallery" class="reveal"></section>
+    <section data-block="music" class="reveal"></section>
+    <section data-block="map" class="card reveal"></section>
+    <section data-block="table" class="card reveal"></section>
+    <section data-block="rsvp" class="card card--rsvp reveal"></section>
+
+    <footer class="closing reveal">
+      <svg class="closing__heart" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21C5 15 1 11.5 1 7 1 3.5 3.8 1 7 1c2.1 0 3.9 1.1 5 2.9C13.1 2.1 14.9 1 17 1c3.2 0 6 2.5 6 6 0 4.5-4 8-11 14Z"/></svg>
+      <p class="closing__text" data-bind="text.closing"></p>
+      <p class="closing__hosts" data-bind="event.hosts_line"></p>
+    </footer>
+    <section data-block="watermark" class="wm"></section>
+  </main>
+  <script type="module" src="/core/invite-core.js"></script>
+  <script type="module" src="motion.js"></script>
+</body>
+</html>

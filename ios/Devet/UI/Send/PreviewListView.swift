@@ -15,21 +15,15 @@ struct PreviewListView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Title
-            Text("guests.preview_title", tableName: "Localizable")
+            Text("Adları yoxlayın")
                 .font(.system(size: 28, weight: .bold))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.md)
+                .padding(Spacing.s2)
 
-            // Warnings
             if !viewModel.warnings.isEmpty {
-                HStack(spacing: .sm) {
+                HStack(spacing: Spacing.s1) {
                     ForEach(viewModel.warnings) { warning in
-                        let label = warning.type == "no_phone"
-                            ? String(format: NSLocalizedString("guests.warning_no_phone", tableName: "Localizable", value: "Telefon yoxdur: %d", comment: ""), warning.count)
-                            : String(format: NSLocalizedString("guests.warning_empty_name", tableName: "Localizable", value: "Boş ad: %d", comment: ""), warning.count)
-
-                        Text(label)
+                        Text("\(warning.type == "no_phone" ? "Telefon yoxdur" : "Boş ad"): \(warning.count)")
                             .font(.system(size: 12))
                             .foregroundColor(.white)
                             .padding(.horizontal, 12)
@@ -37,109 +31,80 @@ struct PreviewListView: View {
                             .background(Color(red: 0.855, green: 0.463, blue: 0.024))
                             .cornerRadius(16)
                     }
+                    Spacer()
                 }
-                .padding(.horizontal, .md)
-                .padding(.bottom, .md)
+                .padding(.horizontal, Spacing.s2)
+                .padding(.bottom, Spacing.s2)
             }
 
-            // Loading state
-            if !viewModel.allReady {
-                VStack(spacing: .sm) {
-                    ProgressView()
-                        .scaleEffect(1.5)
-                    Text("guests.preview_generating", tableName: "Localizable")
-                        .font(.system(size: 14))
+            if let error = viewModel.uploadError {
+                VStack(spacing: Spacing.s2) {
+                    Text("Yükləmə xətası: \(String(describing: error))")
+                        .foregroundColor(.red)
+                    Button("Yenidən cəhd et") { Task { await viewModel.load() } }
+                }
+                .frame(maxHeight: .infinity)
+                .padding()
+            } else if !viewModel.allReady {
+                VStack(spacing: Spacing.s1) {
+                    ProgressView().scaleEffect(1.5)
                     Text(viewModel.uploadProgress)
                         .font(.system(size: 12))
                         .foregroundColor(.gray)
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
-                return
-            }
-
-            // Error state
-            if let error = viewModel.uploadError {
-                VStack(spacing: .md) {
-                    Text("Yükləmə xətası: \(error)")
-                        .foregroundColor(.red)
-                    Button(action: {
-                        Task {
-                            await viewModel.load()
+            } else {
+                List(viewModel.guests) { guest in
+                    HStack(spacing: Spacing.s2) {
+                        if let preview = viewModel.previews[guest.code] {
+                            Image(uiImage: preview.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 120, height: 63)
+                                .cornerRadius(4)
+                        } else {
+                            Color.gray.opacity(0.2)
+                                .frame(width: 120, height: 63)
+                                .cornerRadius(4)
                         }
-                    }) {
-                        Text("guests.retry_upload", tableName: "Localizable")
-                    }
-                }
-                .padding()
-                return
-            }
-
-            // Guest list
-            List(viewModel.guests) { guest in
-                HStack(spacing: .md) {
-                    // Thumbnail
-                    if let preview = viewModel.previews[guest.code] {
-                        Image(uiImage: preview.image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 120, height: 63)
-                            .cornerRadius(4)
-                    } else {
-                        Color.gray.opacity(0.2)
-                            .frame(width: 120, height: 63)
-                            .cornerRadius(4)
-                    }
-
-                    // Name + phone
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(guest.name)
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(guest.name.trimmingCharacters(in: .whitespaces).isEmpty ? .red : .primary)
-
-                        if let phone = guest.phoneE164, !phone.isEmpty {
-                            Text(phone)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(guest.name)
+                                .font(.system(size: 14, weight: .bold))
+                            Text(guest.phoneE164 ?? "")
                                 .font(.system(size: 12))
                                 .foregroundColor(.gray)
-                        } else {
-                            Text("Telefon yoxdur")
-                                .font(.system(size: 12))
-                                .foregroundColor(.red)
                         }
+                        Spacer()
                     }
-
-                    Spacer()
                 }
-            }
-            .listStyle(.plain)
+                .listStyle(.plain)
 
-            // "Ready" button
-            Button(action: onReady) {
-                Text("guests.ready_button", tableName: "Localizable")
-                    .font(.system(size: 16, weight: .medium))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 48)
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-            .padding(.md)
-        }
-        .onAppear {
-            Task {
-                await viewModel.load()
+                Button(action: onReady) {
+                    Text("Hazırdır")
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 48)
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(Spacing.s2)
             }
         }
+        .task { await viewModel.load() }
     }
 }
 
+#if DEBUG
 #Preview {
     PreviewListView(
         eventId: "demo-1",
-        repo: FakeGuestList(),
-        events: FakeEvents(),
-        storage: FakeStorageRepository(),
-        displayNames: DisplayNames(salutationForms: [:]),
+        repo: DemoGuests.shared,
+        events: DemoEvents(),
+        storage: DemoStorageRepository(),
+        displayNames: DisplayNames(forms: [:]),
         onReady: {}
     )
 }
+#endif

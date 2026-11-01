@@ -3,6 +3,7 @@ import SwiftUI
 /// Screen 8b: Qonaq-qonaq göndərmə axını (T48I).
 struct SendView: View {
     @StateObject private var viewModel: SendViewModel
+    @Environment(\.openURL) private var openURL
     let eventTitle: String
     let eventType: String
     let baseUrl: String
@@ -19,20 +20,31 @@ struct SendView: View {
         self.onComplete = onComplete
     }
 
+    private func message(for guest: Guest) -> String {
+        viewModel.buildMessage(guest: guest, eventTitle: eventTitle, eventType: eventType, baseUrl: baseUrl)
+    }
+
+    private func openWhatsApp(for guest: Guest) {
+        if let link = viewModel.buildWaLink(phone: guest.phoneE164 ?? "", message: message(for: guest)) {
+            openURL(link)
+        }
+        showConfirm = true
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            // Progress bar
             if !viewModel.state.guests.isEmpty {
-                ProgressView(value: Double(viewModel.state.sentCount) / Double(viewModel.state.guests.count))
-                    .padding(.md)
-                Text("\(viewModel.state.sentCount) / \(viewModel.state.guests.count) göndərildi")
+                ProgressView(value: Double(viewModel.state.sentCount), total: Double(viewModel.state.guests.count))
+                    .padding(Spacing.s2)
+                Text("\(viewModel.state.sentCount) / \(viewModel.state.guests.count)")
                     .font(.system(size: 12)).foregroundColor(.gray)
-                    .padding(.horizontal, .md).padding(.bottom, .md)
+                    .padding(.horizontal, Spacing.s2).padding(.bottom, Spacing.s2)
             }
 
-            if viewModel.state.allDone {
-                // Completion
-                VStack(spacing: .md) {
+            if viewModel.state.loading {
+                ProgressView().frame(maxHeight: .infinity)
+            } else if viewModel.state.allDone {
+                VStack(spacing: Spacing.s2) {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 64)).foregroundColor(.green)
                     Text("Bütün dəvətlər göndərildi")
@@ -42,14 +54,10 @@ struct SendView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .padding()
-                return
-            }
-
-            if let guest = viewModel.state.currentGuest() {
+            } else if let guest = viewModel.currentGuest() {
                 ScrollView {
-                    VStack(spacing: .md) {
-                        // Guest card
-                        VStack(spacing: .sm) {
+                    VStack(spacing: Spacing.s2) {
+                        VStack(spacing: Spacing.s1) {
                             Circle()
                                 .fill(Color.accentColor)
                                 .frame(width: 80, height: 80)
@@ -58,68 +66,45 @@ struct SendView: View {
                                         .font(.headline).foregroundColor(.white)
                                 )
                             Text(guest.name).font(.headline)
-                            Text(guest.phoneE164 ?? "Telefon yoxdur").font(.body).foregroundColor(.gray)
+                            Text(guest.phoneE164 ?? "").font(.body).foregroundColor(.gray)
                         }
 
-                        // Message
-                        Text("Mesaj:")
-                            .font(.caption).foregroundColor(.gray)
-                        Text(viewModel.buildMessage(guest: guest, eventTitle: eventTitle, eventType: eventType, baseUrl: baseUrl))
+                        Text(message(for: guest))
                             .font(.body)
-                            .padding(.md)
+                            .padding(Spacing.s2)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.gray.opacity(0.1))
                             .cornerRadius(8)
                     }
-                    .padding(.md)
+                    .padding(Spacing.s2)
                 }
 
-                HStack(spacing: .md) {
-                    Button("Keç") { viewModel.skip() }
-                        .frame(maxWidth: .infinity)
-
-                    Button(action: { showConfirm = true }) {
-                        Text("WhatsApp-da göndər")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-                .padding(.md)
-
-                if let link = viewModel.buildWaLink(phone: guest.phoneE164 ?? "", message: viewModel.buildMessage(guest: guest, eventTitle: eventTitle, eventType: eventType, baseUrl: baseUrl)) {
-                    Link("Linki aç", destination: link)
-                        .frame(maxWidth: .infinity)
-                        .padding(.md)
-                        .hidden()  // Hidden, opened by user confirmation
-                }
-            }
-
-            // Confirmation sheet
-            if showConfirm, let guest = viewModel.state.currentGuest() {
-                VStack(spacing: .md) {
-                    Text("Göndərildi?")
-                        .font(.headline)
-
-                    if let link = viewModel.buildWaLink(phone: guest.phoneE164 ?? "", message: viewModel.buildMessage(guest: guest, eventTitle: eventTitle, eventType: eventType, baseUrl: baseUrl)) {
-                        Link("✓ WhatsApp-da açıldı", destination: link)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.accentColor.opacity(0.2))
-                            .cornerRadius(8)
-                    }
-
-                    Button("Bəli, növbəti") {
-                        Task {
-                            await viewModel.confirmSent(guest)
-                            showConfirm = false
+                if showConfirm {
+                    VStack(spacing: Spacing.s2) {
+                        Text("Göndərildi?").font(.headline)
+                        Button("Bəli, növbəti") {
+                            Task {
+                                await viewModel.confirmSent(guest)
+                                showConfirm = false
+                            }
                         }
+                        .buttonStyle(.borderedProminent)
+                        Button("Xeyr, yenidən") { openWhatsApp(for: guest) }
                     }
-                    .buttonStyle(.borderedProminent)
-                    .frame(maxWidth: .infinity)
-
-                    Button("Xeyr, yenidən") { showConfirm = false }
-                        .frame(maxWidth: .infinity)
+                    .padding()
+                } else {
+                    HStack(spacing: Spacing.s2) {
+                        Button("Keç") { viewModel.skip() }
+                            .frame(maxWidth: .infinity)
+                        Button(action: { openWhatsApp(for: guest) }) {
+                            Text("WhatsApp").frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding(Spacing.s2)
                 }
-                .padding()
+            } else {
+                Spacer()
             }
         }
         .task { await viewModel.load() }

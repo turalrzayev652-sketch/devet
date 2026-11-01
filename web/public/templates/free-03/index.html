@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a3a33">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="buta" viewBox="0 0 100 130"><path d="M50 6C84 30 98 74 76 104 58 130 22 120 18 90 15 66 36 54 52 64 66 73 62 92 48 92 38 92 33 82 40 77" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="53" cy="48" r="4" fill="currentColor"/><circle cx="64" cy="70" r="3" fill="currentColor"/></symbol>
+      <symbol id="star8" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="1.4"><rect x="16" y="16" width="68" height="68"/><rect x="16" y="16" width="68" height="68" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="9"/></g></symbol>
+    </defs>
+  </svg>
+
+  <main class="dv-page" data-state="loading">
+    <div class="stars" aria-hidden="true"></div>
+
+    <section data-block="hero" class="hero">
+      <div class="hero__band" aria-hidden="true">
+        <svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg>
+      </div>
+      <svg class="hero__star" aria-hidden="true"><use href="#star8"/></svg>
+      <div class="hero__inner">
+        <p class="hero__type reveal" data-bind="event.type_label"></p>
+        <p class="hero__greeting reveal" data-bind="guest.greeting"></p>
+        <h1 class="hero__names reveal" data-bind="event.title_names"></h1>
+        <p class="hero__invite reveal" data-bind="event.invite_sentence"></p>
+        <div class="hero__when reveal">
+          <span class="hero__weekday" data-bind="event.weekday"></span>
+          <span class="hero__date" data-bind="event.date"></span>
+          <span class="hero__time" data-bind="event.time"></span>
+        </div>
+        <p class="hero__venue reveal" data-bind="event.venue_name"></p>
+        <p class="hero__intro reveal" data-bind="text.intro"></p>
+      </div>
+      <div class="hero__band hero__band--bottom" aria-hidden="true">
+        <svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg><svg><use href="#buta"/></svg>
+      </div>
+    </section>
+
+    <section data-block="countdown" class="panel reveal"></section>
+    <section data-block="gallery" class="reveal"></section>
+    <section data-block="music" class="reveal"></section>
+    <section data-block="map" class="panel reveal"></section>
+    <section data-block="table" class="panel reveal"></section>
+    <section data-block="rsvp" class="panel panel--rsvp reveal"></section>
+
+    <footer class="closing reveal">
+      <svg class="closing__buta" aria-hidden="true"><use href="#buta"/></svg>
+      <p class="closing__text" data-bind="text.closing"></p>
+      <p class="closing__hosts" data-bind="event.hosts_line"></p>
+    </footer>
+    <section data-block="watermark" class="wm"></section>
+  </main>
+  <script type="module" src="/core/invite-core.js"></script>
+  <script type="module" src="motion.js"></script>
+</body>
+</html>

@@ -41,18 +41,24 @@ final class PreviewListViewModel: ObservableObject {
         // Load guests
         let guestResult = await repo.list(eventId)
         guard case let .success(allGuests) = guestResult else {
-            uploadError = guestResult.failure
+            if case let .failure(error) = guestResult {
+                uploadError = error
+            }
             loading = false
             return
         }
 
         // Filter to those with phones
         guests = allGuests.filter { !($0.phoneE164?.isEmpty ?? true) }
+        let noPhone = allGuests.count - guests.count
+        if noPhone > 0 { warnings = [PreviewWarning(type: "no_phone", count: noPhone)] }
 
         // Load event for customization
         let eventResult = await events.get(eventId)
         guard case let .success(event) = eventResult else {
-            uploadError = eventResult.failure
+            if case let .failure(error) = eventResult {
+                uploadError = error
+            }
             loading = false
             return
         }
@@ -68,22 +74,18 @@ final class PreviewListViewModel: ObservableObject {
         for (idx, guest) in guests.enumerated() {
             uploadProgress = "\(idx) / \(guests.count)"
 
-            // Check warnings
-            if guest.phoneE164?.isEmpty ?? true {
-                warningsList.append(PreviewWarning(type: "no_phone", count: 1))
-            }
             if guest.name.trimmingCharacters(in: .whitespaces).isEmpty {
                 warningsList.append(PreviewWarning(type: "empty_name", count: 1))
+                continue
             }
 
             // Generate preview
-            let displayName = displayNames.format(guest.salutation, guest.name, guest.withFamily)
+            let displayName = displayNames.displayName(guest.name, guest.salutation, withFamily: guest.withFamily, lang: guest.lang ?? event.defaultLang)
             let params = PreviewParams(
                 displayName: displayName,
                 code: guest.code,
                 lang: guest.lang ?? event.defaultLang,
-                templateBgColor: (event.customization as? [String: Any])?["colors"] as? [String: String]?
-                    .flatMap { $0["--dv-color-bg"] } ?? nil
+                templateBgColor: nil
             )
 
             let preview = generator.generate(params: params)
@@ -102,7 +104,7 @@ final class PreviewListViewModel: ObservableObject {
         let groupedWarnings = Dictionary(grouping: warningsList, by: { $0.type })
             .map { type, items in PreviewWarning(type: type, count: items.count) }
 
-        warnings = groupedWarnings
+        warnings = warnings.filter { $0.type == "no_phone" } + groupedWarnings
         previews = previewsMap
         uploadProgress = "\(guests.count) / \(guests.count)"
         uploadError = nil

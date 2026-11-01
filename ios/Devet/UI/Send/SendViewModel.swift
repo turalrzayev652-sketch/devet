@@ -33,8 +33,10 @@ final class SendViewModel: ObservableObject {
         // Load unsent guests with phones
         let result = await repo.list(eventId)
         guard case let .success(allGuests) = result else {
+            if case let .failure(err) = result {
+                state.error = err
+            }
             state.loading = false
-            state.error = (result as? AuthResult<[Guest]>)?.failure
             return
         }
 
@@ -58,7 +60,7 @@ final class SendViewModel: ObservableObject {
 
     /// WhatsApp mesajı
     func buildMessage(guest: Guest, eventTitle: String, eventType: String, baseUrl: String) -> String {
-        let displayName = displayNames.displayName(guest.name, guest.salutation, withFamily: guest.withFamily, lang: guest.lang)
+        let displayName = displayNames.displayName(guest.name, guest.salutation, withFamily: guest.withFamily, lang: guest.lang ?? "az")
         let link = "\(baseUrl)/i/\(guest.code)"
 
         let template: String

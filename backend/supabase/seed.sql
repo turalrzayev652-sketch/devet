@@ -33,10 +33,9 @@ set display_name = 'Demo Ailə'
 where id = '11111111-1111-1111-1111-111111111111';
 
 insert into public.templates (id, name, is_premium, version, thumbnail_url, sort_order) values
-  ('free-01', '{"az":"Klassik","ru":"Классика","en":"Classic","tr":"Klasik"}', false, 1,
-   '/templates/free-01/thumb.jpg', 10),
-  ('free-02', '{"az":"Bahar","ru":"Весна","en":"Spring","tr":"Bahar"}', false, 1,
-   '/templates/free-02/thumb.jpg', 20);
+  ('free-01', '{"az":"Qızıl gecə","ru":"Золотая ночь","en":"Golden Night","tr":"Altın Gece"}', false, 1, '/templates/free-01/thumb.jpg', 10),
+  ('free-02', '{"az":"Pudra bağı","ru":"Розовый сад","en":"Blush Garden","tr":"Pudra Bahçesi"}', false, 1, '/templates/free-02/thumb.jpg', 20),
+  ('free-03', '{"az":"Buta","ru":"Бута","en":"Buta","tr":"Buta"}', false, 1, '/templates/free-03/thumb.jpg', 30);
 
 insert into public.events (
   id, type, title_names, host_names, starts_at, venue_name, venue_address,

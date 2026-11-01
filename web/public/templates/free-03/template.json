@@ -1,0 +1,87 @@
+{
+  "id": "free-03",
+  "version": 1,
+  "tier": "free",
+  "name": {
+    "az": "Buta",
+    "ru": "Бута",
+    "en": "Buta",
+    "tr": "Buta"
+  },
+  "event_types": [
+    "wedding",
+    "engagement",
+    "henna",
+    "birthday",
+    "jubilee"
+  ],
+  "langs": [
+    "az",
+    "ru",
+    "en",
+    "tr"
+  ],
+  "blocks": [
+    "hero",
+    "countdown",
+    "gallery",
+    "music",
+    "map",
+    "table",
+    "rsvp",
+    "watermark"
+  ],
+  "css_vars": {
+    "--dv-color-bg": {
+      "type": "color",
+      "default": "#0a3a33",
+      "label_key": "template.var.color_bg"
+    },
+    "--dv-color-text": {
+      "type": "color",
+      "default": "#f6ecd6",
+      "label_key": "template.var.color_text"
+    },
+    "--dv-color-accent": {
+      "type": "color",
+      "default": "#dcb868",
+      "label_key": "template.var.color_accent"
+    },
+    "--dv-font-heading": {
+      "type": "font",
+      "default": "serif",
+      "label_key": "template.var.font_heading"
+    },
+    "--dv-font-body": {
+      "type": "font",
+      "default": "inter",
+      "label_key": "template.var.font_body"
+    }
+  },
+  "fonts": {
+    "serif": {
+      "family": "Noto Serif Display",
+      "fallback": "serif",
+      "file": "assets/fonts/serif.woff2"
+    },
+    "inter": {
+      "family": "Inter",
+      "fallback": "sans-serif",
+      "file": "assets/fonts/inter.woff2"
+    }
+  },
+  "texts": {
+    "intro": {
+      "max_length": 200,
+      "label_key": "template.text.intro"
+    },
+    "closing": {
+      "max_length": 120,
+      "label_key": "template.text.closing"
+    }
+  },
+  "photos": {
+    "max": 6
+  },
+  "music": true
+}

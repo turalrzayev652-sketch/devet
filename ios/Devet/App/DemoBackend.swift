@@ -139,5 +139,20 @@ final class DemoGuests: GuestRepository, GuestListRepository, @unchecked Sendabl
         for (event, list) in byEvent { byEvent[event] = list.filter { !ids.contains($0.id) } }
         return .success(())
     }
+    func markSent(_ id: String) async -> Result<Void, AuthFailure> {
+        for (event, list) in byEvent {
+            byEvent[event] = list.map { g in
+                guard g.id == id else { return g }
+                var n = g
+                n.sentAt = ISO8601DateFormatter().string(from: Date())
+                return n
+            }
+        }
+        return .success(())
+    }
+}
+
+final class DemoStorageRepository: StorageRepository, @unchecked Sendable {
+    func uploadPreviewImage(_ bytes: Data, code: String, eventId: String) async -> Result<String, AuthFailure> { .success("\(code).jpg") }
 }
 #endif

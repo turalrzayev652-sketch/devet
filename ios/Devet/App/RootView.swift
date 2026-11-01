@@ -132,7 +132,7 @@ private struct AppFlow: View {
                 case let .eventHome(id, title, owner):
                     EventView(
                         vm: GuestListViewModel(eventId: id, isOwner: owner, repo: deps.guestList, events: deps.events, spec: deps.guestSpec),
-                        title: title, reloadToken: guestsReload, storage: deps.storage,
+                        title: title, reloadToken: guestsReload, storage: deps.storage, baseUrl: deps.config.publicBaseURL,
                         onAdd: { tab in path.append(.addGuests(eventId: id, tab: tab)) },
                         onLimit: { path.append(.purchase) }
                     )

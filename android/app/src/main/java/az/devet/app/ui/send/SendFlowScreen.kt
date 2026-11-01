@@ -1,5 +1,6 @@
 package az.devet.app.ui.send
 
+import az.devet.app.BuildConfig
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +27,7 @@ fun SendFlowScreen(
             sendVm,
             event.titleNames,
             event.type?.name?.lowercase() ?: "wedding",
-            "https://devet.az",  // TODO: from config
+            BuildConfig.PUBLIC_BASE_URL.trimEnd('/'),
             onComplete,
             modifier
         )
