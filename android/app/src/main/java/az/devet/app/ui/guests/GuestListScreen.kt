@@ -73,6 +73,8 @@ import az.devet.app.ui.components.ErrorBanner
 import az.devet.app.ui.components.LinkButton
 import az.devet.app.ui.components.PrimaryButton
 import az.devet.app.ui.components.messageRes
+import az.devet.app.ui.send.PreviewListScreen
+import az.devet.app.ui.send.PreviewListViewModel
 import az.devet.app.ui.theme.DevetTheme
 import az.devet.app.ui.theme.Shapes
 import az.devet.app.ui.theme.Spacing
@@ -118,6 +120,10 @@ fun EventScreen(
     ) { padding ->
         Box(Modifier.padding(padding)) {
             if (tab == 0) GuestListContent(eventId, title, isOwner, reloadKey, onBack, onAdd, onLimit)
+            else if (tab == 1) {
+                val vm: PreviewListViewModel = koinViewModel(key = "preview-$eventId") { parametersOf(eventId) }
+                PreviewListScreen(vm, onReady = { /* TODO: T48A send flow */ })
+            }
             else Column(Modifier.fillMaxSize()) {
                 Box(Modifier.padding(start = Spacing.s1, top = Spacing.s0_5)) { BackButton(onBack) }
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

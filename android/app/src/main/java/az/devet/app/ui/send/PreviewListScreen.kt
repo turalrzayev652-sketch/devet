@@ -98,7 +98,7 @@ fun PreviewListScreen(
                 CircularProgressIndicator(modifier = Modifier.size(40.dp))
                 Spacer(modifier = Modifier.height(Spacing.sm))
                 Text(
-                    text = "Adlı önizləmə şəkilləri hazırlanır",
+                    text = stringResource(R.string.send_preview_generating),
                     fontSize = 14.sp
                 )
                 Text(
@@ -112,7 +112,7 @@ fun PreviewListScreen(
 
         if (state.uploadError != null) {
             Text(
-                text = "Yükləmə xətası: ${state.uploadError}",
+                text = stringResource(R.string.common_error_network),
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(Spacing.md)
             )
@@ -122,7 +122,7 @@ fun PreviewListScreen(
                     .align(Alignment.CenterHorizontally)
                     .padding(Spacing.md)
             ) {
-                Text("Yenidən cəhd et")
+                Text(stringResource(R.string.send_retry_upload))
             }
             return
         }
@@ -152,7 +152,7 @@ fun PreviewListScreen(
             )
         ) {
             Text(
-                text = "Hamısı düzgündür — başla",
+                text = stringResource(R.string.send_ready_button),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
