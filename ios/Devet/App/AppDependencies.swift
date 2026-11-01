@@ -10,6 +10,7 @@ final class AppDependencies: ObservableObject {
     let events: any EventRepository
     let guests: any GuestRepository
     let guestList: any GuestListRepository
+    let storage: any StorageRepository
     /// Rules from /spec bundled at build time; the app cannot work without them.
     let guestSpec: GuestSpec = try! GuestSpec.load()
     let archive: any ArchiveStore
@@ -18,11 +19,13 @@ final class AppDependencies: ObservableObject {
 
     init(
         config: SupabaseConfig, auth: any AuthRepository, account: any AccountRepository, events: any EventRepository,
-        guests: any GuestRepository, guestList: any GuestListRepository, archive: any ArchiveStore = DefaultsArchiveStore(),
+        guests: any GuestRepository, guestList: any GuestListRepository, storage: any StorageRepository,
+        archive: any ArchiveStore = DefaultsArchiveStore(),
         connectivity: Connectivity, language: any AppLanguage
     ) {
         self.guests = guests
         self.guestList = guestList
+        self.storage = storage
         self.config = config
         self.auth = auth
         self.account = account
@@ -40,7 +43,7 @@ final class AppDependencies: ObservableObject {
         if UserDefaults.standard.bool(forKey: "DevetDemo") {
             return AppDependencies(
                 config: config, auth: DemoAuth(), account: DemoAccount(), events: DemoEvents(), guests: DemoGuests.shared, guestList: DemoGuests.shared,
-                connectivity: Connectivity(), language: SystemAppLanguage()
+                storage: DemoStorageRepository(), connectivity: Connectivity(), language: SystemAppLanguage()
             )
         }
         #endif
@@ -48,7 +51,7 @@ final class AppDependencies: ObservableObject {
         return AppDependencies(
             config: config, auth: SupabaseAuthRepository(client: client), account: SupabaseAccountRepository(client: client),
             events: SupabaseEventRepository(client: client), guests: SupabaseGuestRepository(client: client), guestList: SupabaseGuestListRepository(client: client),
-            connectivity: Connectivity(), language: SystemAppLanguage()
+            storage: SupabaseStorageRepository(client: client), connectivity: Connectivity(), language: SystemAppLanguage()
         )
     }
 
@@ -56,6 +59,7 @@ final class AppDependencies: ObservableObject {
         config: SupabaseConfig(url: "", anonKey: "", publicBaseURL: "https://devet.example"),
         auth: SupabaseAuthRepository(client: nil), account: SupabaseAccountRepository(client: nil),
         events: SupabaseEventRepository(client: nil), guests: SupabaseGuestRepository(client: nil), guestList: SupabaseGuestListRepository(client: nil),
+        storage: SupabaseStorageRepository(client: nil),
         connectivity: .fixed(true), language: SystemAppLanguage()
     )
 

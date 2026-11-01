@@ -88,9 +88,9 @@ final class GuestListViewModel: ObservableObject {
 
     let isOwner: Bool
     let spec: GuestSpec
-    private let eventId: String
-    private let repo: any GuestListRepository
-    private let events: any EventRepository
+    let eventId: String
+    let repo: any GuestListRepository
+    let events: any EventRepository
 
     init(eventId: String, isOwner: Bool, repo: any GuestListRepository, events: any EventRepository, spec: GuestSpec) {
         self.eventId = eventId
