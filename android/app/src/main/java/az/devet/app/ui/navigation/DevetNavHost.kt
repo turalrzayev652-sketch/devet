@@ -35,6 +35,7 @@ import az.devet.app.ui.guests.AddGuestScreen
 import az.devet.app.ui.guests.EventScreen
 import az.devet.app.ui.events.CreateEventScreen
 import az.devet.app.ui.events.EditEventScreen
+import az.devet.app.data.events.EventDraft
 import az.devet.app.ui.events.EventsScreen
 import az.devet.app.ui.settings.SettingsScreen
 import az.devet.app.ui.theme.DevetTheme
@@ -147,8 +148,12 @@ fun DevetNavHost(app: AppViewModel) {
             composable<Route.EventHome> { entry ->
                 val r = entry.toRoute<Route.EventHome>()
                 val reload by entry.savedStateHandle.getStateFlow(GUESTS_KEY, 0).collectAsStateWithLifecycle()
+                // Load event data for SendFlowScreen
+                val eventVm: az.devet.app.ui.events.EditEventViewModel = koinViewModel { parametersOf(r.id) }
+                val eventDraft by eventVm.draft.collectAsStateWithLifecycle()
                 EventScreen(
-                    r.id, r.title, r.owner, reload, onBack = { nav.popBackStack() },
+                    r.id, r.title, r.owner, reload, eventDraft,
+                    onBack = { nav.popBackStack() },
                     onAdd = { tab -> nav.navigate(Route.AddGuests(r.id, tab)) }, onLimit = { nav.navigate(Route.Purchase) },
                 )
             }

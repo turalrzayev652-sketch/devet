@@ -62,6 +62,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import az.devet.app.R
+import az.devet.app.data.events.EventDraft
 import az.devet.app.data.guests.Guest
 import az.devet.app.data.guests.GuestSpec
 import az.devet.app.data.guests.GuestStatus
@@ -75,6 +76,7 @@ import az.devet.app.ui.components.PrimaryButton
 import az.devet.app.ui.components.messageRes
 import az.devet.app.ui.send.PreviewListScreen
 import az.devet.app.ui.send.PreviewListViewModel
+import az.devet.app.ui.send.SendFlowScreen
 import az.devet.app.ui.theme.DevetTheme
 import az.devet.app.ui.theme.Shapes
 import az.devet.app.ui.theme.Spacing
@@ -89,6 +91,7 @@ fun EventScreen(
     title: String,
     isOwner: Boolean,
     reloadKey: Int,
+    event: EventDraft?,
     onBack: () -> Unit,
     onAdd: (tab: Int) -> Unit,
     onLimit: () -> Unit,
@@ -120,9 +123,8 @@ fun EventScreen(
     ) { padding ->
         Box(Modifier.padding(padding)) {
             if (tab == 0) GuestListContent(eventId, title, isOwner, reloadKey, onBack, onAdd, onLimit)
-            else if (tab == 1) {
-                val vm: PreviewListViewModel = koinViewModel(key = "preview-$eventId") { parametersOf(eventId) }
-                PreviewListScreen(vm, onReady = { /* TODO: T48A send flow */ })
+            else if (tab == 1 && event != null) {
+                SendFlowScreen(eventId, event, onComplete = { /* TODO: go to tab 2 stats */ })
             }
             else Column(Modifier.fillMaxSize()) {
                 Box(Modifier.padding(start = Spacing.s1, top = Spacing.s0_5)) { BackButton(onBack) }
